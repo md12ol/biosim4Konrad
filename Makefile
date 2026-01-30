@@ -2,24 +2,21 @@ ifneq ($(BUILD),debug)
     BUILD = release
 endif
 
-CXX = c++
-LD = c++
+CXX = clang++
+LD = clang++
+
+OMP_PREFIX = $(shell brew --prefix libomp)
 
 CXXFLAGS += \
   -Wall \
   -pedantic \
   -std=c++17 \
   -fexceptions \
-  -fopenmp \
+  -Xpreprocessor -fopenmp \
+  -I$(OMP_PREFIX)/include \
   $(shell pkg-config --cflags opencv4)
 
-LDFLAGS += \
-  -lopencv_core \
-  -lopencv_video \
-  -lopencv_videoio \
-  -lgomp \
-  -lpthread \
-  -fopenmp
+LDFLAGS += -L$(OMP_PREFIX)/lib -lomp $(shell pkg-config --libs opencv4)
 
 ifeq ($(BUILD),debug)
   OUT_DIR = bin/Debug/
