@@ -1,0 +1,26 @@
+January 30th 2026
+    >>	For the first goal we want to make it so that half of the creatures are classified as mice and half as cats
+    >>	The mice would have the typical condition of needing to make it to one of the edges in order to reporduce
+    >>	The cats would be able to kill and would have the condition that they need to kill a creature to reproduce
+    >>	The entire population dies each generation
+    >>	What would this require?
+        >>	Enable killing
+            >>	Make sure mice aren't able to kill
+        >>	Add in the possibility of different types of creatures
+            >>	Add in a parameter within the indiv class that keeps track of mice and cats
+        >>	Mice NNs don't include the kill neuron
+        >>	(Cats mights not have sufficient kill neurons in their initial population. If so we will need to ensure more (or all) cats include the kill neuron)
+        >>	Modify the selection mechanism for cats to be that they killed something during the sim
+        >>	Two seperate new population generations: one for cats and one for mice
+        >>	Add a parameter to cats so we know if they have killed something
+    >>	Future steps
+        >>	Pheramone released by mice that other mice can detect and follow
+        >>	Cats also need to have come in contact with another cat to reproduce
+        >>	Cats shouldn't be eating other cats
+        >>	Mouse Changes
+            >>	Mice need to have come in contact with another mouse to reproduce
+            >>	Mice need to have eaten to reproduce
+            >>	Add in food for mice
+            >>	Neurons to detect food but only mice can have them?
+        >>	Either modified neurons or new neurons that add in species information to the other sensors
+        >>	Gender of the mice/cats
