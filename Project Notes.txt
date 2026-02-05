@@ -11,11 +11,11 @@ Minimally Viable Product
         >>	Mice NNs don't include the kill neuron
         >>	(Cats mights not have sufficient kill neurons in their initial population. If so we will need to ensure more (or all) cats include the kill neuron)
         >>	Modify the selection mechanism for cats to be that they killed something during the sim
-        >>	Two seperate new population generations: one for cats and one for mice
+        >>	Two separate new population generations: one for cats and one for mice
         >>	Add a parameter to cats so we know if they have killed something
 
 Future goals
-    >>	Pheramone released by mice that other mice can detect and follow
+    >>	Pheromone released by mice that other mice can detect and follow
     >>	Cats also need to have come in contact with another cat to reproduce
     >>	Cats shouldn't be eating other cats
     >>	Mouse Changes
@@ -35,6 +35,18 @@ Notes
         >>  7 bits: this number mod the number of neurons from the previous bit identifies the destination neuron for the connection
         >>  16 bits: the weight of the connection
     >>  An individual's NN contains some number of neurons from the set of all possible neurons (21 sensory neurons, maxNumberNeurons internal neuron(s), and 11 action neurons).
+    >>  Multiple Actions can be triggered for a single step
+        >>  But only one movement for a single step is possible (depends on accumulated sum of all movement urges)
+        >>  Movement is done after all other actions
+        >>  Movement probability also depends on the responsiveness (gets multiplied with the sum of movement urges to decide the probability of movement in direction x or y)
+        >>  e.g. (5.0, 5.0) adjusted by hyperbolic tangent function to (1.0, 1.0) multiplied with responsiveness 0.6 results in 60% chance of moving east and north respectively
+    >>  When individual's spawn, their NN gets created from their genome
+        >>  first a set of referenced neuron number is created, to keep track of their outputs
+        >>  internal neurons without outputs or which only feed themselves get removed
+        >>  remaining neurons get renumbered sequentially starting with 0
+    >>  During a single simulation step, the sums of the inputs for each action neuron get calculated
+    >>  then they get converted to a probability between 0 and 1 to be executed
+    >>  not all action neurons are probability-based (for example responsiveness is set depending on the hyperbolic tangent of the input sum)
 
 Stuff we Don't Understand
     >>  Can multiple actions be triggered for a single step?
