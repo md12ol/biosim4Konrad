@@ -33,13 +33,24 @@ Notes
         >>  7 bits: this number mod the number of neurons from the previous bit identifies the source neuron for the connection
         >>  1 bit: either to an output action neuron (0) or an internal neuron (1)
         >>  7 bits: this number mod the number of neurons from the previous bit identifies the destination neuron for the connection
-        >>  16 bits: the weight of the connection
-    >>  An individual's NN contains some number of neurons from the set of all possible neurons (21 sensory neurons, maxNumberNeurons internal neuron(s), and 11 action neurons).
+        >>  16 bits: the weight of the connection (can be negative)
+    >>  An individual's NN contains all possible neurons (21 sensory neurons, maxNumberNeurons internal neuron(s), and 11 action neurons) but only some have connections
+        >>  Each neuron can have multiple outgoing and/or incoming connections depending on the genes in the genome
+        >>  Only neurons with a string of connections that ends in an action are considered when deciding a agent's next action
+    >>  Sensory neurons output a value in range [0,1] based on the environment (W), the individual (I), or a random value ( )
+        >>  These are then sent via connection to internal and/or action neurons
+    >>  Internal neurons calculate the sum of all inputs multiplied by the edge weights -> tanh function -> [-1,1]
+        >>  Internal neurons are the only neurons with self-referential edges, storing the last output of the neuron for input at the next simulation step
+    >>  Action neurons calculate the same sum as internal neurons -> tanh function -> [-1,1]
+        >>  Non-movement neurons normalize this value to [0,1]
+        >>  Movement neurons ...?
+    >>  Most of the actions modify the environment (W) (e.g., moving an agent to a new position or killing another agent) but a few modify internal variables of the individuals (I) (e.g., set_responsiveness and set_longprobe_dist).
     >>  Multiple Actions can be triggered for a single step
         >>  But only one movement for a single step is possible (depends on accumulated sum of all movement urges)
         >>  Movement is done after all other actions
         >>  Movement probability also depends on the responsiveness (gets multiplied with the sum of movement urges to decide the probability of movement in direction x or y)
         >>  e.g. (5.0, 5.0) adjusted by hyperbolic tangent function to (1.0, 1.0) multiplied with responsiveness 0.6 results in 60% chance of moving east and north respectively
+
     >>  When individual's spawn, their NN gets created from their genome
         >>  first a set of referenced neuron number is created, to keep track of their outputs
         >>  internal neurons without outputs or which only feed themselves get removed
@@ -49,8 +60,11 @@ Notes
     >>  not all action neurons are probability-based (for example responsiveness is set depending on the hyperbolic tangent of the input sum)
 
 Stuff we Don't Understand
-    >>  Can multiple actions be triggered for a single step?
+    >>  Pragma Omp Commands
 
 January 30th 2026
-    >>  Look into if multiple actions can be triggered for a single step?
-    >>  Look into understanding the NN and how that generates action for the individual and explain this to Michael
+    >>  Look into understanding the NN and how that generates action for the individual and explain this to Michael (see above)
+    >>  Look into what each of the pragma omp commands do with respect to parallelization
+    >>  Modify it so that there are two types of species
+        >>  In the simulation make it so one is one colour and the other is a different colour
+        >>  Level 2: have the colour gradient be different for the two species
