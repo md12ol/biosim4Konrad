@@ -7,7 +7,7 @@ namespace BS {
 
 // This rotates a Dir value by the specified number of steps. There are
 // eight steps per full rotation. Positive values are clockwise; negative
-// values are counterclockwise. E.g., rotate(4) returns a direction 90
+// values are counterclockwise. E.g., rotate(2) returns a direction 90
 // degrees to the right.
 constexpr Compass NW = BS::Compass::NW; constexpr Compass N = BS::Compass::N;
 constexpr Compass NE = BS::Compass::NE; constexpr Compass E = BS::Compass::E;
