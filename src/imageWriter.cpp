@@ -96,8 +96,10 @@ void ImageWriter::startNewGeneration()
 }
 
 
-uint8_t makeGeneticColor(const Genome &genome)
+uint8_t makeGeneticColor(const Genome &genome, const std::string &species)
 {
+    return (species == "mouse" ? 50 : 100);
+    /*
     return ((genome.size() & 1)
          | ((genome.front().sourceType)    << 1)
          | ((genome.back().sourceType)     << 2)
@@ -106,6 +108,7 @@ uint8_t makeGeneticColor(const Genome &genome)
          | ((genome.front().sourceNum & 1) << 5)
          | ((genome.front().sinkNum & 1)   << 6)
          | ((genome.back().sourceNum & 1)  << 7));
+         */
 }
 
 
@@ -141,7 +144,7 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
             const Indiv &indiv = peeps[index];
             if (indiv.alive) {
                 data.indivLocs.push_back(indiv.loc);
-                data.indivColors.push_back(makeGeneticColor(indiv.genome));
+                data.indivColors.push_back(makeGeneticColor(indiv.genome, indiv.species));
             }
         }
 
@@ -182,7 +185,7 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
         const Indiv &indiv = peeps[index];
         if (indiv.alive) {
             data.indivLocs.push_back(indiv.loc);
-            data.indivColors.push_back(makeGeneticColor(indiv.genome));
+            data.indivColors.push_back(makeGeneticColor(indiv.genome, indiv.species));
         }
     }
 

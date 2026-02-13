@@ -44,6 +44,14 @@ Notes
     >>  Action neurons calculate the same sum as internal neurons -> tanh function -> [-1,1]
         >>  Non-movement neurons normalize this value to [0,1]
         >>  Movement neurons ...?
+        >>  MOVE_X and MOVE_Y are used to accumulate the values of the movement neurons
+        >>  MOVE_EAST, MOVE_WEST, MOVE_NORTH and MOVE_SOUTH can also have negative urges meaning they corresponded to their oppositite (e.g. negative MOVE_WEST is similar to positive MOVE_EAST)
+        >>  MOVE_FORWARD and MOVE_REVERSE depend on the last movement and can also have negative values (e.g. negative MOVE_REVERSE is similar to positive MOVE_FORWARD)
+        >>  MOVE_LEFT and MOVE_RIGHT rotate the coordinates depending on the last movement (e.g. x = 1.0, y = 1.0 -> x = -1.0 and y = 1.0 if actionLevel is 1.0)
+            >>  they also are similar to their opposite, if the actionLevel is negative
+            >>  the normalised coordinates get multiplied with the actionLevel in arbitrarily range
+        >>  MOVE_RL seems to work exactly like MOVE_RIGHT
+
     >>  Most of the actions modify the environment (W) (e.g., moving an agent to a new position or killing another agent) but a few modify internal variables of the individuals (I) (e.g., set_responsiveness and set_longprobe_dist).
     >>  Multiple Actions can be triggered for a single step
         >>  But only one movement for a single step is possible (depends on accumulated sum of all movement urges)
@@ -58,6 +66,16 @@ Notes
     >>  During a single simulation step, the sums of the inputs for each action neuron get calculated
     >>  then they get converted to a probability between 0 and 1 to be executed
     >>  not all action neurons are probability-based (for example responsiveness is set depending on the hyperbolic tangent of the input sum)
+
+    >>  Pragma Omp Commands enable parallelization of the simulator
+        >>  #pragma omp parallel num_threads(p.numThreads) default(shared)
+            >>  #pragma omp parallel num_threads(p.numThreads) creates a number of threads which are forked at the beginning and joined in the end of the region
+            >>  default(shared) means, that each thread can access the variables in the parallel region
+        >>  #pragma omp single means, that only one thread executes the code within the region (usually the first one that reaches it)
+        >>  #pragma omp for schedule(auto)
+            >>  #pragma omp for means, that multiple threads run different regions of the loop (e.g. Thread 1 runs iteration 0 to 5 and Thread 2 runs iteration 6 to 10)
+            >>  OMP Implementation/Runtime uses schedule(auto) as hint, how to divide the iterations into contigous, non-empty subsets (chunks) and how to distribute the chunks to the threads
+                >> in case auto, the compiler and/or runtime system decides the distribution
 
 Stuff we Don't Understand
     >>  Pragma Omp Commands
