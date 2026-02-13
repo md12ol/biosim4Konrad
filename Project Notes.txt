@@ -1,5 +1,5 @@
 Minimally Viable Product
-    >>	For the first goal we want to make it so that half of the creatures are classified as mice and half as cats
+    >>	For the first goal we want to make it so that half of the creatures are classified as mice and half as cats [DONE]
     >>	The mice would have the typical condition of needing to make it to one of the edges in order to reproduce
     >>	The cats would be able to kill and would have the condition that they need to kill a creature to reproduce
     >>	What would this require?
@@ -43,7 +43,7 @@ Notes
         >>  Internal neurons are the only neurons with self-referential edges, storing the last output of the neuron for input at the next simulation step
     >>  Action neurons calculate the same sum as internal neurons -> tanh function -> [-1,1]
         >>  Non-movement neurons normalize this value to [0,1]
-        >>  Movement neurons ...?
+        >>  Movement neurons combine their values into two numbers moveX and moveY -> tanh function -> [-1,1] for both -> prob and direction -> possible movement
         >>  MOVE_X and MOVE_Y are used to accumulate the values of the movement neurons
         >>  MOVE_EAST, MOVE_WEST, MOVE_NORTH and MOVE_SOUTH can also have negative urges meaning they corresponded to their oppositite (e.g. negative MOVE_WEST is similar to positive MOVE_EAST)
         >>  MOVE_FORWARD and MOVE_REVERSE depend on the last movement and can also have negative values (e.g. negative MOVE_REVERSE is similar to positive MOVE_FORWARD)
@@ -78,11 +78,30 @@ Notes
                 >> in case auto, the compiler and/or runtime system decides the distribution
 
 Stuff we Don't Understand
-    >>  Pragma Omp Commands
 
 January 30th 2026
-    >>  Look into understanding the NN and how that generates action for the individual and explain this to Michael (see above)
-    >>  Look into what each of the pragma omp commands do with respect to parallelization
-    >>  Modify it so that there are two types of species
-        >>  In the simulation make it so one is one colour and the other is a different colour
+    >>  Look into understanding the NN and how that generates action for the individual and explain this to Michael (see above) [DONE]
+    >>  Look into what each of the pragma omp commands do with respect to parallelization [DONE]
+    >>  Modify it so that there are two types of species [DONE]
+        >>  In the simulation make it so one is one colour and the other is a different colour [DONE]
         >>  Level 2: have the colour gradient be different for the two species
+
+February 13th 2026
+    >>  Species colouring
+        >>  Go through the makeGeneticColor(...) and determine how this number is made, generate an example to show Michael
+        >>  Think about different ways that we might be able to make it so mice are one shade and cats are another
+    >>  Turn on the kill neuron for cats
+        >>  Turn it on for the entire code base
+        >>  Hack that only cats can actually express the kill neuron in their NNs
+            >>  Do some print statements in the kill method that will print if a mouse tries to kill anything
+        >>  Hack that cats can only kill mice
+            >>  Determine how a kill is processed
+            >>  Prevent it from happening if the victim is a cat (as early as possible)
+            >>  Edge case: a cat tries to kill a cat THEN move to where that dead cat would be
+        >>  We need to track when a cat had made a kill -> variable
+            >>  Make sure it starts as none killed
+        >>  Anything else you can think of?
+    >>  Reproduction only Within a Species
+        >>  Separate the two species and have the reproduction process happen individually for each species
+        >>  Make sure cats only make cats and mice only make mice
+        >>  Much more: if you get here continue to think about what else needs to be done and try it
