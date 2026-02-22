@@ -89,7 +89,7 @@ January 30th 2026
 February 13th 2026
     >>  Species colouring
         >>  Go through the makeGeneticColor(...) and determine how this number is made, generate an example to show Michael
-        >>  Think about different ways that we might be able to make it so mice are one shade and cats are another
+        >>  Think about different ways that we might be able to make it so mice are one shade and cats are another (see ColorGenerationExample)
     >>  Turn on the kill neuron for cats
         >>  Turn it on for the entire code base
         >>  Hack that only cats can actually express the kill neuron in their NNs

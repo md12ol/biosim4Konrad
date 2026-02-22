@@ -1,0 +1,65 @@
+Length of genome: 24
+Type of source of front gene: 1
+Type of source of back gene: 1
+Gene sink type of front gene: 0
+Gene sink type at back gene: 1
+Gene source num of front gene: 52 = 001101000
+Gene sink num of front gene: 70 = 01000110
+Gene source num at back gene: 18 = 00010010
+
+
+makeGenericColor(const Genome &genome) generates color depending on size of genome, source type and num of
+first and last gene in the genome, sink type and num of the first gene in the genome and sink type of the
+last gene in the genome.
+
+  00011000
+& 00000001
+| (00000001 << 1)
+| (00000001 << 2)
+| (00000000 << 3)
+| (00000001 << 4)
+| ((00110100 & 1) << 5)
+| ((01000110 & 1) << 6)
+| ((00010010 & 1) << 7)
+
+=
+
+  00000000
+| 00000010
+| 00000100
+| 00000000
+| 00010000
+| 00000000
+| 00000000
+| 00000000
+
+=
+
+00010110 = 22 = indivColors[index]
+
+
+
+saveOneFrameImmed(const ImageFrameData &data) pushes a nem frame to .imageList. The Frame contains agents/indivs
+and optional barriers. Here the colors of the individuals in the frame are set.
+
+color[0] = 22
+color[1] = (00010110 & 00011111) << 3 = (00010110 << 3) = 10110000 = 176
+color[2] = (00010110 & 00000111) << 5 = (00000110 << 5) = 11000000 = 192
+
+rbgToLuma(22, 176, 192) = (r+r+r+b+g+g+g+g) / 8 = 126,25
+
+126,5 < 176, therefore no color correction, because the colors are not too bright to see them.
+
+
+A different approach to color the mice and cats is to convert a wavelength to an RGB-color.
+We could use e.g. for cats a range from 570nm to 697nm (yellow to red)
+and for mice a range from 430nm to 557nm (violet to green).
+In this approach there are 7 Bits (2^7 = 128) we can influence, depending on the genome.
+For cats, we would calculate the sum of (570nm + genomeInfluencedValue) and
+for mice the sum of (430nm + genomeInfluencedValue).
+The genomeInfluencedValue can take ints between the range 0...127.
+This approach would make sure, that we can distinguish between cats and mice in the avi-Files.
+
+
+
+
