@@ -90,6 +90,10 @@ std::array<float, Action::NUM_ACTIONS> Indiv::feedForward(unsigned simStep)
             neuronAccumulators[conn.sinkNum] += inputVal * conn.weightAsFloat();
         }
     }
+    if (this->species == "mouse") {
+        // Make sure, that actionLevels for the kill neurons of the mice are always -1.0;
+        actionLevels[Action::KILL_FORWARD] = -1.0;
+    }
 
     return actionLevels;
 }

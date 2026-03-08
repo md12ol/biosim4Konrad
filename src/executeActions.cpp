@@ -133,6 +133,9 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
         if (level > killThreshold && prob2bool((level - ACTION_MIN) / ACTION_RANGE)) {
             Coord otherLoc = indiv.loc + indiv.lastMoveDir;
             if (grid.isInBounds(otherLoc) && grid.isOccupiedAt(otherLoc)) {
+                if (indiv.species == "mouse") {
+                    std::cerr << "Mouse should not be able to kill other animals." << std::endl;
+                }
                 Indiv &indiv2 = peeps.getIndiv(otherLoc);
                 assert((indiv.loc - indiv2.loc).length() == 1);
                 peeps.queueForDeath(indiv2);
