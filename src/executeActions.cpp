@@ -137,6 +137,9 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
                     std::cerr << "Mouse should not be able to kill other animals." << std::endl;
                 }
                 Indiv &indiv2 = peeps.getIndiv(otherLoc);
+                if (indiv2.species == "cat") {
+                    std::cerr << "Cats cannot be killed in the simulation." << std::endl;
+                }
                 assert((indiv.loc - indiv2.loc).length() == 1);
                 peeps.queueForDeath(indiv2);
             }

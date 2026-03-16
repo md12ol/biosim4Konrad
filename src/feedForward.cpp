@@ -90,9 +90,13 @@ std::array<float, Action::NUM_ACTIONS> Indiv::feedForward(unsigned simStep)
             neuronAccumulators[conn.sinkNum] += inputVal * conn.weightAsFloat();
         }
     }
-    if (this->species == "mouse") {
-        // Make sure, that actionLevels for the kill neurons of the mice are always -1.0;
-        actionLevels[Action::KILL_FORWARD] = -1.0;
+    Coord otherLoc = this->loc + this->lastMoveDir;
+    if (grid.isInBounds(otherLoc) && grid.isOccupiedAt(otherLoc)) {
+        Indiv &indiv2 = peeps.getIndiv(otherLoc);
+        if (indiv2.species == "cat" || this->species == "mouse") {
+            // ActionLevels for the kill neurons of the mice are set to -1.0 and cats cannot be killed;
+            actionLevels[Action::KILL_FORWARD] = -1.0;
+        }
     }
 
     return actionLevels;
