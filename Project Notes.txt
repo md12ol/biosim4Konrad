@@ -87,21 +87,33 @@ January 30th 2026
         >>  Level 2: have the colour gradient be different for the two species
 
 February 13th 2026
-    >>  Species colouring
-        >>  Go through the makeGeneticColor(...) and determine how this number is made, generate an example to show Michael
-        >>  Think about different ways that we might be able to make it so mice are one shade and cats are another (see ColorGenerationExample)
+    >>  Species colouring [DONE]
+        >>  Go through the makeGeneticColor(...) and determine how this number is made, generate an example to show Michael [DONE]
+        >>  Think about different ways that we might be able to make it so mice are one shade and cats are another [DONE]
     >>  Turn on the kill neuron for cats
-        >>  Turn it on for the entire code base
-        >>  Hack that only cats can actually express the kill neuron in their NNs
-            >>  Do some print statements in the kill method that will print if a mouse tries to kill anything
-        >>  Hack that cats can only kill mice
-            >>  Determine how a kill is processed
-            >>  Prevent it from happening if the victim is a cat (as early as possible)
-            >>  Edge case: a cat tries to kill a cat THEN move to where that dead cat would be
-        >>  We need to track when a cat had made a kill -> variable
-            >>  Make sure it starts as none killed
+        >>  Turn it on for the entire code base [DONE]
+        >>  Hack that only cats can actually express the kill neuron in their NNs [DONE]
+            >>  Do some print statements in the kill method that will print if a mouse tries to kill anything [DONE]
+        >>  Hack that cats can only kill mice [DONE]
+            >>  Determine how a kill is processed [DONE]
+            >>  Prevent it from happening if the victim is a cat (as early as possible) [DONE]
+            >>  Edge case: a cat tries to kill a cat THEN move to where that dead cat would be [DONE]
+        >>  We need to track when a cat had made a kill -> variable [DONE]
+            >>  Make sure it starts as none killed [DONE]
         >>  Anything else you can think of?
     >>  Reproduction only Within a Species
         >>  Separate the two species and have the reproduction process happen individually for each species
         >>  Make sure cats only make cats and mice only make mice
         >>  Much more: if you get here continue to think about what else needs to be done and try it
+
+March 20th, 2026
+    >>  Implement the wavelength idea we discussed
+    >>  Double check that we separate the two species and have the reproduction process happen individually for each species
+    >>  Determine how the fitness of the individuals is calculated
+    >>  Add some addition output data for each gen (number of mice eaten, number of cats that ate mice, etc)
+    >>  Experiment with different ratios of mice:cats
+
+
+Future Ideas
+    >>  Give more reproductive rights to cats that killed more mice
+        >>  There is already a fitness-proportion selection mechanism, we may be able to edit this
