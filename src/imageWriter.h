@@ -21,7 +21,7 @@ struct ImageFrameData {
     unsigned simStep;
     unsigned generation;
     std::vector<Coord> indivLocs;
-    std::vector<uint8_t> indivColors;
+    std::vector<double> indivColors;
     std::vector<Coord> barrierLocs;
     typedef std::vector<std::vector<uint8_t>> SignalLayer;  // [x][y]
     std::vector<SignalLayer> signalLayers; // [layer][x][y]

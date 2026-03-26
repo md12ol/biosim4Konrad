@@ -52,11 +52,11 @@ rbgToLuma(22, 176, 192) = (r+r+r+b+g+g+g+g) / 8 = 126,25
 
 
 A different approach to color the mice and cats is to convert a wavelength to an RGB-color.
-We could use e.g. for cats a range from 570nm to 697nm (yellow to red)
-and for mice a range from 430nm to 557nm (violet to green).
-In this approach there are 7 Bits (2^7 = 128) we can influence, depending on the genome.
-For cats, we would calculate the sum of (570nm + genomeInfluencedValue) and
-for mice the sum of (430nm + genomeInfluencedValue).
+We could use e.g. for cats a range from 610nm to 773.5nm (green to red)
+and for mice a range from 400nm to 463.5nm (violet to blue).
+In this approach there are 7 Bits (2^7 = 128 divide them by 2) we can influence, depending on the genome.
+For cats, we would calculate the sum of (610nm + genomeInfluencedValue / 2) and
+for mice the sum of (400nm + genomeInfluencedValue / 2).
 The genomeInfluencedValue can take ints between the range 0...127.
 This approach would make sure, that we can distinguish between cats and mice in the avi-Files.
 

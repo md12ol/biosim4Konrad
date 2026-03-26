@@ -36,6 +36,7 @@ constexpr unsigned CHALLENGE_PAIRS = 15;
 constexpr unsigned CHALLENGE_LOCATION_SEQUENCE = 16;
 constexpr unsigned CHALLENGE_ALTRUISM = 17;
 constexpr unsigned CHALLENGE_ALTRUISM_SACRIFICE = 18;
+constexpr unsigned CHALLENGE_CATS = 19;
 
 extern ParamManager paramManager; // manages simulator params from the config file plus more
 extern const Params &p; // read-only simulator config params

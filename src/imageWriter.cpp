@@ -15,10 +15,85 @@
 
 namespace BS {
 
+struct Array3 {
+    double rgb[3];
+};
+
+
+/**
+ * Taken from Earl F. Glynn's web page:
+ * <a href="http://www.efg2.com/Lab/ScienceAndEngineering/Spectra.htm">Spectra Lab Report</a>
+ */
+Array3 waveLengthToRGB(double Wavelength) {
+    constexpr double Gamma = 0.80;
+    constexpr double IntensityMax = 255;
+    double factor;
+    double Red, Green, Blue;
+
+    if((Wavelength >= 380) && (Wavelength < 440)) {
+        Red = -(Wavelength - 440) / (440 - 380);
+        Green = 0.0;
+        Blue = 1.0;
+    } else if((Wavelength >= 440) && (Wavelength < 490)) {
+        Red = 0.0;
+        Green = (Wavelength - 440) / (490 - 440);
+        Blue = 1.0;
+    } else if((Wavelength >= 490) && (Wavelength < 510)) {
+        Red = 0.0;
+        Green = 1.0;
+        Blue = -(Wavelength - 510) / (510 - 490);
+    } else if((Wavelength >= 510) && (Wavelength < 580)) {
+        Red = (Wavelength - 510) / (580 - 510);
+        Green = 1.0;
+        Blue = 0.0;
+    } else if((Wavelength >= 580) && (Wavelength < 645)) {
+        Red = 1.0;
+        Green = -(Wavelength - 645) / (645 - 580);
+        Blue = 0.0;
+    } else if((Wavelength >= 645) && (Wavelength < 781)) {
+        Red = 1.0;
+        Green = 0.0;
+        Blue = 0.0;
+    } else {
+        Red = 0.0;
+        Green = 0.0;
+        Blue = 0.0;
+    }
+
+    // Let the intensity fall off near the vision limits
+
+    if((Wavelength >= 380) && (Wavelength < 420)) {
+        factor = 0.3 + 0.7 * (Wavelength - 380) / (420 - 380);
+    } else if((Wavelength >= 420) && (Wavelength < 701)) {
+        factor = 1.0;
+    } else if((Wavelength >= 701) && (Wavelength < 781)) {
+        factor = 0.3 + 0.7 * (780 - Wavelength) / (780 - 700);
+    } else {
+        factor = 0.0;
+    }
+
+
+    Array3 rgb;
+
+    // Don't want 0^x = 1 for x <> 0
+    rgb.rgb[0] = Red == 0.0 ? 0 : (int)std::round(IntensityMax * std::pow(Red * factor, Gamma));
+    rgb.rgb[1] = Green == 0.0 ? 0 : (int)std::round(IntensityMax * std::pow(Green * factor, Gamma));
+    rgb.rgb[2] = Blue == 0.0 ? 0 : (int)std::round(IntensityMax * std::pow(Blue * factor, Gamma));
+
+    if (rgb.rgb[0] <= 0 && rgb.rgb[1] <= 0 && rgb.rgb[2] <= 0) {
+        std::cerr << "RGB values must be positive(wavelengthToRGB)." << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+
+    return rgb;
+}
+
 cimg_library::CImgList<uint8_t> imageList;
 
 // Pushes a new image frame onto .imageList.
 //
+
+
 void saveOneFrameImmed(const ImageFrameData &data)
 {
     using namespace cimg_library;
@@ -47,22 +122,14 @@ void saveOneFrameImmed(const ImageFrameData &data)
 
     // Draw agents
 
-    constexpr uint8_t maxColorVal = 0xb0;
-    constexpr uint8_t maxLumaVal = 0xb0;
-
-    auto rgbToLuma = [](uint8_t r, uint8_t g, uint8_t b) { return (r+r+r+b+g+g+g+g) / 8; };
-
     for (size_t i = 0; i < data.indivLocs.size(); ++i) {
-        int c = data.indivColors[i];
-            color[0] = (c);                  // R: 0..255
-            color[1] = ((c & 0x1f) << 3);    // G: 0..255
-            color[2] = ((c & 7)    << 5);    // B: 0..255
-
-            // Prevent color mappings to very bright colors (hard to see):
-            if (rgbToLuma(color[0], color[1], color[2]) > maxLumaVal) {
-                if (color[0] > maxColorVal) color[0] %= maxColorVal;
-                if (color[1] > maxColorVal) color[1] %= maxColorVal;
-                if (color[2] > maxColorVal) color[2] %= maxColorVal;
+            Array3 colors = waveLengthToRGB(data.indivColors[i]);
+            color[0] = (uint8_t)colors.rgb[0];
+            color[1] = (uint8_t)colors.rgb[1];
+            color[2] = (uint8_t)colors.rgb[2];
+            if (color[0] == 0 && color[1] == 0 && color[2] == 0) {
+                std::cerr << "RGB values must be positive(saveOneFrameImmed)." << std::endl;
+                std::exit(EXIT_FAILURE);
             }
 
         image.draw_circle(
@@ -96,19 +163,31 @@ void ImageWriter::startNewGeneration()
 }
 
 
-uint8_t makeGeneticColor(const Genome &genome, const std::string &species)
+double makeGeneticColor(const Genome &genome, const std::string &species)
 {
-    return (species == "mouse" ? 50 : 100);
-    /*
-    return ((genome.size() & 1)
+    double val = ((genome.size() & 1)
          | ((genome.front().sourceType)    << 1)
          | ((genome.back().sourceType)     << 2)
          | ((genome.front().sinkType)      << 3)
          | ((genome.back().sinkType)       << 4)
          | ((genome.front().sourceNum & 1) << 5)
-         | ((genome.front().sinkNum & 1)   << 6)
-         | ((genome.back().sourceNum & 1)  << 7));
-         */
+         | ((genome.front().sinkNum & 1)   << 6));
+         //| ((genome.back().sourceNum & 1)  << 7));
+
+
+    if (species == "mouse") {
+        if (400 + val / 2 < 0) {
+            std::cerr << "Value should not be below 0(makeGeneticColor).";
+            std::exit(EXIT_FAILURE);
+        }
+        return 400 + val / 2;
+    } else {
+        if (610 + val / 2 < 0) {
+            std::cerr << "Value should not be below 0(makeGeneticColor).";
+            std::exit(EXIT_FAILURE);
+        }
+        return 610 + val / 2;
+    }
 }
 
 

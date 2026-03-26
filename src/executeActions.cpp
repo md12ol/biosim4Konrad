@@ -142,6 +142,7 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
                 }
                 assert((indiv.loc - indiv2.loc).length() == 1);
                 peeps.queueForDeath(indiv2);
+                indiv.mouseKilled = indiv.mouseKilled + 1;
             }
         }
     }

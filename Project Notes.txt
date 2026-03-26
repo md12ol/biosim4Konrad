@@ -77,6 +77,18 @@ Notes
             >>  OMP Implementation/Runtime uses schedule(auto) as hint, how to divide the iterations into contigous, non-empty subsets (chunks) and how to distribute the chunks to the threads
                 >> in case auto, the compiler and/or runtime system decides the distribution
 
+    >>  Fitness calculation of individuals
+        >>  the possible scores of individuals are in the range 0.0 to 1.0
+        >>  score calculation depends on the challenge
+        >>  calculation of score is done in survival-criteria.cpp
+        >>  if an individual does not survive their score will be set to 0.0
+        >>  for challenge "corner 1/4 radius weighted"
+            >>  survivors are those within a specified radius of any corner
+            >>  since the scores are weighted, they are not neccessarily 1.0 if an individual is within the radius
+            >>  since sizeX = 128 the radius in which the individuals need to be in order to survive is 128 / 4 = 32 around the corners
+            >>  the closer the individuals are to the corners the higher their score is
+
+
 Stuff we Don't Understand
 
 January 30th 2026
