@@ -119,11 +119,16 @@ February 13th 2026
         >>  Much more: if you get here continue to think about what else needs to be done and try it
 
 March 20th, 2026
-    >>  Implement the wavelength idea we discussed
-    >>  Double check that we separate the two species and have the reproduction process happen individually for each species
-    >>  Determine how the fitness of the individuals is calculated
-    >>  Add some addition output data for each gen (number of mice eaten, number of cats that ate mice, etc)
+    >>  Implement the wavelength idea we discussed [DONE]
+    >>  Double check that we separate the two species and have the reproduction process happen individually for each species [DONE]
+    >>  Determine how the fitness of the individuals is calculated [DONE]
+    >>  Add some addition output data for each gen (number of mice eaten, number of cats that ate mice, etc) [DONE]
     >>  Experiment with different ratios of mice:cats
+
+March 26th, 2026
+    >>  Distinguish between the Mice challenge and the Cat challenge
+    >>  Add a new mice challenge where the mice need to have visited a stationary food area
+    >>  General refactoring of parameters and the code
 
 
 Future Ideas
