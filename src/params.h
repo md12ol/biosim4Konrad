@@ -23,6 +23,7 @@ extern RunMode runMode;
 
 struct Params {
     unsigned population; // >= 0
+    double miceRatio; // 0.0..1.0
     unsigned stepsPerGeneration; // > 0
     unsigned maxGenerations; // >= 0
     unsigned numThreads; // > 0
@@ -52,7 +53,8 @@ struct Params {
     unsigned genomeComparisonMethod; // 0 = Jaro-Winkler; 1 = Hamming
     bool updateGraphLog;
     unsigned updateGraphLogStride; // > 0
-    unsigned challenge;
+    unsigned challengeMice;
+    unsigned challengeCats;
     unsigned barrierType; // >= 0
     bool deterministic;
     unsigned RNGSeed; // >= 0

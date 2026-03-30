@@ -24,7 +24,8 @@ void ParamManager::setDefaults()
 {
     privParams.sizeX = 128;
     privParams.sizeY = 128;
-    privParams.challenge = 6;
+    privParams.challengeMice = 20;
+    privParams.challengeCats = 19;
 
     privParams.genomeInitialLengthMin = 24;
     privParams.genomeInitialLengthMax = 24;
@@ -32,6 +33,7 @@ void ParamManager::setDefaults()
     privParams.logDir = "./logs/";
     privParams.imageDir = "./images/";
     privParams.population = 3000;
+    privParams.miceRatio = 0.5;
     privParams.stepsPerGeneration = 300;
     privParams.maxGenerations = 200000;
     privParams.barrierType = 0;
@@ -138,8 +140,11 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "sizey" && isUint && uVal >= 2 && uVal <= (uint16_t)-1) {
             privParams.sizeY = uVal; break;
         }
-        else if (name == "challenge" && isUint && uVal < (uint16_t)-1) {
-            privParams.challenge = uVal; break;
+        else if (name == "challengemice" && isUint && uVal < (uint16_t)-1) {
+            privParams.challengeMice = uVal; break;
+        }
+        else if (name == "challengecats" && isUint && uVal < (uint16_t)-1) {
+            privParams.challengeCats = uVal; break;
         }
         else if (name == "genomeinitiallengthmin" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.genomeInitialLengthMin = uVal; break;
@@ -155,6 +160,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "population" && isUint && uVal > 0 && uVal < (uint32_t)-1) {
             privParams.population = uVal; break;
+        }
+        else if (name == "miceratio" && isFloat && dVal >= 0.0 && dVal <= 1.0) {
+            privParams.miceRatio = dVal; break;
         }
         else if (name == "stepspergeneration" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.stepsPerGeneration = uVal; break;

@@ -27,7 +27,7 @@ void initializeGeneration0()
     // Spawn the population. The peeps container has already been allocated,
     // just clear and reuse it
     for (uint16_t index = 1; index <= p.population; ++index) {
-        if (index <= p.population - 1500) {
+        if (index <= p.population * p.miceRatio) {
             peeps[index].initialize(index, grid.findEmptyLocation(), makeRandomGenome(), "mouse");
         } else {
             peeps[index].initialize(index, grid.findEmptyLocation(), makeRandomGenome(), "cat");
@@ -53,7 +53,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
 
     // Spawn the population. This overwrites all the elements of peeps[]
     for (uint16_t index = 1; index <= p.population; ++index) {
-        if (index <= p.population - 1500) {
+        if (index <= p.population * p.miceRatio) {
             peeps[index].initialize(index, grid.findEmptyLocation(), generateChildGenome(parentGenomesMice), "mouse");
         } else {
             peeps[index].initialize(index, grid.findEmptyLocation(), generateChildGenome(parentGenomesCats), "cat");
@@ -91,7 +91,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::vector<Genome> parentGenomesMice;
     std::vector<Genome> parentGenomesCats;
 
-    if (p.challenge != CHALLENGE_ALTRUISM) {
+    if (p.challengeMice != CHALLENGE_ALTRUISM && p.challengeCats != CHALLENGE_ALTRUISM) {
         // First, make a list of all the individuals who will become parents; save
         // their scores for later sorting. Indexes start at 1.
         for (uint16_t index = 1; index <= p.population; ++index) {
@@ -101,12 +101,12 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
             // possibly do a move here instead of copy, although it's doubtful that
             // the optimization would be noticeable.
             if (peeps[index].species == "mouse") {
-                std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challenge);
+                std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeMice);
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
                     parentsMice.push_back( { index, passed.second } ); // passed.second = score
                 }
             } else if (peeps[index].species == "cat") {
-                std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], 19);
+                std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeCats);
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
                     numberOfMiceEaten = numberOfMiceEaten + peeps[index].mouseKilled;
                     successfullCats = successfullCats + 1;

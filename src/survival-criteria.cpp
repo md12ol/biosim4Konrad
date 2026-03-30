@@ -348,6 +348,14 @@ std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned chal
             }
         }
 
+    // Survivors are the mice which have passed through a food area.
+    case CHALLENGE_MICE:
+            if (indiv.challengeBits != 0) {
+                return { true, 1.0 };
+            } else {
+                return { false, 0.0 };
+            }
+
     default:
         assert(false);
     }

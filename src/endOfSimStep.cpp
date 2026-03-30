@@ -23,7 +23,7 @@ mode to take care of several things:
 
 void endOfSimStep(unsigned simStep, unsigned generation)
 {
-    if (p.challenge == CHALLENGE_RADIOACTIVE_WALLS) {
+    if (p.challengeMice == CHALLENGE_RADIOACTIVE_WALLS) {
         // During the first half of the generation, the west wall is radioactive,
         // where X == 0. In the last half of the generation, the east wall is
         // radioactive, where X = the area width - 1. There's an exponential
@@ -36,7 +36,7 @@ void endOfSimStep(unsigned simStep, unsigned generation)
                 int16_t distanceFromRadioactiveWall = std::abs(indiv.loc.x - radioactiveX);
                 if (distanceFromRadioactiveWall < p.sizeX / 2) {
                     float chanceOfDeath = 1.0 / distanceFromRadioactiveWall;
-                    if (randomUint() / (float)RANDOM_UINT_MAX < chanceOfDeath) {
+                    if (randomUint() / (float)RANDOM_UINT_MAX < chanceOfDeath && indiv.species == "mouse") {
                         peeps.queueForDeath(indiv);
                     }
                 }
@@ -46,11 +46,11 @@ void endOfSimStep(unsigned simStep, unsigned generation)
 
     // If the individual is touching any wall, we set its challengeFlag to true.
     // At the end of the generation, all those with the flag true will reproduce.
-    if (p.challenge == CHALLENGE_TOUCH_ANY_WALL) {
+    if (p.challengeMice == CHALLENGE_TOUCH_ANY_WALL) {
         for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
             Indiv &indiv = peeps[index];
-            if (indiv.loc.x == 0 || indiv.loc.x == p.sizeX - 1
-             || indiv.loc.y == 0 || indiv.loc.y == p.sizeY - 1) {
+            if ((indiv.loc.x == 0 || indiv.loc.x == p.sizeX - 1
+             || indiv.loc.y == 0 || indiv.loc.y == p.sizeY - 1) && indiv.species == "mouse") {
                 indiv.challengeBits = true;
             }
         }
@@ -59,18 +59,35 @@ void endOfSimStep(unsigned simStep, unsigned generation)
     // If this challenge is enabled, the individual gets a bit set in their challengeBits
     // member if they are within a specified radius of a barrier center. They have to
     // visit the barriers in sequential order.
-    if (p.challenge == CHALLENGE_LOCATION_SEQUENCE) {
+    if (p.challengeMice == CHALLENGE_LOCATION_SEQUENCE) {
         float radius = 9.0;
         for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
             Indiv &indiv = peeps[index];
             for (unsigned n = 0; n < grid.getBarrierCenters().size(); ++n) {
                 unsigned bit = 1 << n;
                 if ((indiv.challengeBits & bit) == 0) {
-                    if ((indiv.loc - grid.getBarrierCenters()[n]).length() <= radius) {
+                    if (((indiv.loc - grid.getBarrierCenters()[n]).length() <= radius)
+                        && indiv.species == "mouse") {
                         indiv.challengeBits |= bit;
                     }
                     break;
                 }
+            }
+        }
+    }
+
+    // If the individual has moved into a food area, we set its challengeFlag to true.
+    // The food are is the same center used for the center (un)weighted challenge.
+    if (p.challengeMice == CHALLENGE_MICE) {
+        Coord safeCenter {(int16_t)(p.sizeX / 2.0), (int16_t)(p.sizeY / 2.0)};
+        float radius = p.sizeX / 3.0;
+
+        for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
+            Indiv &indiv = peeps[index];
+            Coord offset = safeCenter - indiv.loc;
+            float distance = offset.length();
+            if (distance <= radius && indiv.species == "mouse") {
+                indiv.challengeBits = true;
             }
         }
     }
