@@ -45,12 +45,13 @@ Notes
         >>  Non-movement neurons normalize this value to [0,1]
         >>  Movement neurons combine their values into two numbers moveX and moveY -> tanh function -> [-1,1] for both -> prob and direction -> possible movement
         >>  MOVE_X and MOVE_Y are used to accumulate the values of the movement neurons
-        >>  MOVE_EAST, MOVE_WEST, MOVE_NORTH and MOVE_SOUTH can also have negative urges meaning they corresponded to their oppositite (e.g. negative MOVE_WEST is similar to positive MOVE_EAST)
+        >>  MOVE_EAST, MOVE_WEST, MOVE_NORTH and MOVE_SOUTH can also have negative urges meaning they corresponded to their opposite (e.g. negative MOVE_WEST is similar to positive MOVE_EAST)
         >>  MOVE_FORWARD and MOVE_REVERSE depend on the last movement and can also have negative values (e.g. negative MOVE_REVERSE is similar to positive MOVE_FORWARD)
         >>  MOVE_LEFT and MOVE_RIGHT rotate the coordinates depending on the last movement (e.g. x = 1.0, y = 1.0 -> x = -1.0 and y = 1.0 if actionLevel is 1.0)
             >>  they also are similar to their opposite, if the actionLevel is negative
             >>  the normalised coordinates get multiplied with the actionLevel in arbitrarily range
         >>  MOVE_RL seems to work exactly like MOVE_RIGHT
+    >>  The video talks about blockages, but the code uses barriers. For sensors, barriers and boundaries are mutually exclusive (i.e., a boundry isn't a barrier and a barrier isn't a boundry)
 
     >>  Most of the actions modify the environment (W) (e.g., moving an agent to a new position or killing another agent) but a few modify internal variables of the individuals (I) (e.g., set_responsiveness and set_longprobe_dist).
     >>  Multiple Actions can be triggered for a single step
@@ -126,11 +127,23 @@ March 20th, 2026
     >>  Experiment with different ratios of mice:cats
 
 March 26th, 2026
-    >>  Distinguish between the Mice challenge and the Cat challenge
-    >>  Add a new mice challenge where the mice need to have visited a stationary food area
+    >>  Distinguish between the Mice challenge and the Cat challenge [DONE]
+    >>  Add a new mice challenge where the mice need to have visited a stationary food area [DONE]
     >>  General refactoring of parameters and the code
 
+March 31st, 2026
+    >>  Right now multiple cats may trigger the death of a mouse and get credit for eating it. We only want one cat to get credit for each killed mouse
+    >>  Add in a visualization of the circle for the food area
+    >>  Run one of the simulations for a long time (100 000 Generations, 90:10 Mice:Cats, 3000 Population)
+        >>  Rename the folder with the parameters used and what's been done
+    >>  Add in hiding places that Mice can access but Cats cannot (visible)
+        >>  Cats need to think of this as a barrier, but Mice don't
+        >>  Cats shouldn't be able to spawn in these areas
+        >>  Cats shouldn't be able to eat Mice in these areas
+    >>  Add in a sensor to sense these new places
+        >>  Modify the barrier detection neuron for Mice so that they don't view this as a barries
 
 Future Ideas
+    >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
     >>  Give more reproductive rights to cats that killed more mice
         >>  There is already a fitness-proportion selection mechanism, we may be able to edit this
