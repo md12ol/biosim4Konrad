@@ -17,6 +17,7 @@ struct Indiv {
     bool alive;
     std::string species; // can either be "mouse" or "cat"
     unsigned mouseKilled; // 0 at spawning a new generation
+    bool eatenByCat; // true if cat attempts to eat the indiv
     uint16_t index; // index into peeps[] container
     Coord loc;   // refers to a location in grid[][]
     Coord birthLoc;
