@@ -37,6 +37,7 @@ void ParamManager::setDefaults()
     privParams.stepsPerGeneration = 300;
     privParams.maxGenerations = 200000;
     privParams.barrierType = 0;
+    privParams.safeAreaType = 0;
     privParams.numThreads = 4;
     privParams.signalLayers = 1;
     privParams.maxNumberNeurons = 5;
@@ -172,6 +173,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "barriertype" && isUint && uVal < (uint32_t)-1) {
             privParams.barrierType = uVal; break;
+        }
+        else if (name == "safeareatype" && isUint && uVal < (uint32_t)-1) {
+            privParams.safeAreaType = uVal; break;
         }
         else if (name == "numthreads" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.numThreads = uVal; break;

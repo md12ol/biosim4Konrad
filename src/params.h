@@ -56,6 +56,7 @@ struct Params {
     unsigned challengeMice;
     unsigned challengeCats;
     unsigned barrierType; // >= 0
+    unsigned safeAreaType; // >= 0
     bool deterministic;
     unsigned RNGSeed; // >= 0
 

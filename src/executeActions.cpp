@@ -242,7 +242,7 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
 
     // Move there if it's a valid location
     Coord newLoc = indiv.loc + movementOffset;
-    if (grid.isInBounds(newLoc) && grid.isEmptyAt(newLoc)) {
+    if (grid.isInBounds(newLoc) && (grid.isEmptyAt(newLoc) || (grid.isSafeAreaAt(newLoc) && indiv.species == "mouse"))) {
         peeps.queueForMove(indiv, newLoc);
     }
 }

@@ -120,6 +120,33 @@ void saveOneFrameImmed(const ImageFrameData &data)
                 1.0);  // alpha
     }
 
+    // Draw safeAreaLocations
+
+    color[0] = 0;
+    color[1] = 255;
+    color[2] = 0;
+    for (Coord loc : data.safeAreaLocs) {
+            image.draw_rectangle(
+                loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
+                (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
+                color,
+                1.0);  // alpha
+    }
+
+    // Draw food locations
+
+    /*
+    color[0] = 255;
+    color[1] = 255;
+    color[2] = 0;
+    image.draw_circle(
+            (p.sizeX * p.displayScale) / 2.0,
+            (p.sizeY * p.displayScale) / 2.0,
+            (p.sizeX * p.displayScale) / 3.0,
+            color,
+            1.0
+        );
+    */
     // Draw agents
 
     for (size_t i = 0; i < data.indivLocs.size(); ++i) {
@@ -217,6 +244,7 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
         data.indivLocs.clear();
         data.indivColors.clear();
         data.barrierLocs.clear();
+        data.safeAreaLocs.clear();
         data.signalLayers.clear();
         //todo!!!
         for (uint16_t index = 1; index <= p.population; ++index) {
@@ -230,6 +258,11 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
         auto const &barrierLocs = grid.getBarrierLocations();
         for (Coord loc : barrierLocs) {
             data.barrierLocs.push_back(loc);
+        }
+
+        auto const &safeAreaLocs = grid.getSafeAreaLocations();
+        for (Coord loc : safeAreaLocs) {
+            data.safeAreaLocs.push_back(loc);
         }
 
         // tell thread there's a job to do
@@ -258,6 +291,7 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     data.indivLocs.clear();
     data.indivColors.clear();
     data.barrierLocs.clear();
+    data.safeAreaLocs.clear();
     data.signalLayers.clear();
     //todo!!!
     for (uint16_t index = 1; index <= p.population; ++index) {
@@ -271,6 +305,11 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     auto const &barrierLocs = grid.getBarrierLocations();
     for (Coord loc : barrierLocs) {
         data.barrierLocs.push_back(loc);
+    }
+
+    auto const &safeAreaLocs = grid.getSafeAreaLocations();
+    for (Coord loc : safeAreaLocs) {
+        data.safeAreaLocs.push_back(loc);
     }
 
     saveOneFrameImmed(data);
