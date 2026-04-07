@@ -20,6 +20,7 @@ namespace BS {
 
 const uint16_t EMPTY = 0; // Index value 0 is reserved
 const uint16_t BARRIER = 0xffff;
+const uint16_t SAFEAREA = 0xfffe;
 
 class Grid {
 public:
@@ -42,8 +43,9 @@ public:
     bool isInBounds(Coord loc) const { return loc.x >= 0 && loc.x < sizeX() && loc.y >= 0 && loc.y < sizeY(); }
     bool isEmptyAt(Coord loc) const { return at(loc) == EMPTY; }
     bool isBarrierAt(Coord loc) const { return at(loc) == BARRIER; }
+    bool isSafeAreaAt(Coord loc) const { return at(loc) == SAFEAREA; }
     // Occupied means an agent is living there.
-    bool isOccupiedAt(Coord loc) const { return at(loc) != EMPTY && at(loc) != BARRIER; }
+    bool isOccupiedAt(Coord loc) const { return at(loc) != EMPTY && at(loc) != BARRIER && at(loc) != SAFEAREA; }
     bool isBorder(Coord loc) const { return loc.x == 0 || loc.x == sizeX() - 1 || loc.y == 0 || loc.y == sizeY() - 1; }
     uint16_t at(Coord loc) const { return data[loc.x][loc.y]; }
     uint16_t at(uint16_t x, uint16_t y) const { return data[x][y]; }
@@ -52,8 +54,11 @@ public:
     void set(uint16_t x, uint16_t y, uint16_t val) { data[x][y] = val; }
     Coord findEmptyLocation() const;
     void createBarrier(unsigned barrierType);
+    void createSafeArea(unsigned safeAreaType);
     const std::vector<Coord> &getBarrierLocations() const { return barrierLocations; }
     const std::vector<Coord> &getBarrierCenters() const { return barrierCenters; }
+    const std::vector<Coord> &getSafeAreaLocations() const { return safeAreaLocations; }
+    const std::vector<Coord> &getSafeAreaCenters() const { return safeAreaCenters; }
     // Direct access:
     Column & operator[](uint16_t columnXNum) { return data[columnXNum]; }
     const Column & operator[](uint16_t columnXNum) const { return data[columnXNum]; }
@@ -61,6 +66,8 @@ private:
     std::vector<Column> data;
     std::vector<Coord> barrierLocations;
     std::vector<Coord> barrierCenters;
+    std::vector<Coord> safeAreaLocations;
+    std::vector<Coord> safeAreaCenters;
 };
 
 extern void visitNeighborhood(Coord loc, float radius, std::function<void(Coord)> f);

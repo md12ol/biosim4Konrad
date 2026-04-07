@@ -14,6 +14,7 @@ void Indiv::initialize(uint16_t index_, Coord loc_, Genome &&genome_, std::strin
 {
     species = species_;
     mouseKilled = 0;
+    eatenByCat = false;
     index = index_;
     loc = loc_;
     //birthLoc = loc_;
