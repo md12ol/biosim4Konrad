@@ -132,16 +132,21 @@ March 26th, 2026
     >>  General refactoring of parameters and the code
 
 March 31st, 2026
-    >>  Right now multiple cats may trigger the death of a mouse and get credit for eating it. We only want one cat to get credit for each killed mouse
-    >>  Add in a visualization of the circle for the food area
-    >>  Run one of the simulations for a long time (100 000 Generations, 90:10 Mice:Cats, 3000 Population)
-        >>  Rename the folder with the parameters used and what's been done
-    >>  Add in hiding places that Mice can access but Cats cannot (visible)
-        >>  Cats need to think of this as a barrier, but Mice don't
-        >>  Cats shouldn't be able to spawn in these areas
-        >>  Cats shouldn't be able to eat Mice in these areas
+    >>  Right now multiple cats may trigger the death of a mouse and get credit for eating it. We only want one cat to get credit for each killed mouse [DONE]
+    >>  Add in a visualization of the circle for the food area [DONE]
+    >>  Run one of the simulations for a long time (100 000 Generations, 90:10 Mice:Cats, 3000 Population) [DONE, look at this more next week]
+        >>  Rename the folder with the parameters used and what's been done [DONE]
+    >>  Add in hiding places that Mice can access but Cats cannot (visible) [DONE]
+        >>  Cats need to think of this as a barrier, but Mice don't [DONE]
+        >>  Cats shouldn't be able to spawn in these areas [DONE]
+        >>  Cats shouldn't be able to eat Mice in these areas [DONE]
+        >>  Mice can spawn in these areas
+
+April 7th, 2026
+    >>  Add in some toggle options in the parameters file for safe areas and food locations
     >>  Add in a sensor to sense these new places
         >>  Modify the barrier detection neuron for Mice so that they don't view this as a barries
+    >>  Add in a sensor for cats to see mice and mice to see cats
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
