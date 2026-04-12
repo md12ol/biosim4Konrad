@@ -27,6 +27,7 @@ void ParamManager::setDefaults()
     privParams.challengeMice = 20;
     privParams.challengeCats = 19;
 
+    privParams.displayFoodLocations = true;
     privParams.genomeInitialLengthMin = 24;
     privParams.genomeInitialLengthMax = 24;
     privParams.genomeMaxLength = 300;
@@ -38,6 +39,7 @@ void ParamManager::setDefaults()
     privParams.maxGenerations = 200000;
     privParams.barrierType = 0;
     privParams.safeAreaType = 0;
+    privParams.displaySafeAreas = true;
     privParams.numThreads = 4;
     privParams.signalLayers = 1;
     privParams.maxNumberNeurons = 5;
@@ -147,6 +149,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "challengecats" && isUint && uVal < (uint16_t)-1) {
             privParams.challengeCats = uVal; break;
         }
+        else if (name == "displayfoodlocations" && isBool) {
+            privParams.displayFoodLocations = bVal; break;
+        }
         else if (name == "genomeinitiallengthmin" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.genomeInitialLengthMin = uVal; break;
         }
@@ -176,6 +181,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "safeareatype" && isUint && uVal < (uint32_t)-1) {
             privParams.safeAreaType = uVal; break;
+        }
+        else if (name == "displaysafeareas" && isBool) {
+            privParams.displaySafeAreas = bVal; break;
         }
         else if (name == "numthreads" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.numThreads = uVal; break;

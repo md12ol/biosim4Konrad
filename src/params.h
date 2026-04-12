@@ -55,8 +55,10 @@ struct Params {
     unsigned updateGraphLogStride; // > 0
     unsigned challengeMice;
     unsigned challengeCats;
+    bool displayFoodLocations;
     unsigned barrierType; // >= 0
     unsigned safeAreaType; // >= 0
+    bool displaySafeAreas;
     bool deterministic;
     unsigned RNGSeed; // >= 0
 

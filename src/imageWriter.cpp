@@ -109,6 +109,21 @@ void saveOneFrameImmed(const ImageFrameData &data)
                   << '-' << std::setfill('0') << std::setw(6) << data.simStep
                   << ".png";
 
+    // Draw food locations
+
+    if (p.displayFoodLocations == true) {
+        color[0] = 255;
+        color[1] = 255;
+        color[2] = 0;
+        image.draw_circle(
+                (p.sizeX * p.displayScale) / 2.0,
+                (p.sizeY * p.displayScale) / 2.0,
+                (p.sizeX * p.displayScale) / 3.0,
+                color,
+                1.0
+            );
+    }
+
     // Draw barrier locations
 
     color[0] = color[1] = color[2] = 0x88;
@@ -122,31 +137,19 @@ void saveOneFrameImmed(const ImageFrameData &data)
 
     // Draw safeAreaLocations
 
-    color[0] = 0;
-    color[1] = 255;
-    color[2] = 0;
-    for (Coord loc : data.safeAreaLocs) {
+    if (p.displaySafeAreas == true) {
+        color[0] = 0;
+        color[1] = 255;
+        color[2] = 0;
+        for (Coord loc : data.safeAreaLocs) {
             image.draw_rectangle(
                 loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
                 (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
                 color,
                 1.0);  // alpha
+        }
     }
 
-    // Draw food locations
-
-    /*
-    color[0] = 255;
-    color[1] = 255;
-    color[2] = 0;
-    image.draw_circle(
-            (p.sizeX * p.displayScale) / 2.0,
-            (p.sizeY * p.displayScale) / 2.0,
-            (p.sizeX * p.displayScale) / 3.0,
-            color,
-            1.0
-        );
-    */
     // Draw agents
 
     for (size_t i = 0; i < data.indivLocs.size(); ++i) {
