@@ -44,6 +44,7 @@ enum Sensor {
     LAST_MOVE_DIR_Y,   // I +- amount of Y movement in last movement
     LONGPROBE_POP_FWD, // W long look for population forward
     LONGPROBE_BAR_FWD, // W long look for barriers forward
+    LONGPROBE_SAF_FWD, // W long look for safe areas forward
     POPULATION,        // W population density in neighborhood
     POPULATION_FWD,    // W population density in the forward-reverse axis
     POPULATION_LR,     // W population density in the left-right axis
@@ -51,6 +52,8 @@ enum Sensor {
     AGE,               // I
     BARRIER_FWD,       // W neighborhood barrier distance forward-reverse axis
     BARRIER_LR,        // W neighborhood barrier distance left-right axis
+    SAFEAREA_FWD,      // W neighborhood safe area distance forward-reverse axis
+    SAFEAREA_LR,       // W neighborhood safe area distance left-right axis
     RANDOM,            //   random sensor value, uniform distribution
     SIGNAL0,           // W strength of signal0 in neighborhood
     SIGNAL0_FWD,       // W strength of signal0 in the forward-reverse axis

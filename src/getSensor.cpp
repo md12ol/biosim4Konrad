@@ -85,6 +85,42 @@ float getShortProbeBarrierDistance(Coord loc0, Dir dir, unsigned probeDistance)
 }
 
 
+// Converts the number of locations (not including loc) to the next safe area location
+// along opposite directions of the specified axis to the sensor range. If no safe areas
+// are found, the result is sensor mid-range. Ignores agents in the path.
+float getShortProbeSafeAreaDistance(Coord loc0, Dir dir, unsigned probeDistance)
+{
+    unsigned countFwd = 0;
+    unsigned countRev = 0;
+    Coord loc = loc0 + dir;
+    unsigned numLocsToTest = probeDistance;
+    // Scan positive direction
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+        ++countFwd;
+        loc = loc + dir;
+        --numLocsToTest;
+    }
+    if (numLocsToTest > 0 && !grid.isInBounds(loc)) {
+        countFwd = probeDistance;
+    }
+    // Scan negative direction
+    numLocsToTest = probeDistance;
+    loc = loc0 - dir;
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+        ++countRev;
+        loc = loc - dir;
+        --numLocsToTest;
+    }
+    if (numLocsToTest > 0 && !grid.isInBounds(loc)) {
+        countRev = probeDistance;
+    }
+
+    float sensorVal = ((countFwd - countRev) + probeDistance); // convert to 0..2*probeDistance
+    sensorVal = (sensorVal / 2.0) / probeDistance; // convert to 0.0..1.0
+    return sensorVal;
+}
+
+
 float getSignalDensity(unsigned layerNum, Coord loc)
 {
     // returns magnitude of the specified signal layer in a neighborhood, with
@@ -193,6 +229,30 @@ unsigned longProbeBarrierFwd(Coord loc, Dir dir, unsigned longProbeDist)
 }
 
 
+// Returns the number of locations to the next safe area in the
+// specified direction, not including loc. Ignores agents in the way.
+// If the distance to the border is less than the longProbeDist distance
+// and no barriers are found, returns longProbeDist.
+// Returns 0..longProbeDist.
+unsigned longProbeSafeAreaFwd(Coord loc, Dir dir, unsigned longProbeDist)
+{
+    assert(longProbeDist > 0);
+    unsigned count = 0;
+    loc = loc + dir;
+    unsigned numLocsToTest = longProbeDist;
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+        ++count;
+        loc = loc + dir;
+        --numLocsToTest;
+    }
+    if (numLocsToTest > 0 && !grid.isInBounds(loc)) {
+        return longProbeDist;
+    } else {
+        return count;
+    }
+}
+
+
 // Returned sensor values range SENSOR_MIN..SENSOR_MAX
 float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
 {
@@ -286,6 +346,13 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         sensorVal = longProbeBarrierFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
         break;
     }
+    case Sensor::LONGPROBE_SAF_FWD:
+    {
+        // Measures the distance to the nearest safe area in the forward
+        // direction. If non found, returns the maximum sensor value.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = longProbeSafeAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+    }
     case Sensor::POPULATION:
     {
         // Returns population density in neighborhood converted linearly from
@@ -323,6 +390,16 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         // Sense the nearest barrier along axis perpendicular to last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getShortProbeBarrierDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
+        break;
+    case Sensor::SAFEAREA_FWD:
+        // Sense the nearest barrier along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = getShortProbeSafeAreaDistance(loc, lastMoveDir, p.shortProbeBarrierDistance);
+        break;
+    case Sensor::SAFEAREA_LR:
+        // Sense the nearest barrier along axis perpendicular to last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = getShortProbeSafeAreaDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
         break;
     case Sensor::RANDOM:
         // Returns a random sensor value in the range 0.0..1.0.
