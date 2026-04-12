@@ -83,8 +83,7 @@ void Peeps::drainMoveQueue()
             if (grid.isEmptyAt(newLoc) || (indiv.species == "mouse" && grid.isSafeAreaAt(newLoc))) {
                 auto const &safeAreaLocs = grid.getSafeAreaLocations();
                 for (Coord loc : safeAreaLocs) {
-                    // ToDo: test if locations can be compared in this way
-                    if (loc.x == indiv.loc.x && loc.y == indiv.loc.y) {
+                    if (loc == indiv.loc) {
                         // Only mice can stand on safeAreas
                         assert(indiv.species == "mouse");
                         grid.set(indiv.loc, SAFEAREA);
@@ -94,7 +93,7 @@ void Peeps::drainMoveQueue()
                         break;
                     }
                 }
-                if (indiv.loc.x != newLoc.x || indiv.loc.y != newLoc.y) {
+                if (indiv.loc != newLoc) {
                     grid.set(indiv.loc, 0);
                     grid.set(newLoc, indiv.index);
                     indiv.loc = newLoc;

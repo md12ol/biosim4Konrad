@@ -145,7 +145,7 @@ March 31st, 2026
 April 7th, 2026
     >>  Add in some toggle options in the parameters file for safe areas and food locations
     >>  Add in a sensor to sense these new places
-        >>  Modify the barrier detection neuron for Mice so that they don't view this as a barries
+        >>  Modify the barrier detection neuron for Mice so that they don't view this as a barrier
     >>  Add in a sensor for cats to see mice and mice to see cats
 
 Future Ideas

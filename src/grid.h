@@ -52,7 +52,7 @@ public:
 
     void set(Coord loc, uint16_t val) { data[loc.x][loc.y] = val; }
     void set(uint16_t x, uint16_t y, uint16_t val) { data[x][y] = val; }
-    Coord findEmptyLocation() const;
+    Coord findValidLocation(bool isMouse) const;
     void createBarrier(unsigned barrierType);
     void createSafeArea(unsigned safeAreaType);
     const std::vector<Coord> &getBarrierLocations() const { return barrierLocations; }

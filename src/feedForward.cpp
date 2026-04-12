@@ -93,6 +93,14 @@ std::array<float, Action::NUM_ACTIONS> Indiv::feedForward(unsigned simStep)
     Coord otherLoc = this->loc + this->lastMoveDir;
     if (grid.isInBounds(otherLoc) && grid.isOccupiedAt(otherLoc)) {
         Indiv &indiv2 = peeps.getIndiv(otherLoc);
+        auto const &safeAreaLocations = grid.getSafeAreaLocations();
+        for (Coord loc : safeAreaLocations) {
+            // Indiv is within safe area
+            if (indiv2.loc == loc) {
+                actionLevels[Action::KILL_FORWARD] = -1.0;
+                return actionLevels;
+            }
+        }
         if (indiv2.species == "cat" || this->species == "mouse") {
             // ActionLevels for the kill neurons of the mice are set to -1.0 and cats cannot be killed;
             actionLevels[Action::KILL_FORWARD] = -1.0;

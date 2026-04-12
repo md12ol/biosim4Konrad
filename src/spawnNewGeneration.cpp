@@ -29,9 +29,9 @@ void initializeGeneration0()
     // just clear and reuse it
     for (uint16_t index = 1; index <= p.population; ++index) {
         if (index <= p.population * p.miceRatio) {
-            peeps[index].initialize(index, grid.findEmptyLocation(), makeRandomGenome(), "mouse");
+            peeps[index].initialize(index, grid.findValidLocation(true), makeRandomGenome(), "mouse");
         } else {
-            peeps[index].initialize(index, grid.findEmptyLocation(), makeRandomGenome(), "cat");
+            peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
         }
     }
 }
@@ -56,9 +56,9 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     // Spawn the population. This overwrites all the elements of peeps[]
     for (uint16_t index = 1; index <= p.population; ++index) {
         if (index <= p.population * p.miceRatio) {
-            peeps[index].initialize(index, grid.findEmptyLocation(), generateChildGenome(parentGenomesMice), "mouse");
+            peeps[index].initialize(index, grid.findValidLocation(true), generateChildGenome(parentGenomesMice), "mouse");
         } else {
-            peeps[index].initialize(index, grid.findEmptyLocation(), generateChildGenome(parentGenomesCats), "cat");
+            peeps[index].initialize(index, grid.findValidLocation(false), generateChildGenome(parentGenomesCats), "cat");
         }
     }
 }

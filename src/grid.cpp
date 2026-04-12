@@ -14,14 +14,14 @@ void Grid::init(uint16_t sizeX, uint16_t sizeY)
 }
 
 
-// Finds a random unoccupied location in the grid
-Coord Grid::findEmptyLocation() const {
+// Finds a random unoccupied location (or in case of a mouse also alternatively a safe area) in the grid
+Coord Grid::findValidLocation(bool isMouse) const {
     Coord loc;
 
     while (true) {
         loc.x = randomUint(0, p.sizeX - 1);
         loc.y = randomUint(0, p.sizeY - 1);
-        if (grid.isEmptyAt(loc)) {
+        if (grid.isEmptyAt(loc) || (isMouse == true && grid.isSafeAreaAt(loc))) {
             break;
         }
     }
