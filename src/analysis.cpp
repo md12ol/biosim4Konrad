@@ -25,6 +25,8 @@ std::string sensorName(Sensor sensor)
     case LONGPROBE_POP_FWD: return "long probe population fwd"; break;
     case LONGPROBE_BAR_FWD: return "long probe barrier fwd"; break;
     case LONGPROBE_SAF_FWD: return "long probe safe area fwd"; break;
+    case LONGPROBE_MICE_FWD: return "long probe mice fwd"; break;
+    case LONGPROBE_CATS_FWD: return "long probe cats fwd"; break;
     case BARRIER_FWD: return "short probe barrier fwd-rev"; break;
     case BARRIER_LR: return "short probe barrier left-right"; break;
     case SAFEAREA_FWD: return "short probe safe area fwd-rev"; break;
@@ -85,6 +87,8 @@ std::string sensorShortName(Sensor sensor)
     case LONGPROBE_POP_FWD: return "LPf"; break;
     case LONGPROBE_BAR_FWD: return "LPb"; break;
     case LONGPROBE_SAF_FWD: return "LPs"; break;
+    case LONGPROBE_MICE_FWD: return "LPm"; break;
+    case LONGPROBE_CATS_FWD: return "LPc"; break;
     case BARRIER_FWD: return "Bfd"; break;
     case BARRIER_LR: return "Blr"; break;
     case SAFEAREA_FWD: return "SAfd"; break;

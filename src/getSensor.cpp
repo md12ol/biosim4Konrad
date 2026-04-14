@@ -205,6 +205,30 @@ unsigned longProbePopulationFwd(Coord loc, Dir dir, unsigned longProbeDist)
 }
 
 
+// Returns the number of locations to the next mouse or cat in the specified direction,
+// not including loc. If the probe encounters a boundary or a barrier
+// before reaching the longProbeDist distance, returns longProbeDist.
+// Returns 0..longProbeDist.
+unsigned longProbeSpecifiedPopulationFwd(Coord loc, Dir dir, unsigned longProbeDist, std::string species)
+{
+    assert(longProbeDist > 0);
+    unsigned count = 0;
+    loc = loc + dir;
+    unsigned numLocsToTest = longProbeDist;
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (grid.isEmptyAt(loc) ||
+        (grid.isOccupiedAt(loc) && peeps.getIndiv(loc).species != species))) {
+        ++count;
+        loc = loc + dir;
+        --numLocsToTest;
+    }
+    if (numLocsToTest > 0 && (!grid.isInBounds(loc) || grid.isBarrierAt(loc))) {
+        return longProbeDist;
+    } else {
+        return count;
+    }
+}
+
+
 // Returns the number of locations to the next barrier in the
 // specified direction, not including loc. Ignores agents in the way.
 // If the distance to the border is less than the longProbeDist distance
@@ -352,6 +376,25 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         // direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeSafeAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
+    }
+    case Sensor::LONGPROBE_MICE_FWD:
+    {
+        // Measures the distance to the nearest other mousein the
+        // fwd direction. If non found, returns the maximum sensor value.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "mouse") /
+            (float)longProbeDist; // 0..1
+        break;
+    }
+    case Sensor::LONGPROBE_CATS_FWD:
+    {
+        // Measures the distance to the nearest other mousein the
+        // fwd direction. If non found, returns the maximum sensor value.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "cat") /
+            (float)longProbeDist; // 0..1
+        break;
     }
     case Sensor::POPULATION:
     {

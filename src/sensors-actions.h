@@ -45,6 +45,8 @@ enum Sensor {
     LONGPROBE_POP_FWD, // W long look for population forward
     LONGPROBE_BAR_FWD, // W long look for barriers forward
     LONGPROBE_SAF_FWD, // W long look for safe areas forward
+    LONGPROBE_MICE_FWD,// W long look for mice forward
+    LONGPROBE_CATS_FWD,// W long look for cats forward
     POPULATION,        // W population density in neighborhood
     POPULATION_FWD,    // W population density in the forward-reverse axis
     POPULATION_LR,     // W population density in the left-right axis
