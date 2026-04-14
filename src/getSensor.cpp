@@ -415,6 +415,44 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         sensorVal = (float)countOccupied / countLocs;
         break;
     }
+    case Sensor::POPULATION_MICE:
+    {
+        // Returns population density of mice in neighborhood converted linearly from
+        // 0..100% to sensor range
+        unsigned countLocs = 0;
+        unsigned countOccupied = 0;
+        Coord center = loc;
+
+        auto f = [&](Coord tloc) {
+            ++countLocs;
+            if (grid.isOccupiedAt(tloc) && peeps.getIndiv(tloc).species == "mouse") {
+                ++countOccupied;
+            }
+        };
+
+        visitNeighborhood(center, p.populationSensorRadius, f);
+        sensorVal = (float)countOccupied / countLocs;
+        break;
+    }
+    case Sensor::POPULATION_CATS:
+    {
+        // Returns population density of cats in neighborhood converted linearly from
+        // 0..100% to sensor range
+        unsigned countLocs = 0;
+        unsigned countOccupied = 0;
+        Coord center = loc;
+
+        auto f = [&](Coord tloc) {
+            ++countLocs;
+            if (grid.isOccupiedAt(tloc) && peeps.getIndiv(tloc).species == "cat") {
+                ++countOccupied;
+            }
+        };
+
+        visitNeighborhood(center, p.populationSensorRadius, f);
+        sensorVal = (float)countOccupied / countLocs;
+        break;
+    }
     case Sensor::POPULATION_FWD:
         // Sense population density along axis of last movement direction, mapped
         // to sensor range 0.0..1.0

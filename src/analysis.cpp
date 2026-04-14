@@ -33,6 +33,8 @@ std::string sensorName(Sensor sensor)
     case SAFEAREA_LR: return "short probe safe area left-right"; break;
     case OSC1: return "osc1"; break;
     case POPULATION: return "population"; break;
+    case POPULATION_MICE: return "population mice"; break;
+    case POPULATION_CATS: return "population cats"; break;
     case POPULATION_FWD: return "population fwd"; break;
     case POPULATION_LR: return "population LR"; break;
     case RANDOM: return "random"; break;
@@ -95,6 +97,8 @@ std::string sensorShortName(Sensor sensor)
     case SAFEAREA_LR: return "SAlr"; break;
     case OSC1: return "Osc"; break;
     case POPULATION: return "Pop"; break;
+    case POPULATION_MICE: return "Popm"; break;
+    case POPULATION_CATS: return "Popc"; break;
     case POPULATION_FWD: return "Pfd"; break;
     case POPULATION_LR: return "Plr"; break;
     case RANDOM: return "Rnd"; break;

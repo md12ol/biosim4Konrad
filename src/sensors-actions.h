@@ -48,6 +48,8 @@ enum Sensor {
     LONGPROBE_MICE_FWD,// W long look for mice forward
     LONGPROBE_CATS_FWD,// W long look for cats forward
     POPULATION,        // W population density in neighborhood
+    POPULATION_MICE,   // W population density of mice in neighborhood
+    POPULATION_CATS,   // W population density of cats in neighborhood
     POPULATION_FWD,    // W population density in the forward-reverse axis
     POPULATION_LR,     // W population density in the left-right axis
     OSC1,              // I oscillator +-value
