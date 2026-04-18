@@ -60,6 +60,7 @@ struct Params {
     unsigned barrierType; // >= 0
     unsigned safeAreaType; // >= 0
     bool displaySafeAreas;
+    bool spawnMiceInSafeAreas;
     bool deterministic;
     unsigned RNGSeed; // >= 0
 

@@ -40,6 +40,7 @@ void ParamManager::setDefaults()
     privParams.barrierType = 0;
     privParams.safeAreaType = 0;
     privParams.displaySafeAreas = true;
+    privParams.spawnMiceInSafeAreas = true;
     privParams.numThreads = 4;
     privParams.signalLayers = 1;
     privParams.maxNumberNeurons = 5;
@@ -185,6 +186,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "displaysafeareas" && isBool) {
             privParams.displaySafeAreas = bVal; break;
+        }
+        else if (name == "spawnmiceinsafeareas" && isBool) {
+            privParams.spawnMiceInSafeAreas = bVal; break;
         }
         else if (name == "numthreads" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.numThreads = uVal; break;
