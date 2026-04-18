@@ -34,35 +34,39 @@ constexpr float ACTION_RANGE = ACTION_MAX - ACTION_MIN;
 // I means data about the individual, mainly stored in Indiv
 // W means data about the environment, mainly stored in Peeps or Grid
 enum Sensor {
-    LOC_X,             // I distance from left edge
-    LOC_Y,             // I distance from bottom
-    BOUNDARY_DIST_X,   // I X distance to nearest edge of world
-    BOUNDARY_DIST,     // I distance to nearest edge of world
-    BOUNDARY_DIST_Y,   // I Y distance to nearest edge of world
-    GENETIC_SIM_FWD,   // I genetic similarity forward
-    LAST_MOVE_DIR_X,   // I +- amount of X movement in last movement
-    LAST_MOVE_DIR_Y,   // I +- amount of Y movement in last movement
-    LONGPROBE_POP_FWD, // W long look for population forward
-    LONGPROBE_BAR_FWD, // W long look for barriers forward
-    LONGPROBE_SAF_FWD, // W long look for safe areas forward
-    LONGPROBE_MICE_FWD,// W long look for mice forward
-    LONGPROBE_CATS_FWD,// W long look for cats forward
-    POPULATION,        // W population density in neighborhood
-    POPULATION_MICE,   // W population density of mice in neighborhood
-    POPULATION_CATS,   // W population density of cats in neighborhood
-    POPULATION_FWD,    // W population density in the forward-reverse axis
-    POPULATION_LR,     // W population density in the left-right axis
-    OSC1,              // I oscillator +-value
-    AGE,               // I
-    BARRIER_FWD,       // W neighborhood barrier distance forward-reverse axis
-    BARRIER_LR,        // W neighborhood barrier distance left-right axis
-    SAFEAREA_FWD,      // W neighborhood safe area distance forward-reverse axis
-    SAFEAREA_LR,       // W neighborhood safe area distance left-right axis
-    RANDOM,            //   random sensor value, uniform distribution
-    SIGNAL0,           // W strength of signal0 in neighborhood
-    SIGNAL0_FWD,       // W strength of signal0 in the forward-reverse axis
-    SIGNAL0_LR,        // W strength of signal0 in the left-right axis
-    NUM_SENSES,        // <<------------------ END OF ACTIVE SENSES MARKER
+    LOC_X,                  // I distance from left edge
+    LOC_Y,                  // I distance from bottom
+    BOUNDARY_DIST_X,        // I X distance to nearest edge of world
+    BOUNDARY_DIST,          // I distance to nearest edge of world
+    BOUNDARY_DIST_Y,        // I Y distance to nearest edge of world
+    GENETIC_SIM_FWD,        // I genetic similarity forward
+    LAST_MOVE_DIR_X,        // I +- amount of X movement in last movement
+    LAST_MOVE_DIR_Y,        // I +- amount of Y movement in last movement
+    LONGPROBE_POP_FWD,      // W long look for population forward
+    LONGPROBE_BAR_FWD,      // W long look for barriers forward
+    LONGPROBE_SAF_FWD,      // W long look for safe areas forward
+    LONGPROBE_MICE_FWD,     // W long look for mice forward
+    LONGPROBE_CATS_FWD,     // W long look for cats forward
+    POPULATION,             // W population density in neighborhood
+    POPULATION_MICE,        // W population density of mice in neighborhood
+    POPULATION_CATS,        // W population density of cats in neighborhood
+    POPULATION_FWD,         // W population density in the forward-reverse axis
+    POPULATION_FWD_MICE,    // W population density of mice in the forward-reverse axis
+    POPULATION_FWD_CATS,    // W population density of cats in the forward-reverse axis
+    POPULATION_LR,          // W population density in the left-right axis
+    POPULATION_LR_MICE,     // W population density of mice in the left right axis
+    POPULATION_LR_CATS,     // W population density of cats in the left right axis
+    OSC1,                   // I oscillator +-value
+    AGE,                    // I
+    BARRIER_FWD,            // W neighborhood barrier distance forward-reverse axis
+    BARRIER_LR,             // W neighborhood barrier distance left-right axis
+    SAFEAREA_FWD,           // W neighborhood safe area distance forward-reverse axis
+    SAFEAREA_LR,            // W neighborhood safe area distance left-right axis
+    RANDOM,                 //   random sensor value, uniform distribution
+    SIGNAL0,                // W strength of signal0 in neighborhood
+    SIGNAL0_FWD,            // W strength of signal0 in the forward-reverse axis
+    SIGNAL0_LR,             // W strength of signal0 in the left-right axis
+    NUM_SENSES,             // <<------------------ END OF ACTIVE SENSES MARKER
 };
 
 

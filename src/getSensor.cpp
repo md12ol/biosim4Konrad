@@ -49,6 +49,48 @@ float getPopulationDensityAlongAxis(Coord loc, Dir dir)
 }
 
 
+float getSpecifiedPopulationDensityAlongAxis(Coord loc, Dir dir, std::string species)
+{
+    // Converts the mice or cats along the specified axis to the sensor range. The
+    // locations of neighbors are scaled by the inverse of their distance times
+    // the positive absolute cosine of the difference of their angle and the
+    // specified axis. The maximum positive or negative magnitude of the sum is
+    // about 2*radius. We don't adjust for being close to a border, so mice or cats
+    // along borders and in corners are commonly sparser than away from borders.
+    // An empty neighborhood results in a sensor value exactly midrange; below
+    // midrange if the density of mice or cats is greatest in the reverse direction,
+    // above midrange if density is greatest in forward direction.
+
+    assert(dir != Compass::CENTER);  // require a defined axis
+
+    double sum = 0.0;
+    Coord dirVec = dir.asNormalizedCoord();
+    double len = std::sqrt(dirVec.x * dirVec.x + dirVec.y * dirVec.y);
+    double dirVecX = dirVec.x / len;
+    double dirVecY = dirVec.y / len; // Unit vector components along dir
+
+    auto f = [&](Coord tloc) {
+        if (tloc != loc && grid.isOccupiedAt(tloc) && peeps.getIndiv(loc).species == species) {
+            Coord offset = tloc - loc;
+            double proj = dirVecX * offset.x + dirVecY * offset.y; // Magnitude of projection along dir
+            double contrib = proj / (offset.x * offset.x + offset.y * offset.y);
+            sum += contrib;
+        }
+    };
+
+    visitNeighborhood(loc, p.populationSensorRadius, f);
+
+    double maxSumMag = 6.0 * p.populationSensorRadius;
+    assert(sum >= -maxSumMag && sum <= maxSumMag);
+
+    double sensorVal;
+    sensorVal = sum / maxSumMag; // convert to -1.0..1.0
+    sensorVal = (sensorVal + 1.0) / 2.0; // convert to 0.0..1.0
+
+    return sensorVal;
+}
+
+
 // Converts the number of locations (not including loc) to the next barrier location
 // along opposite directions of the specified axis to the sensor range. If no barriers
 // are found, the result is sensor mid-range. Ignores agents in the path.
@@ -380,7 +422,7 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
     }
     case Sensor::LONGPROBE_MICE_FWD:
     {
-        // Measures the distance to the nearest other mousein the
+        // Measures the distance to the nearest other mouse in the
         // fwd direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "mouse") /
@@ -389,7 +431,7 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
     }
     case Sensor::LONGPROBE_CATS_FWD:
     {
-        // Measures the distance to the nearest other mousein the
+        // Measures the distance to the nearest other cat in the
         // fwd direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "cat") /
@@ -458,9 +500,27 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         // to sensor range 0.0..1.0
         sensorVal = getPopulationDensityAlongAxis(loc, lastMoveDir);
         break;
+    case Sensor::POPULATION_FWD_MICE:
+        // Sense population density of mice along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "mouse");
+        break;
+    case Sensor::POPULATION_FWD_CATS:
+        // Sense population density of cats along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "cat");
+        break;
     case Sensor::POPULATION_LR:
         // Sense population density along an axis 90 degrees from last movement direction
         sensorVal = getPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW());
+        break;
+    case Sensor::POPULATION_LR_MICE:
+        // Sense mice density along an axis 90 degrees from last movement direction
+        sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "mouse");
+        break;
+    case Sensor::POPULATION_LR_CATS:
+        // Sense cats density along an axis 90 degrees from last movement direction
+        sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "cat");
         break;
     case Sensor::BARRIER_FWD:
         // Sense the nearest barrier along axis of last movement direction, mapped

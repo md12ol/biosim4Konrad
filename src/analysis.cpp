@@ -36,7 +36,11 @@ std::string sensorName(Sensor sensor)
     case POPULATION_MICE: return "population mice"; break;
     case POPULATION_CATS: return "population cats"; break;
     case POPULATION_FWD: return "population fwd"; break;
+    case POPULATION_FWD_MICE: return "population fwd mice"; break;
+    case POPULATION_FWD_CATS: return "population fwd cats"; break;
     case POPULATION_LR: return "population LR"; break;
+    case POPULATION_LR_MICE: return "population LR mice"; break;
+    case POPULATION_LR_CATS: return "population LR cats"; break;
     case RANDOM: return "random"; break;
     case SIGNAL0: return "signal 0"; break;
     case SIGNAL0_FWD: return "signal 0 fwd"; break;
@@ -100,7 +104,11 @@ std::string sensorShortName(Sensor sensor)
     case POPULATION_MICE: return "Popm"; break;
     case POPULATION_CATS: return "Popc"; break;
     case POPULATION_FWD: return "Pfd"; break;
+    case POPULATION_FWD_MICE: return "Pfdm"; break;
+    case POPULATION_FWD_CATS: return "Pfdc"; break;
     case POPULATION_LR: return "Plr"; break;
+    case POPULATION_LR_MICE: return "Plrm"; break;
+    case POPULATION_LR_CATS: return "Plrc"; break;
     case RANDOM: return "Rnd"; break;
     case SIGNAL0: return "Sg"; break;
     case SIGNAL0_FWD: return "Sfd"; break;
