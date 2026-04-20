@@ -76,17 +76,11 @@ void endOfSimStep(unsigned simStep, unsigned generation)
         }
     }
 
-    // If the individual has moved into a food area, we set its challengeFlag to true.
-    // The food are is the same center used for the center (un)weighted challenge.
+    // If the individual has moved on a food tile, we set its challengeFlag to true.
     if (p.challengeMice == CHALLENGE_MICE) {
-        Coord safeCenter {(int16_t)(p.sizeX / 2.0), (int16_t)(p.sizeY / 2.0)};
-        float radius = p.sizeX / 3.0;
-
         for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
             Indiv &indiv = peeps[index];
-            Coord offset = safeCenter - indiv.loc;
-            float distance = offset.length();
-            if (distance <= radius && indiv.species == "mouse") {
+            if (isWithinSpecifiedArea(indiv.loc, FOODAREA)) {
                 indiv.challengeBits = true;
             }
         }

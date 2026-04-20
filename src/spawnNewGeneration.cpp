@@ -19,6 +19,7 @@ void initializeGeneration0()
 {
     // The grid has already been allocated, just clear and reuse it
     grid.zeroFill();
+    grid.createFoodArea(p.foodAreaType);
     grid.createBarrier(p.barrierType);
     grid.createSafeArea(p.safeAreaType);
 
@@ -49,6 +50,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     // The grid, signals, and peeps containers have already been allocated, just
     // clear them if needed and reuse the elements
     grid.zeroFill();
+    grid.createFoodArea(p.foodAreaType);
     grid.createBarrier(p.barrierType);
     grid.createSafeArea(p.safeAreaType);
     signals.zeroFill();

@@ -27,6 +27,7 @@ void ParamManager::setDefaults()
     privParams.challengeMice = 20;
     privParams.challengeCats = 19;
 
+    privParams.foodAreaType = 0;
     privParams.displayFoodLocations = true;
     privParams.genomeInitialLengthMin = 24;
     privParams.genomeInitialLengthMax = 24;
@@ -150,6 +151,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "challengecats" && isUint && uVal < (uint16_t)-1) {
             privParams.challengeCats = uVal; break;
+        }
+        else if (name == "foodareatype" && isUint && uVal < (uint32_t)-1) {
+            privParams.foodAreaType = uVal; break;
         }
         else if (name == "displayfoodlocations" && isBool) {
             privParams.displayFoodLocations = bVal; break;

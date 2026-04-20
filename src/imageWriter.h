@@ -22,6 +22,7 @@ struct ImageFrameData {
     unsigned generation;
     std::vector<Coord> indivLocs;
     std::vector<double> indivColors;
+    std::vector<Coord> foodAreaLocs;
     std::vector<Coord> barrierLocs;
     std::vector<Coord> safeAreaLocs;
     typedef std::vector<std::vector<uint8_t>> SignalLayer;  // [x][y]

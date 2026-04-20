@@ -16,6 +16,7 @@ namespace BS {
     // specific scenarios.
 
     void Grid::createSafeArea(unsigned safeAreaType) {
+
         safeAreaLocations.clear();
         safeAreaCenters.clear();
 

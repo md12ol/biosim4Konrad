@@ -115,13 +115,13 @@ void saveOneFrameImmed(const ImageFrameData &data)
         color[0] = 255;
         color[1] = 255;
         color[2] = 0;
-        image.draw_circle(
-                (p.sizeX * p.displayScale) / 2.0,
-                (p.sizeY * p.displayScale) / 2.0,
-                (p.sizeX * p.displayScale) / 3.0,
-                color,
-                1.0
-            );
+        for (Coord loc : data.foodAreaLocs) {
+            image.draw_rectangle(
+                loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
+                (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
+                color,  // rgb
+                1.0);  // alpha
+        }
     }
 
     // Draw barrier locations
@@ -246,6 +246,7 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
         data.generation = generation;
         data.indivLocs.clear();
         data.indivColors.clear();
+        data.foodAreaLocs.clear();
         data.barrierLocs.clear();
         data.safeAreaLocs.clear();
         data.signalLayers.clear();
@@ -256,6 +257,11 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
                 data.indivLocs.push_back(indiv.loc);
                 data.indivColors.push_back(makeGeneticColor(indiv.genome, indiv.species));
             }
+        }
+
+        auto const &foodAreaLocs = grid.getFoodAreaLocations();
+        for (Coord loc : foodAreaLocs) {
+            data.foodAreaLocs.push_back(loc);
         }
 
         auto const &barrierLocs = grid.getBarrierLocations();
@@ -293,6 +299,7 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     data.generation = generation;
     data.indivLocs.clear();
     data.indivColors.clear();
+    data.foodAreaLocs.clear();
     data.barrierLocs.clear();
     data.safeAreaLocs.clear();
     data.signalLayers.clear();
@@ -303,6 +310,11 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
             data.indivLocs.push_back(indiv.loc);
             data.indivColors.push_back(makeGeneticColor(indiv.genome, indiv.species));
         }
+    }
+
+    auto const &foodAreaLocs = grid.getFoodAreaLocations();
+    for (Coord loc : foodAreaLocs) {
+        data.foodAreaLocs.push_back(loc);
     }
 
     auto const &barrierLocs = grid.getBarrierLocations();

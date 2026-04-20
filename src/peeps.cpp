@@ -43,10 +43,21 @@ void Peeps::queueForDeath(const Indiv &indiv)
 // queued deaths, removing the dead agents from the grid.
 void Peeps::drainDeathQueue()
 {
+    auto const &foodAreaLocs = grid.getFoodAreaLocations();
     for (uint16_t index : deathQueue) {
         auto & indiv = peeps[index];
-        grid.set(indiv.loc, 0);
-        indiv.alive = false;
+        // Edge case of mouse standing on a food tile and getting eaten by a cat.
+        for (Coord loc : foodAreaLocs) {
+            if (loc == indiv.loc) {
+                grid.set(indiv.loc, FOODAREA);
+                indiv.alive = false;
+                break;
+            }
+        }
+        if (indiv.alive == true) {
+            grid.set(indiv.loc, 0);
+            indiv.alive = false;
+        }
     }
     deathQueue.clear();
 }
@@ -80,8 +91,9 @@ void Peeps::drainMoveQueue()
         if (indiv.alive) {
             Coord newLoc = moveRecord.second;
             Dir moveDir = (newLoc - indiv.loc).asDir();
-            if (grid.isEmptyAt(newLoc) || (indiv.species == "mouse" && grid.isSafeAreaAt(newLoc))) {
+            if (grid.isEmptyAt(newLoc) || grid.isFoodAreaAt(newLoc) || (indiv.species == "mouse" && grid.isSafeAreaAt(newLoc))) {
                 auto const &safeAreaLocs = grid.getSafeAreaLocations();
+                auto const &foodAreaLocs = grid.getFoodAreaLocations();
                 for (Coord loc : safeAreaLocs) {
                     if (loc == indiv.loc) {
                         // Only mice can stand on safeAreas
@@ -91,6 +103,18 @@ void Peeps::drainMoveQueue()
                         indiv.loc = newLoc;
                         indiv.lastMoveDir = moveDir;
                         break;
+                    }
+                }
+                if (indiv.loc != newLoc) {
+                    for (Coord loc : foodAreaLocs) {
+                        if (loc == indiv.loc) {
+                            // After a mice moves away from a food area it needs to be set to food area again
+                            grid.set(indiv.loc, FOODAREA);
+                            grid.set(newLoc, indiv.index);
+                            indiv.loc = newLoc;
+                            indiv.lastMoveDir = moveDir;
+                            break;
+                        }
                     }
                 }
                 if (indiv.loc != newLoc) {
