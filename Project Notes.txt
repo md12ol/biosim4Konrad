@@ -34,6 +34,7 @@ Notes
         >>  1 bit: either to an output action neuron (0) or an internal neuron (1)
         >>  7 bits: this number mod the number of neurons from the previous bit identifies the destination neuron for the connection
         >>  16 bits: the weight of the connection (can be negative)
+        >>  This means the maximum of 128 different neurons for each of these 7 bit values
     >>  An individual's NN contains all possible neurons (21 sensory neurons, maxNumberNeurons internal neuron(s), and 11 action neurons) but only some have connections
         >>  Each neuron can have multiple outgoing and/or incoming connections depending on the genes in the genome
         >>  Only neurons with a string of connections that ends in an action are considered when deciding a agent's next action
@@ -52,6 +53,7 @@ Notes
             >>  the normalised coordinates get multiplied with the actionLevel in arbitrarily range
         >>  MOVE_RL seems to work exactly like MOVE_RIGHT
     >>  The video talks about blockages, but the code uses barriers. For sensors, barriers and boundaries are mutually exclusive (i.e., a boundry isn't a barrier and a barrier isn't a boundry)
+    >>  The population neurons return the largest value when something is not there
 
     >>  Most of the actions modify the environment (W) (e.g., moving an agent to a new position or killing another agent) but a few modify internal variables of the individuals (I) (e.g., set_responsiveness and set_longprobe_dist).
     >>  Multiple Actions can be triggered for a single step
@@ -149,12 +151,22 @@ April 7th, 2026
     >>  Add in a sensor for cats to see mice and mice to see cats [Some DONE]
 
 April 14th, 2026
-    >>  Implement population_forward for mice and cats
-    >>  Implement a parameter to set if mice can spawn in the safe area
-    >>  Implement one or more parameters to have different safe area locations
-    >>  Implement a neuron to detect food areas
-    >>  Switch to food tiles rather than food area
+    >>  Implement population_forward for mice and cats [DONE]
+    >>  Implement a parameter to set if mice can spawn in the safe area [DONE]
+    >>  Implement one or more parameters to have different safe area locations [DONE]
+    >>  Implement a neuron to detect food areas [DONE]
+    >>  Switch to food tiles rather than food area [DONE]
     >>  Think about how we might display the changing NNs over time (heatmaps if you have time start implementing this)
+
+April 21st, 2026
+    >>  Think about how we might display the changing NNs over time
+    >>  We want to make an inverse neuron to population_forward that returns a larger value if a mouse/cat is closer
+        >>  Also do this for mouse/cat short probes, food/safe/barrier sensors, and the right/left neurons
+    >>  Barriers should be considered the most important -> they are added first and block other areas
+        >>  If the safe/food areas are static, the overlap will simply not exist
+        >>  If they are random, then these areas will be added until the desired coverage is met
+        >>  Add another type for the board that is both a safe and food area
+    >>  Optimize the code for food areas and let me know what you find
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
