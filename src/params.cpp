@@ -58,6 +58,7 @@ void ParamManager::setDefaults()
     privParams.longProbeDistance = 16;
     privParams.shortProbeBarrierDistance = 4;
     privParams.shortProbeSafeAreaDistance = 4;
+    privParams.shortProbeFoodAreaDistance = 4;
     privParams.valenceSaturationMag = 0.5;
     privParams.saveVideo = true;
     privParams.videoStride = 25;
@@ -244,6 +245,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "shortprobesafeareadistance" && isUint && uVal > 0) {
             privParams.shortProbeSafeAreaDistance = uVal; break;
+        }
+        else if (name == "shortprobefoodareadistance" && isUint && uVal > 0) {
+            privParams.shortProbeFoodAreaDistance = uVal; break;
         }
         else if (name == "valencesaturationmag" && isFloat && dVal >= 0.0) {
             privParams.valenceSaturationMag = dVal; break;

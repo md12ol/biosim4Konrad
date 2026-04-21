@@ -43,6 +43,7 @@ struct Params {
     unsigned longProbeDistance; // > 0
     unsigned shortProbeBarrierDistance; // > 0
     unsigned shortProbeSafeAreaDistance; // > 0
+    unsigned shortProbeFoodAreaDistance; // > 0
     float valenceSaturationMag;
     bool saveVideo;
     unsigned videoStride; // > 0

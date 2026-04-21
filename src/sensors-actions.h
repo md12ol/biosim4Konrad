@@ -45,6 +45,7 @@ enum Sensor {
     LONGPROBE_POP_FWD,      // W long look for population forward
     LONGPROBE_BAR_FWD,      // W long look for barriers forward
     LONGPROBE_SAF_FWD,      // W long look for safe areas forward
+    LONGPROBE_FOOD_FWD,     // W long look for food areas forward
     LONGPROBE_MICE_FWD,     // W long look for mice forward
     LONGPROBE_CATS_FWD,     // W long look for cats forward
     POPULATION,             // W population density in neighborhood
@@ -62,6 +63,8 @@ enum Sensor {
     BARRIER_LR,             // W neighborhood barrier distance left-right axis
     SAFEAREA_FWD,           // W neighborhood safe area distance forward-reverse axis
     SAFEAREA_LR,            // W neighborhood safe area distance left-right axis
+    FOODAREA_FWD,           // W neighborhood food area distance forward-reverse axis
+    FOODAREA_LR,            // W neighborhood food area distance left right axis
     RANDOM,                 //   random sensor value, uniform distribution
     SIGNAL0,                // W strength of signal0 in neighborhood
     SIGNAL0_FWD,            // W strength of signal0 in the forward-reverse axis
