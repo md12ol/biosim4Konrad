@@ -21,7 +21,7 @@ Coord Grid::findValidLocation(bool isMouse) const {
     while (true) {
         loc.x = randomUint(0, p.sizeX - 1);
         loc.y = randomUint(0, p.sizeY - 1);
-        if (grid.isEmptyAt(loc) || (isMouse == true && grid.isSafeAreaAt(loc))) {
+        if (grid.isEmptyAt(loc) || (isMouse == true && (grid.isSafeAreaAt(loc) || grid.isSafeFoodAreaAt(loc)))) {
             break;
         }
     }

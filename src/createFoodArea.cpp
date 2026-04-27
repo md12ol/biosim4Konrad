@@ -23,8 +23,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
     auto drawBox = [&](int16_t minX, int16_t minY, int16_t maxX, int16_t maxY) {
         for (int16_t x = minX; x <= maxX; ++x) {
             for (int16_t y = minY; y <= maxY; ++y) {
-                grid.set(x, y, FOODAREA);
-                foodAreaLocations.push_back( {x, y} );
+                if (grid.isEmptyAt(Coord(x, y))) {
+                    grid.set(x, y, FOODAREA);
+                    foodAreaLocations.push_back( {x, y} );
+                }
             }
         }
     };
@@ -43,8 +45,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
 
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, FOODAREA);
-                    foodAreaLocations.push_back( {x, y} );
+                    if (grid.isEmptyAt(Coord(x, y))) {
+                        grid.set(x, y, FOODAREA);
+                        foodAreaLocations.push_back( {x, y} );
+                    }
                 }
             }
         }
@@ -60,8 +64,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
 
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, FOODAREA);
-                    foodAreaLocations.push_back( {x, y} );
+                    if (grid.isEmptyAt(Coord(x, y))) {
+                        grid.set(x, y, FOODAREA);
+                        foodAreaLocations.push_back( {x, y} );
+                    }
                 }
             }
         }
@@ -107,8 +113,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
 
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, FOODAREA);
-                    foodAreaLocations.push_back( {x, y} );
+                    if (grid.isEmptyAt(Coord(x, y))) {
+                        grid.set(x, y, FOODAREA);
+                        foodAreaLocations.push_back( {x, y} );
+                    }
                 }
             }
         }
@@ -144,8 +152,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
             //foodAreaCenters.push_back(center2);
 
             auto f = [&](Coord loc) {
-                grid.set(loc, FOODAREA);
-                foodAreaLocations.push_back(loc);
+                if (grid.isEmptyAt(loc)) {
+                    grid.set(loc, FOODAREA);
+                    foodAreaLocations.push_back(loc);
+                }
             };
 
             visitNeighborhood(center0, radius, f);
@@ -161,8 +171,10 @@ void Grid::createFoodArea(unsigned foodAreaType)
             float radius = 5.0;
 
             auto f = [&](Coord loc) {
-                grid.set(loc, FOODAREA);
-                foodAreaLocations.push_back(loc);
+                if (grid.isEmptyAt(loc)) {
+                    grid.set(loc, FOODAREA);
+                    foodAreaLocations.push_back(loc);
+                }
             };
 
             unsigned verticalSliceSize = p.sizeY / (numberOfLocations + 1);

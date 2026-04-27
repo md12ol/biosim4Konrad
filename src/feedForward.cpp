@@ -94,9 +94,17 @@ std::array<float, Action::NUM_ACTIONS> Indiv::feedForward(unsigned simStep)
     if (grid.isInBounds(otherLoc) && grid.isOccupiedAt(otherLoc)) {
         Indiv &indiv2 = peeps.getIndiv(otherLoc);
         auto const &safeAreaLocations = grid.getSafeAreaLocations();
+        auto const &safeFoodAreaLocations = grid.getSafeFoodAreaLocations();
         for (Coord loc : safeAreaLocations) {
             // Indiv is within safe area
             if (indiv2.loc == loc) {
+                actionLevels[Action::KILL_FORWARD] = -1.0;
+                return actionLevels;
+            }
+        }
+        for (Coord loc : safeFoodAreaLocations) {
+            if (indiv2.loc == loc) {
+                // Indiv is within safe food area
                 actionLevels[Action::KILL_FORWARD] = -1.0;
                 return actionLevels;
             }

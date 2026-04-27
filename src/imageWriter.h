@@ -25,6 +25,7 @@ struct ImageFrameData {
     std::vector<Coord> foodAreaLocs;
     std::vector<Coord> barrierLocs;
     std::vector<Coord> safeAreaLocs;
+    std::vector<Coord> safeFoodAreaLocs;
     typedef std::vector<std::vector<uint8_t>> SignalLayer;  // [x][y]
     std::vector<SignalLayer> signalLayers; // [layer][x][y]
 };

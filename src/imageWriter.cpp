@@ -109,6 +109,17 @@ void saveOneFrameImmed(const ImageFrameData &data)
                   << '-' << std::setfill('0') << std::setw(6) << data.simStep
                   << ".png";
 
+    // Draw barrier locations
+
+    color[0] = color[1] = color[2] = 0x88;
+    for (Coord loc : data.barrierLocs) {
+        image.draw_rectangle(
+            loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
+            (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
+            color,  // rgb
+            1.0);  // alpha
+    }
+
     // Draw food locations
 
     if (p.displayFoodLocations == true) {
@@ -124,17 +135,6 @@ void saveOneFrameImmed(const ImageFrameData &data)
         }
     }
 
-    // Draw barrier locations
-
-    color[0] = color[1] = color[2] = 0x88;
-    for (Coord loc : data.barrierLocs) {
-            image.draw_rectangle(
-                loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
-                (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
-                color,  // rgb
-                1.0);  // alpha
-    }
-
     // Draw safeAreaLocations
 
     if (p.displaySafeAreas == true) {
@@ -148,6 +148,18 @@ void saveOneFrameImmed(const ImageFrameData &data)
                 color,
                 1.0);  // alpha
         }
+    }
+
+    // Draw safeFoodAreaLocations
+    color[0] = 0;
+    color[1] = 0;
+    color[2] = 255;
+    for (Coord loc : data.safeFoodAreaLocs) {
+        image.draw_rectangle(
+            loc.x       * p.displayScale - (p.displayScale / 2), ((p.sizeY - loc.y) - 1)   * p.displayScale - (p.displayScale / 2),
+            (loc.x + 1) * p.displayScale, ((p.sizeY - (loc.y - 0))) * p.displayScale,
+            color,
+            1.0);  // alpha
     }
 
     // Draw agents
@@ -274,6 +286,11 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
             data.safeAreaLocs.push_back(loc);
         }
 
+        auto const &safeFoodAreaLocs = grid.getSafeFoodAreaLocations();
+        for (Coord loc : safeFoodAreaLocs) {
+            data.safeFoodAreaLocs.push_back(loc);
+        }
+
         // tell thread there's a job to do
         {
             std::lock_guard<std::mutex> lck(mutex_);
@@ -302,6 +319,7 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     data.foodAreaLocs.clear();
     data.barrierLocs.clear();
     data.safeAreaLocs.clear();
+    data.safeFoodAreaLocs.clear();
     data.signalLayers.clear();
     //todo!!!
     for (uint16_t index = 1; index <= p.population; ++index) {
@@ -325,6 +343,11 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     auto const &safeAreaLocs = grid.getSafeAreaLocations();
     for (Coord loc : safeAreaLocs) {
         data.safeAreaLocs.push_back(loc);
+    }
+
+    auto const &safeFoodAreaLocs = grid.getSafeFoodAreaLocations();
+    for (Coord loc : safeFoodAreaLocs) {
+        data.safeFoodAreaLocs.push_back(loc);
     }
 
     saveOneFrameImmed(data);

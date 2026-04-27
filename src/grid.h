@@ -22,6 +22,7 @@ const uint16_t EMPTY = 0; // Index value 0 is reserved
 const uint16_t BARRIER = 0xffff;
 const uint16_t SAFEAREA = 0xfffe;
 const uint16_t FOODAREA = 0xfffd;
+const uint16_t SAFEFOODAREA = 0xfffc;
 
 class Grid {
 public:
@@ -46,8 +47,9 @@ public:
     bool isBarrierAt(Coord loc) const { return at(loc) == BARRIER; }
     bool isSafeAreaAt(Coord loc) const { return at(loc) == SAFEAREA; }
     bool isFoodAreaAt(Coord loc) const { return at(loc) == FOODAREA; }
+    bool isSafeFoodAreaAt(Coord loc) const { return at(loc) == SAFEFOODAREA; }
     // Occupied means an agent is living there.
-    bool isOccupiedAt(Coord loc) const { return at(loc) != EMPTY && at(loc) != BARRIER && at(loc) != SAFEAREA && at(loc) != FOODAREA; }
+    bool isOccupiedAt(Coord loc) const { return at(loc) != EMPTY && at(loc) != BARRIER && at(loc) != SAFEAREA && at(loc) != FOODAREA && at(loc) != SAFEFOODAREA; }
     bool isBorder(Coord loc) const { return loc.x == 0 || loc.x == sizeX() - 1 || loc.y == 0 || loc.y == sizeY() - 1; }
     uint16_t at(Coord loc) const { return data[loc.x][loc.y]; }
     uint16_t at(uint16_t x, uint16_t y) const { return data[x][y]; }
@@ -64,6 +66,8 @@ public:
     const std::vector<Coord> &getSafeAreaCenters() const { return safeAreaCenters; }
     const std::vector<Coord> &getFoodAreaLocations() const { return foodAreaLocations; }
     const std::vector<Coord> &getFoodAreaCenters() const { return foodAreaCenters; }
+    const std::vector<Coord> &getSafeFoodAreaLocations() const { return safeFoodAreaLocations; }
+    const std::vector<Coord> &getSafeFoodAreaCenters() const { return safeFoodAreaCenters; }
     // Direct access:
     Column & operator[](uint16_t columnXNum) { return data[columnXNum]; }
     const Column & operator[](uint16_t columnXNum) const { return data[columnXNum]; }
@@ -75,6 +79,8 @@ private:
     std::vector<Coord> safeAreaCenters;
     std::vector<Coord> foodAreaLocations;
     std::vector<Coord> foodAreaCenters;
+    std::vector<Coord> safeFoodAreaLocations;
+    std::vector<Coord> safeFoodAreaCenters;
 };
 
 extern void visitNeighborhood(Coord loc, float radius, std::function<void(Coord)> f);

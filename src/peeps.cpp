@@ -91,9 +91,11 @@ void Peeps::drainMoveQueue()
         if (indiv.alive) {
             Coord newLoc = moveRecord.second;
             Dir moveDir = (newLoc - indiv.loc).asDir();
-            if (grid.isEmptyAt(newLoc) || grid.isFoodAreaAt(newLoc) || (indiv.species == "mouse" && grid.isSafeAreaAt(newLoc))) {
+            if (grid.isEmptyAt(newLoc) || grid.isFoodAreaAt(newLoc) ||
+                (indiv.species == "mouse" && (grid.isSafeAreaAt(newLoc) || grid.isSafeFoodAreaAt(newLoc)))) {
                 auto const &safeAreaLocs = grid.getSafeAreaLocations();
                 auto const &foodAreaLocs = grid.getFoodAreaLocations();
+                auto const &safeFoodAreaLocs = grid.getSafeFoodAreaLocations();
                 for (Coord loc : safeAreaLocs) {
                     if (loc == indiv.loc) {
                         // Only mice can stand on safeAreas
@@ -110,6 +112,18 @@ void Peeps::drainMoveQueue()
                         if (loc == indiv.loc) {
                             // After a mice moves away from a food area it needs to be set to food area again
                             grid.set(indiv.loc, FOODAREA);
+                            grid.set(newLoc, indiv.index);
+                            indiv.loc = newLoc;
+                            indiv.lastMoveDir = moveDir;
+                            break;
+                        }
+                    }
+                }
+                if (indiv.loc != newLoc) {
+                    for (Coord loc : safeFoodAreaLocs) {
+                        if (loc == indiv.loc) {
+                            // After a mouse moves away from a safe food area it needs to be set to a safe food area
+                            grid.set(indiv.loc, SAFEFOODAREA);
                             grid.set(newLoc, indiv.index);
                             indiv.loc = newLoc;
                             indiv.lastMoveDir = moveDir;

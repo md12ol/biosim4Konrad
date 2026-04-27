@@ -1,6 +1,9 @@
 // createSafeArea.cpp
 
 #include <cassert>
+#include <iostream>
+#include <ostream>
+
 #include "simulator.h"
 
 namespace BS {
@@ -23,8 +26,16 @@ namespace BS {
         auto drawBox = [&](int16_t minX, int16_t minY, int16_t maxX, int16_t maxY) {
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, SAFEAREA);
-                    safeAreaLocations.push_back( {x, y} );
+                    if (!grid.isBarrierAt(Coord(x, y))) {
+                        if (grid.isFoodAreaAt(Coord(x, y))) {
+                            grid.set(x, y, SAFEFOODAREA);
+                            std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
+                            foodAreaLocations.pop_back();
+                        } else {
+                            grid.set(x, y, SAFEAREA);
+                            safeAreaLocations.push_back( {x, y} );
+                        }
+                    }
                 }
             }
         };
@@ -43,8 +54,17 @@ namespace BS {
 
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, SAFEAREA);
-                    safeAreaLocations.push_back( {x, y} );
+                    if (!grid.isBarrierAt(Coord(x, y))) {
+                        if (grid.isFoodAreaAt(Coord(x, y))) {
+                            grid.set(x, y, SAFEFOODAREA);
+                            std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
+                            foodAreaLocations.pop_back();
+                            safeFoodAreaLocations.push_back( {x, y} );
+                        } else {
+                            grid.set(x, y, SAFEAREA);
+                            safeAreaLocations.push_back( {x, y} );
+                            }
+                        }
                     }
                 }
             }
@@ -60,8 +80,16 @@ namespace BS {
 
             for (int16_t x = minX; x <= maxX; ++x) {
                 for (int16_t y = minY; y <= maxY; ++y) {
-                    grid.set(x, y, SAFEAREA);
-                    safeAreaLocations.push_back( {x, y} );
+                    if (!grid.isBarrierAt(Coord(x, y))) {
+                        if (grid.isFoodAreaAt(Coord(x, y))) {
+                            grid.set(x, y, SAFEFOODAREA);
+                            std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
+                            foodAreaLocations.pop_back();
+                        } else {
+                            grid.set(x, y, SAFEAREA);
+                            safeAreaLocations.push_back( {x, y} );
+                        }
+                    }
                     }
                 }
             }
@@ -107,8 +135,16 @@ namespace BS {
 
                 for (int16_t x = minX; x <= maxX; ++x) {
                     for (int16_t y = minY; y <= maxY; ++y) {
-                        grid.set(x, y, SAFEAREA);
-                        safeAreaLocations.push_back( {x, y} );
+                        if (!grid.isBarrierAt(Coord(x, y))) {
+                            if (grid.isFoodAreaAt(Coord(x, y))) {
+                                grid.set(x, y, SAFEFOODAREA);
+                                std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
+                                foodAreaLocations.pop_back();
+                            } else {
+                                grid.set(x, y, SAFEAREA);
+                                safeAreaLocations.push_back( {x, y} );
+                            }
+                        }
                     }
                 }
             }
@@ -144,8 +180,16 @@ namespace BS {
                 //safeAreaCenters.push_back(center2);
 
                 auto f = [&](Coord loc) {
-                    grid.set(loc, SAFEAREA);
-                    safeAreaLocations.push_back(loc);
+                    if (!grid.isBarrierAt(loc)) {
+                        if (grid.isFoodAreaAt(loc)) {
+                            grid.set(loc, SAFEFOODAREA);
+                            std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), loc);
+                            foodAreaLocations.pop_back();
+                        } else {
+                            grid.set(loc, SAFEAREA);
+                            safeAreaLocations.push_back(loc);
+                        }
+                    }
                 };
 
                 visitNeighborhood(center0, radius, f);
@@ -161,8 +205,16 @@ namespace BS {
                 float radius = 5.0;
 
                 auto f = [&](Coord loc) {
-                    grid.set(loc, SAFEAREA);
-                    safeAreaLocations.push_back(loc);
+                    if (!grid.isBarrierAt(loc)) {
+                        if (grid.isFoodAreaAt(loc)) {
+                            grid.set(loc, SAFEFOODAREA);
+                            std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), loc);
+                            foodAreaLocations.pop_back();
+                        } else {
+                            grid.set(loc, SAFEAREA);
+                            safeAreaLocations.push_back(loc);
+                        }
+                    }
                 };
 
                 unsigned verticalSliceSize = p.sizeY / (numberOfLocations + 1);
