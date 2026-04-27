@@ -464,12 +464,28 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         sensorVal = longProbePopulationFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
         break;
     }
+    case Sensor::LONGPROBE_POP_FWD_INV:
+    {
+        // Measures the distance to the nearest other individual in the
+        // forward direction. If non found returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbePopulationFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
+    }
     case Sensor::LONGPROBE_BAR_FWD:
     {
         // Measures the distance to the nearest barrier in the forward
         // direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeBarrierFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
+    }
+    case Sensor::LONGPROBE_BAR_FWD_INV:
+    {
+        // Measures the distance to the nearest barrier in the forward
+        // direction. If non found, returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbeBarrierFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
         break;
     }
     case Sensor::LONGPROBE_SAF_FWD:
@@ -480,12 +496,29 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         sensorVal = longProbeSafeAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
         break;
     }
+    case Sensor::LONGPROBE_SAF_FWD_INV:
+    {
+        // Measures the distance to the nearest safe area in the forward
+        // direction. If non found, returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbeSafeAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
+    }
     case Sensor::LONGPROBE_FOOD_FWD:
     {
         // Measures the distance to the nearest food area in the forward
         // direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeFoodAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
+    }
+    case Sensor::LONGPROBE_FOOD_FWD_INV:
+    {
+        // Measures the distance to the nearest food area in the forward
+        // direction. If non found, returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbeFoodAreaFwd(loc, lastMoveDir, longProbeDist) / (float)longProbeDist; // 0..1
+        break;
     }
     case Sensor::LONGPROBE_MICE_FWD:
     {
@@ -496,12 +529,30 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
             (float)longProbeDist; // 0..1
         break;
     }
+    case Sensor::LONGPROBE_MICE_FWD_INV:
+    {
+        // Measures the distance to the nearest other mouse in the
+        // fwd direction. If non found, returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "mouse") /
+            (float)longProbeDist; // 0..1
+        break;
+    }
     case Sensor::LONGPROBE_CATS_FWD:
     {
         // Measures the distance to the nearest other cat in the
         // fwd direction. If non found, returns the maximum sensor value.
         // Maps the result to the sensor range 0.0..1.0.
         sensorVal = longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "cat") /
+            (float)longProbeDist; // 0..1
+        break;
+    }
+    case Sensor::LONGPROBE_CATS_FWD_INV:
+    {
+        // Measures the distance to the nearest other cat in the
+        // fwd direction. If non found, returns 0.0.
+        // Maps the result to the sensor range 0.0..1.0.
+        sensorVal = 1 - longProbeSpecifiedPopulationFwd(loc, lastMoveDir, longProbeDist, "cat") /
             (float)longProbeDist; // 0..1
         break;
     }
@@ -567,53 +618,114 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
         // to sensor range 0.0..1.0
         sensorVal = getPopulationDensityAlongAxis(loc, lastMoveDir);
         break;
+    case Sensor::POPULATION_FWD_INV:
+        // Sense population density along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getPopulationDensityAlongAxis(loc, lastMoveDir);
+        break;
     case Sensor::POPULATION_FWD_MICE:
         // Sense population density of mice along axis of last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "mouse");
+        break;
+    case Sensor::POPULATION_FWD_MICE_INV:
+        // Sense population density of mice along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "mouse");
         break;
     case Sensor::POPULATION_FWD_CATS:
         // Sense population density of cats along axis of last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "cat");
         break;
+    case Sensor::POPULATION_FWD_CATS_INV:
+        // Sense population density of cats along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir, "cat");
+        break;
     case Sensor::POPULATION_LR:
         // Sense population density along an axis 90 degrees from last movement direction
         sensorVal = getPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW());
+        break;
+    case Sensor::POPULATION_LR_INV:
+        // Sense population density along an axis 90 degrees from last movement direction
+        sensorVal = 1 - getPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW());
         break;
     case Sensor::POPULATION_LR_MICE:
         // Sense mice density along an axis 90 degrees from last movement direction
         sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "mouse");
         break;
+    case Sensor::POPULATION_LR_MICE_INV:
+        // Sense mice density along an axis 90 degrees from last movement direction
+        sensorVal = 1 - getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "mouse");
+        break;
     case Sensor::POPULATION_LR_CATS:
         // Sense cats density along an axis 90 degrees from last movement direction
         sensorVal = getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "cat");
+        break;
+    case Sensor::POPULATION_LR_CATS_INV:
+        // Sense cats density along an axis 90 degrees from last movement direction
+        sensorVal = 1 - getSpecifiedPopulationDensityAlongAxis(loc, lastMoveDir.rotate90DegCW(), "cat");
         break;
     case Sensor::BARRIER_FWD:
         // Sense the nearest barrier along axis of last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getShortProbeBarrierDistance(loc, lastMoveDir, p.shortProbeBarrierDistance);
         break;
+    case Sensor::BARRIER_FWD_INV:
+        // Sense the nearest barrier along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeBarrierDistance(loc, lastMoveDir, p.shortProbeBarrierDistance);
+        break;
     case Sensor::BARRIER_LR:
         // Sense the nearest barrier along axis perpendicular to last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getShortProbeBarrierDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
         break;
+    case Sensor::BARRIER_LR_INV:
+        // Sense the nearest barrier along axis perpendicular to last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeBarrierDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
+        break;
     case Sensor::SAFEAREA_FWD:
-        // Sense the nearest barrier along axis of last movement direction, mapped
+        // Sense the nearest safe area along axis of last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getShortProbeSafeAreaDistance(loc, lastMoveDir, p.shortProbeBarrierDistance);
         break;
+    case Sensor::SAFEAREA_FWD_INV:
+        // Sense the nearest safe area along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeSafeAreaDistance(loc, lastMoveDir, p.shortProbeBarrierDistance);
+        break;
     case Sensor::SAFEAREA_LR:
-        // Sense the nearest barrier along axis perpendicular to last movement direction, mapped
+        // Sense the nearest safe area along axis perpendicular to last movement direction, mapped
         // to sensor range 0.0..1.0
         sensorVal = getShortProbeSafeAreaDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
         break;
+    case Sensor::SAFEAREA_LR_INV:
+        // Sense the nearest safe area along axis perpendicular to last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeSafeAreaDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeBarrierDistance);
+        break;
     case Sensor::FOODAREA_FWD:
+        // Sense the nearest food area along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
         sensorVal = getShortProbeFoodAreaDistance(loc, lastMoveDir, p.shortProbeFoodAreaDistance);
         break;
+    case Sensor::FOODAREA_FWD_INV:
+        // Sense the nearest food area along axis of last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeFoodAreaDistance(loc, lastMoveDir, p.shortProbeFoodAreaDistance);
+        break;
     case Sensor::FOODAREA_LR:
+        // Sense the nearest food area along axis perpendicular to last movement direction, mapped
+        // to sensor range 0.0..1.0
         sensorVal = getShortProbeFoodAreaDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeFoodAreaDistance);
+        break;
+    case Sensor::FOODAREA_LR_INV:
+        // Sense the nearest food area along axis perpendicular to last movement direction, mapped
+        // to sensor range 0.0..1.0
+        sensorVal = 1 - getShortProbeFoodAreaDistance(loc, lastMoveDir.rotate90DegCW(), p.shortProbeFoodAreaDistance);
         break;
     case Sensor::RANDOM:
         // Returns a random sensor value in the range 0.0..1.0.

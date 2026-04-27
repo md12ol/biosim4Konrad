@@ -43,28 +43,46 @@ enum Sensor {
     LAST_MOVE_DIR_X,        // I +- amount of X movement in last movement
     LAST_MOVE_DIR_Y,        // I +- amount of Y movement in last movement
     LONGPROBE_POP_FWD,      // W long look for population forward
+    LONGPROBE_POP_FWD_INV,  // W long look for population forward (inverse result)
     LONGPROBE_BAR_FWD,      // W long look for barriers forward
+    LONGPROBE_BAR_FWD_INV,  // W long look for barriers forward (inverse result)
     LONGPROBE_SAF_FWD,      // W long look for safe areas forward
+    LONGPROBE_SAF_FWD_INV,  // W long look for safe areas forward (inverse result)
     LONGPROBE_FOOD_FWD,     // W long look for food areas forward
+    LONGPROBE_FOOD_FWD_INV, // W long look for food areas forward (inverse result)
     LONGPROBE_MICE_FWD,     // W long look for mice forward
+    LONGPROBE_MICE_FWD_INV, // W long look for mice forward (inverse result)
     LONGPROBE_CATS_FWD,     // W long look for cats forward
+    LONGPROBE_CATS_FWD_INV, // W long look for cats forward (inverse result)
     POPULATION,             // W population density in neighborhood
     POPULATION_MICE,        // W population density of mice in neighborhood
     POPULATION_CATS,        // W population density of cats in neighborhood
     POPULATION_FWD,         // W population density in the forward-reverse axis
+    POPULATION_FWD_INV,     // W population density in the forward-reverse axis (inverse result)
     POPULATION_FWD_MICE,    // W population density of mice in the forward-reverse axis
+    POPULATION_FWD_MICE_INV,// W population density of mice in the forward-reverse axis (inverse result)
     POPULATION_FWD_CATS,    // W population density of cats in the forward-reverse axis
+    POPULATION_FWD_CATS_INV,// W population density of cats in the forward-reverse axis (inverse result)
     POPULATION_LR,          // W population density in the left-right axis
+    POPULATION_LR_INV,      // W population density in the left-right axis (inverse result)
     POPULATION_LR_MICE,     // W population density of mice in the left right axis
+    POPULATION_LR_MICE_INV, // W population density of mice in the left right axis (inverse result)
     POPULATION_LR_CATS,     // W population density of cats in the left right axis
+    POPULATION_LR_CATS_INV, // W population density of cats in the left right axis (inverse result)
     OSC1,                   // I oscillator +-value
     AGE,                    // I
     BARRIER_FWD,            // W neighborhood barrier distance forward-reverse axis
+    BARRIER_FWD_INV,        // W neighborhood barrier distance forward-reverse axis (inverse result)
     BARRIER_LR,             // W neighborhood barrier distance left-right axis
+    BARRIER_LR_INV,         // W neighborhood barrier distance left-right axis (inverse result)
     SAFEAREA_FWD,           // W neighborhood safe area distance forward-reverse axis
+    SAFEAREA_FWD_INV,       // W neighborhood safe area distance forward-reverse axis (inverse result)
     SAFEAREA_LR,            // W neighborhood safe area distance left-right axis
+    SAFEAREA_LR_INV,        // W neighborhood safe area distance left-right axis (inverse result)
     FOODAREA_FWD,           // W neighborhood food area distance forward-reverse axis
+    FOODAREA_FWD_INV,       // W neighborhood food area distance forward-reverse axis (inverse result)
     FOODAREA_LR,            // W neighborhood food area distance left right axis
+    FOODAREA_LR_INV,        // W neighborhood food area distance left right axis (inverse result)
     RANDOM,                 //   random sensor value, uniform distribution
     SIGNAL0,                // W strength of signal0 in neighborhood
     SIGNAL0_FWD,            // W strength of signal0 in the forward-reverse axis
