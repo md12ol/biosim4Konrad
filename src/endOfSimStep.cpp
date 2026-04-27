@@ -78,10 +78,13 @@ void endOfSimStep(unsigned simStep, unsigned generation)
 
     // If the individual has moved on a food tile, we set its challengeFlag to true.
     if (p.challengeMice == CHALLENGE_MICE) {
+        auto const &foodAreaLocs = grid.getFoodAreaLocations();
         for (uint16_t index = 1; index <= p.population; ++index) { // index 0 is reserved
             Indiv &indiv = peeps[index];
-            if (isWithinSpecifiedArea(indiv.loc, FOODAREA)) {
-                indiv.challengeBits = true;
+            for (Coord loc : foodAreaLocs) {
+                if (loc == indiv.loc) {
+                    indiv.challengeBits = true;
+                }
             }
         }
     }

@@ -46,26 +46,4 @@ void visitNeighborhood(Coord loc, float radius, std::function<void(Coord)> f)
     }
 }
 
-
-// This is a utility function used for performance reasons to check, if foodAreaLocations or
-// safeAreaLocations contain the specified Coordinates.
-bool isWithinSpecifiedArea(Coord loc, uint16_t specifiedType) {
-    if (specifiedType == FOODAREA) {
-        auto const &foodAreaLocs = grid.getFoodAreaLocations();
-        for (Coord foodLoc : foodAreaLocs) {
-            if (foodLoc == loc) {
-                return true;
-            }
-        }
-    } else if (specifiedType == SAFEAREA) {
-        auto const &safeAreaLocs = grid.getSafeAreaLocations();
-        for (Coord safeLoc : safeAreaLocs) {
-            if (safeLoc == loc) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 } // end namespace BS

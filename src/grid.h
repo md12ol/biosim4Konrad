@@ -78,7 +78,6 @@ private:
 };
 
 extern void visitNeighborhood(Coord loc, float radius, std::function<void(Coord)> f);
-extern bool isWithinSpecifiedArea(Coord loc, uint16_t specifiedType);
 extern void unitTestGridVisitNeighborhood();
 
 } // end namespace BS
