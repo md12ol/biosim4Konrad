@@ -31,6 +31,7 @@ namespace BS {
                             grid.set(x, y, SAFEFOODAREA);
                             std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
                             foodAreaLocations.pop_back();
+                            safeFoodAreaLocations.push_back({x, y});
                         } else {
                             grid.set(x, y, SAFEAREA);
                             safeAreaLocations.push_back( {x, y} );
@@ -85,6 +86,7 @@ namespace BS {
                             grid.set(x, y, SAFEFOODAREA);
                             std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
                             foodAreaLocations.pop_back();
+                            safeFoodAreaLocations.push_back( {x, y} );
                         } else {
                             grid.set(x, y, SAFEAREA);
                             safeAreaLocations.push_back( {x, y} );
@@ -140,6 +142,7 @@ namespace BS {
                                 grid.set(x, y, SAFEFOODAREA);
                                 std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), Coord(x, y));
                                 foodAreaLocations.pop_back();
+                                safeFoodAreaLocations.push_back( {x, y} );
                             } else {
                                 grid.set(x, y, SAFEAREA);
                                 safeAreaLocations.push_back( {x, y} );
@@ -185,6 +188,7 @@ namespace BS {
                             grid.set(loc, SAFEFOODAREA);
                             std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), loc);
                             foodAreaLocations.pop_back();
+                            safeFoodAreaLocations.push_back(loc);
                         } else {
                             grid.set(loc, SAFEAREA);
                             safeAreaLocations.push_back(loc);
@@ -210,6 +214,7 @@ namespace BS {
                             grid.set(loc, SAFEFOODAREA);
                             std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), loc);
                             foodAreaLocations.pop_back();
+                            safeFoodAreaLocations.push_back(loc);
                         } else {
                             grid.set(loc, SAFEAREA);
                             safeAreaLocations.push_back(loc);
