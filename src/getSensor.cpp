@@ -137,7 +137,7 @@ float getShortProbeSafeAreaDistance(Coord loc0, Dir dir, unsigned probeDistance)
     Coord loc = loc0 + dir;
     unsigned numLocsToTest = probeDistance;
     // Scan positive direction
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isSafeAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++countFwd;
         loc = loc + dir;
         --numLocsToTest;
@@ -148,7 +148,7 @@ float getShortProbeSafeAreaDistance(Coord loc0, Dir dir, unsigned probeDistance)
     // Scan negative direction
     numLocsToTest = probeDistance;
     loc = loc0 - dir;
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isSafeAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++countRev;
         loc = loc - dir;
         --numLocsToTest;
@@ -173,7 +173,7 @@ float getShortProbeFoodAreaDistance(Coord loc0, Dir dir, unsigned probeDistance)
     Coord loc = loc0 + dir;
     unsigned numLocsToTest = probeDistance;
     // Scan positive direction
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isFoodAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isFoodAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++countFwd;
         loc = loc + dir;
         --numLocsToTest;
@@ -184,7 +184,7 @@ float getShortProbeFoodAreaDistance(Coord loc0, Dir dir, unsigned probeDistance)
     // Scan negative direction
     numLocsToTest = probeDistance;
     loc = loc0 - dir;
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isFoodAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isFoodAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++countRev;
         loc = loc - dir;
         --numLocsToTest;
@@ -342,7 +342,7 @@ unsigned longProbeSafeAreaFwd(Coord loc, Dir dir, unsigned longProbeDist)
     unsigned count = 0;
     loc = loc + dir;
     unsigned numLocsToTest = longProbeDist;
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isSafeAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isSafeAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++count;
         loc = loc + dir;
         --numLocsToTest;
@@ -366,7 +366,7 @@ unsigned longProbeFoodAreaFwd(Coord loc, Dir dir, unsigned longProbeDist)
     unsigned count = 0;
     loc = loc + dir;
     unsigned numLocsToTest = longProbeDist;
-    while (numLocsToTest > 0 && grid.isInBounds(loc) && !grid.isFoodAreaAt(loc)) {
+    while (numLocsToTest > 0 && grid.isInBounds(loc) && (!grid.isFoodAreaAt(loc) || !grid.isSafeFoodAreaAt(loc))) {
         ++count;
         loc = loc + dir;
         --numLocsToTest;
