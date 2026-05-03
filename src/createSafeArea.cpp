@@ -234,6 +234,31 @@ namespace BS {
             }
             break;
 
+        // Random points, percentage of the grid
+        case 7:
+        {
+            auto randomLoc = [&]() {
+                return Coord( (int16_t)randomUint(0, p.sizeX - 1),
+                              (int16_t)randomUint(0, p.sizeY - 1));
+            };
+            for (int i = 0; i < (int16_t)(p.sizeX * p.sizeY / 100); ++i) {
+                Coord loc = randomLoc();
+                while (grid.isBarrierAt(loc)) {
+                    loc = randomLoc();
+                }
+                if (grid.isFoodAreaAt(loc)) {
+                    grid.set(loc, SAFEFOODAREA);
+                    std::remove(foodAreaLocations.begin(), foodAreaLocations.end(), loc);
+                    foodAreaLocations.pop_back();
+                    safeFoodAreaLocations.push_back(loc);
+                } else {
+                    grid.set(loc, SAFEAREA);
+                    safeAreaLocations.push_back(loc);
+                }
+            }
+        }
+        break;
+
         default:
             assert(false);
         }

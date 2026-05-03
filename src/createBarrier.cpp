@@ -176,6 +176,24 @@ void Grid::createBarrier(unsigned barrierType)
         }
         break;
 
+    // Random points, percentage of the grid
+    case 7:
+        {
+            auto randomLoc = [&]() {
+                return Coord( (int16_t)randomUint(0, p.sizeX - 1),
+                              (int16_t)randomUint(0, p.sizeY - 1));
+            };
+            for (int i = 0; i < (int16_t)(p.sizeX * p.sizeY / 100); ++i) {
+                Coord loc = randomLoc();
+                while (grid.isBarrierAt(loc)) {
+                    loc = randomLoc();
+                }
+                grid.set(loc, BARRIER);
+                barrierLocations.push_back(loc);
+            }
+        }
+        break;
+
     default:
         assert(false);
     }

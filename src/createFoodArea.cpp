@@ -188,6 +188,24 @@ void Grid::createFoodArea(unsigned foodAreaType)
         }
         break;
 
+    // Random points, percentage of the grid
+    case 7:
+        {
+            auto randomLoc = [&]() {
+                return Coord( (int16_t)randomUint(0, p.sizeX - 1),
+                              (int16_t)randomUint(0, p.sizeY - 1));
+            };
+            for (int i = 0; i < (int16_t)(p.sizeX * p.sizeY / 100); ++i) {
+                Coord loc = randomLoc();
+                while (!grid.isEmptyAt(loc)) {
+                    loc = randomLoc();
+                }
+                grid.set(loc, FOODAREA);
+                foodAreaLocations.push_back(loc);
+            }
+        }
+        break;
+
     default:
         assert(false);
     }
