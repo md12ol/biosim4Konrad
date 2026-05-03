@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <ostream>
 
 #include "simulator.h"
 
@@ -22,6 +21,8 @@ namespace BS {
 
         safeAreaLocations.clear();
         safeAreaCenters.clear();
+        safeFoodAreaLocations.clear();
+        safeFoodAreaCenters.clear();
 
         auto drawBox = [&](int16_t minX, int16_t minY, int16_t maxX, int16_t maxY) {
             for (int16_t x = minX; x <= maxX; ++x) {
