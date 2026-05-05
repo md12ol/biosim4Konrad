@@ -159,14 +159,29 @@ April 14th, 2026
     >>  Think about how we might display the changing NNs over time (heatmaps if you have time start implementing this)
 
 April 21st, 2026
-    >>  Think about how we might display the changing NNs over time
-    >>  We want to make an inverse neuron to population_forward that returns a larger value if a mouse/cat is closer
-        >>  Also do this for mouse/cat short probes, food/safe/barrier sensors, and the right/left neurons
-    >>  Barriers should be considered the most important -> they are added first and block other areas
-        >>  If the safe/food areas are static, the overlap will simply not exist
-        >>  If they are random, then these areas will be added until the desired coverage is met
-        >>  Add another type for the board that is both a safe and food area
-    >>  Optimize the code for food areas and let me know what you find
+    >>  Think about how we might display the changing NNs over time [DONE, below]
+        >>  A 2D matrix with sensor/internal on the y-axis and action/internal on the x-axis. The weight of the connection is the contents of the cell.
+        >>  Sum up all the neural networks into one matrix.
+        >>  Divide each cell by the maximum possible value (i.e., all cells contain the maximum positive weight).
+    >>  We want to make an inverse neuron to population_forward that returns a larger value if a mouse/cat is closer [DONE]
+        >>  Also do this for mouse/cat short probes, food/safe/barrier sensors, and the right/left neurons [DONE]
+    >>  Barriers should be considered the most important -> they are added first and block other areas [DONE]
+        >>  If the safe/food areas are static, the overlap will simply not exist [DONE]
+        >>  If they are random, then these areas will be added until the desired coverage is met [DONE]
+        >>  Add another type for the board that is both a safe and food area [DONE]
+
+May 5th, 2026
+    >>  Make the matrix/heatmap
+    >>  Look into the bug that occurs when no cats eat any mice
+        >>  Randomly create a new cat population (like during initialization)
+    >>  Modify th e code so that when no mice survive, we just generate a random population of mice but keep the cats
+        >>  And vice-versa
+    >>  Make a log for each generation, keeping track of things like the number of surviving mice/cats, etc.
+        >>  Check out graphlog.gp
+        >>  Check out gnuplot as well (from output)
+    >>  Keep track of how many timesteps a mouse stays on a food tile
+    >>  Modify the simulation so that we could have a dynamic population size (and ratio between cats/mice)
+        >>  Dyanmic: use equations on the sheet
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
