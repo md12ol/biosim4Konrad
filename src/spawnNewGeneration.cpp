@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include <cassert>
+
+#include "heatmapWriter.h"
 #include "simulator.h"
 
 namespace BS {
@@ -35,6 +37,7 @@ void initializeGeneration0()
             peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
         }
     }
+    createHeatmap();
 }
 
 
