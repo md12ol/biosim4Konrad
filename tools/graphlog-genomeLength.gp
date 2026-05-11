@@ -3,7 +3,9 @@
 # Requires a text file named "epoch-log.txt" in the log directory
 
 set term png size 2000, 400
-set output "/home/dm/sw/biosim4/images/log.png"
+
+realpath = $(realpath)
+set output $realpath + "/images/log.png"
 
 # Left Y axis gets scaled to the max survivors.
 # Right Y axis gets scaled to 0..255.
@@ -22,7 +24,7 @@ set key lmargin
 ScaleGenomeLength(y)= y*2
 ScaleDiversity(d)= 350*d
 
-plot "/home/dm/sw/biosim4/logs/epoch-log.txt" using 1:2 with lines lw 1 linecolor 2 title "Survivors", \
+plot $realpath + "/logs/epoch-log.txt" using 1:2 with lines lw 1 linecolor 2 title "Survivors", \
     "" using 1:(ScaleDiversity($3)) with lines lw 1 linecolor 1 title "Diversity" axes x1y2, \
     "" using 1:(ScaleGenomeLength($4)) with lines lw 1 linecolor 6 title "Genome Len" axes x1y2
 
