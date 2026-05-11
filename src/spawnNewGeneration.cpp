@@ -37,7 +37,7 @@ void initializeGeneration0()
             peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
         }
     }
-    createHeatmap();
+    //createHeatmap();
 }
 
 
@@ -215,7 +215,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << parentGenomesCats.size() << " survived cats" << std::endl;
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
-    std::cout << "Gen " << generation << ", " << parentsCats.at(parentsCats.size() / 2).second << " median of eaten mice" << std::endl;
+    std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), murderCount);
     //displaySignalUse(); // for debugging only
 
