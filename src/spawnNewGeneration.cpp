@@ -59,11 +59,29 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     signals.zeroFill();
 
     // Spawn the population. This overwrites all the elements of peeps[]
-    for (uint16_t index = 1; index <= p.population; ++index) {
-        if (index <= p.population * p.miceRatio) {
-            peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateChildGenome(parentGenomesMice), "mouse");
-        } else {
-            peeps[index].initialize(index, grid.findValidLocation(false), generateChildGenome(parentGenomesCats), "cat");
+    if (!parentGenomesMice.empty() && parentGenomesCats.empty()) {
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateChildGenome(parentGenomesMice), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
+            }
+        }
+    } else if (parentGenomesMice.empty() && !parentGenomesCats.empty()) {
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), generateChildGenome(parentGenomesCats), "cat");
+            }
+        }
+    } else {
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateChildGenome(parentGenomesMice), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), generateChildGenome(parentGenomesCats), "cat");
+            }
         }
     }
 }
@@ -221,12 +239,12 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
 
     // Now we have a container of zero or more parents' genomes
 
-    if (!parentGenomesMice.empty() && !parentGenomesCats.empty()) {
+    if (!parentGenomesMice.empty() || !parentGenomesCats.empty()) {
         // Spawn a new generation
         initializeNewGeneration(parentGenomesMice, parentGenomesCats, generation + 1);
     } else {
-        // Special case: there are no surviving parents: start the simulation over
-        // from scratch with randomly-generated genomes
+        // Special case: there are no surviving parents or only surviving parents from one species:
+        // start the simulation over from scratch with randomly-generated genomes
         initializeGeneration0();
     }
 
