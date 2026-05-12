@@ -172,14 +172,26 @@ April 21st, 2026
 
 May 5th, 2026
     >>  Make the matrix/heatmap
-    >>  Look into the bug that occurs when no cats eat any mice
-        >>  Randomly create a new cat population (like during initialization)
-    >>  Modify th e code so that when no mice survive, we just generate a random population of mice but keep the cats
-        >>  And vice-versa
-    >>  Make a log for each generation, keeping track of things like the number of surviving mice/cats, etc.
+        >>  Setup the preliminary files to generate vectors which store the heatmap [DONE]
+    >>  Look into the bug that occurs when no cats eat any mice [DONE]
+        >>  Randomly create a new cat population (like during initialization) [DONE]
+    >>  Modify the code so that when no mice survive, we just generate a random population of mice but keep the cats [DONE]
+        >>  And vice-versa [DONE]
+    >>  Make a log for each generation, keeping track of things like the number of surviving mice/cats, etc. [STARTED]
         >>  Check out graphlog.gp
         >>  Check out gnuplot as well (from output)
-    >>  Keep track of how many timesteps a mouse stays on a food tile
+
+May 12th, 2026
+    >>  Modify the vector behaviour to use v.at(10) = 5 rather than v[10] = 5 as it is safer
+    >>  Make a heatmap for each generation as a average of all the weights for each edge
+    >>  Modify the plot being made so that we have lines (of different colours) for the number of cats and number of mice surviving
+        >>  Modify the y-axis to scale with the number of members of the population
+        >>  Add a diversity metric for both cats and mice
+    >>  Expand epoch-log.txt to include additional data (like what we are printing to console (i.e., surviving cats/mice, mice eaten, etc.))
+        >>  Make this dynamic so we can choose what is included in foutput
+            >>  The easiest way to do this is probably with booleans and ternary operators
+    >>  Keep track of how many timesteps a mouse stays on a food tile [DONE]
+        >>  Modify the reproduction to favour those who ate more food [DONE]
     >>  Modify the simulation so that we could have a dynamic population size (and ratio between cats/mice)
         >>  Dyanmic: use equations on the sheet
 
@@ -189,3 +201,6 @@ Future Ideas
         >>  There is already a fitness-proportion selection mechanism, we may be able to edit this
     >>  Move the food areas between generations
     >>  Think about removing eaten food from the map that generation
+    >>  Dynamic food tiles that have a fixed amount of food and dissapear after depletion
+        >>  Dynamic food calculation, rather than keeping track of the number of time steps a mouse spends on a time we can actually count the number of food items it removed from the food tile
+        >>  We can also remove the doof tiles from the video simulation
