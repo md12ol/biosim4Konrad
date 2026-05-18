@@ -333,7 +333,7 @@ float averageGenomeLength()
 // The epoch log contains one line per generation in a format that can be
 // fed to graphlog.gp to produce a chart of the simulation progress.
 // ToDo: remove hardcoded filename.
-void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murderCount)
+void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount)
 {
     std::ofstream foutput;
 
@@ -346,12 +346,28 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murd
 
     if (foutput.is_open()) {
         foutput << generation << " " << numberSurvivors << " " << geneticDiversity()
-                << " " << averageGenomeLength() << " " << murderCount << std::endl;
+                << " " << geneticDiversitySpecifiedPopulation("mouse")
+                << " " << geneticDiversitySpecifiedPopulation("cat")
+                << " " << averageGenomeLength() << " " << survivedMice << " "
+                << survivedCats << " " << murderCount << std::endl;
     } else {
         assert(false);
     }
 }
 
+
+// Create textfile which contains maximum population range
+void createPopulationRange()
+{
+    std::ofstream foutput;
+    foutput.open(p.logDir + "/population-range.txt");
+
+    if (foutput.is_open()) {
+        foutput << p.population << std::endl;
+    } else {
+        assert(false);
+    }
+}
 
 // Print stats about pheromone usage.
 void displaySignalUse()

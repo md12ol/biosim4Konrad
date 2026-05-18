@@ -103,7 +103,8 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     unsigned numberOfMiceEaten = 0;
     unsigned successfullCats = 0;
 
-    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murderCount);
+    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
+    extern void createPopulationRange();
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
     extern void displaySignalUse();
 
@@ -234,7 +235,11 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
-    appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), murderCount);
+    appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
+    // Create textfile to contain maximum population number
+    if (generation == 1) {
+        createPopulationRange();
+    }
     //displaySignalUse(); // for debugging only
 
     // Now we have a container of zero or more parents' genomes

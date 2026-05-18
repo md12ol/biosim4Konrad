@@ -172,4 +172,50 @@ float geneticDiversity()
     return diversity;
 }
 
+// returns 0.0..1.0
+// Samples random pairs of mice regardless if they are alive or not
+float geneticDiversitySpecifiedPopulation(std::string species)
+{
+    if (p.population < 2) {
+        return 0.0;
+    }
+
+    int numSamples = 0;
+    float similaritySum = 0.0f;
+
+    if (species == "mouse") {
+        // count limits the number of genomes of mice sampled for performance reasons.
+        unsigned numMice = p.population * p.miceRatio;
+        unsigned count = std::min(1000U, numMice - 1);
+
+        while (count > 0) {
+            unsigned index0 = randomUint(1, numMice - 1);
+            unsigned index1 = index0 + 1;
+            assert(peeps[index0].species == "mouse");
+            assert(peeps[index1].species == "mouse");
+            similaritySum += genomeSimilarity(peeps[index0].genome, peeps[index1].genome);
+            --count;
+            ++numSamples;
+        }
+        float diversity = 1.0f - (similaritySum / numSamples);
+        return diversity;
+    } else {
+        // count limits the number of genomes of cats sampled for performance reasons.
+        unsigned numCats = p.population - p.population * p.miceRatio;
+        unsigned count = std::min(1000U, numCats - 1);
+
+        while (count > 0) {
+            unsigned index0 = randomUint(p.population * p.miceRatio + 1, p.population - 1);
+            unsigned index1 = index0 + 1;
+            assert(peeps[index0].species == "cat");
+            assert(peeps[index1].species == "cat");
+            similaritySum += genomeSimilarity(peeps[index0].genome, peeps[index1].genome);
+            --count;
+            ++numSamples;
+        }
+        float diversity = 1.0f - (similaritySum / numSamples);
+        return diversity;
+    }
+}
+
 } // end namespace BS
