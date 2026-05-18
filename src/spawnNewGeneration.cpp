@@ -133,7 +133,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
             } else if (peeps[index].species == "cat") {
                 std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeCats);
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
-                    numberOfMiceEaten = numberOfMiceEaten + peeps[index].mouseKilled;
+                    numberOfMiceEaten = numberOfMiceEaten + peeps[index].foodEaten;
                     successfullCats = successfullCats + 1;
                     parentsCats.push_back( { index, passed.second } ); // passed.second = score
                 }

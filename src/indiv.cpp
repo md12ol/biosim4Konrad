@@ -13,7 +13,7 @@ namespace BS {
 void Indiv::initialize(uint16_t index_, Coord loc_, Genome &&genome_, std::string species_)
 {
     species = species_;
-    mouseKilled = 0;
+    foodEaten = 0;
     eatenByCat = false;
     index = index_;
     loc = loc_;
