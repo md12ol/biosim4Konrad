@@ -33,10 +33,10 @@ ScaleSurvivedCats(sc) = sc
 #ScaleMurders(m) = m
 
 plot "./logs/epoch-log.txt" \
-       using 1:(ScaleSurvivors($2)) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
-    "" using 1:(ScaleDiversity($3)) with lines lw 2 linecolor 1 title "Diversity" axes x1y2, \
-    "" using 1:(ScaleDiversityMice($4)) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2, \
-    "" using 1:(ScaleDiversityCats($5)) with lines lw 2 linecolor 6 title "DiversityCats" axes x1y2, \
-    "" using 1:(ScaleSurvivedMice($7)) with lines lw 2 linecolor 3 title "SurvivedMice" axes x1y1, \
-    "" using 1:(ScaleSurvivedCats($8)) with lines lw 2 linecolor 4 title "SurvivedCats" axes x1y1
+       using 1:(column("Survivors")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
+    "" using 1:(column("Diversity")) with lines lw 2 linecolor 1 title "Diversity" axes x1y2, \
+    "" using 1:(column("DiversityMice")) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2, \
+    "" using 1:(column("DiversityCats")) with lines lw 2 linecolor 6 title "DiversityCats" axes x1y2, \
+    "" using 1:(column("SurvivedMice")) with lines lw 2 linecolor 3 title "SurvivedMice" axes x1y1, \
+    "" using 1:(column("SurvivedCats")) with lines lw 2 linecolor 4 title "SurvivedCats" axes x1y1
 

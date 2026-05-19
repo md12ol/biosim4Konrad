@@ -345,11 +345,79 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
     foutput.open(p.logDir + "/epoch-log.txt", std::ios::app);
 
     if (foutput.is_open()) {
+        if (generation == 0) {
+            if (p.logGeneration == true) {
+                foutput << "generation";
+            }
+            if (p.logSurvivors == true) {
+                foutput << " Survivors";
+            }
+            if (p.logDiversity == true) {
+                foutput << " Diversity";
+            }
+            if (p.logDiversityMice ==  true) {
+                foutput << " DiversityMice";
+            }
+            if (p.logDiversityCats == true) {
+                foutput << " DiversityCats";
+            }
+            if (p.logAverageGenomeLength == true) {
+                foutput << " averageGenomeLength";
+            }
+            if (p.logSurvivorsMice ==  true) {
+                foutput << " SurvivedMice";
+            }
+            if (p.logSurvivorsCats == true) {
+                foutput << " SurvivedCats";
+            }
+            if (p.logEatenMice ==  true) {
+                foutput << " EatenMice";
+            }
+            foutput << std::endl;
+
+            /*
+            foutput << "generation " << "Survivors " << "Diversity "
+            << "DiversityMice " << "DiversityCats " << "averageGenomeLength "
+            << "survivedMice " << "survivedCats" << std::endl;
+            */
+        }
+
+        if (p.logGeneration == true) {
+            foutput << generation;
+        }
+        if (p.logSurvivors == true) {
+            foutput << " " << numberSurvivors;
+        }
+        if (p.logDiversity == true) {
+            foutput << " " << geneticDiversity();
+        }
+        if (p.logDiversityMice == true) {
+            foutput << " " << geneticDiversitySpecifiedPopulation("mouse");
+        }
+        if (p.logDiversityCats == true) {
+            foutput << " " << geneticDiversitySpecifiedPopulation("cat");
+        }
+        if (p.logAverageGenomeLength == true) {
+            foutput << " " << averageGenomeLength();
+        }
+        if (p.logSurvivorsMice == true) {
+            foutput << " " << survivedMice;
+        }
+        if (p.logSurvivorsCats == true) {
+            foutput << " " << survivedCats;
+        }
+        if (p.logEatenMice == true) {
+            foutput << " " << murderCount;
+        }
+        foutput << std::endl;
+
+        /*
         foutput << generation << " " << numberSurvivors << " " << geneticDiversity()
                 << " " << geneticDiversitySpecifiedPopulation("mouse")
                 << " " << geneticDiversitySpecifiedPopulation("cat")
                 << " " << averageGenomeLength() << " " << survivedMice << " "
                 << survivedCats << " " << murderCount << std::endl;
+                */
     } else {
         assert(false);
     }

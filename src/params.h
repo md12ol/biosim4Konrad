@@ -55,6 +55,15 @@ struct Params {
     unsigned genomeComparisonMethod; // 0 = Jaro-Winkler; 1 = Hamming
     bool updateGraphLog;
     unsigned updateGraphLogStride; // > 0
+    bool logGeneration;
+    bool logSurvivors;
+    bool logDiversity;
+    bool logDiversityMice;
+    bool logDiversityCats;
+    bool logAverageGenomeLength;
+    bool logSurvivorsMice;
+    bool logSurvivorsCats;
+    bool logEatenMice;
     unsigned challengeMice;
     unsigned challengeCats;
     unsigned foodAreaType; // >= 0
