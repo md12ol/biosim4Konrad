@@ -182,18 +182,22 @@ May 5th, 2026
         >>  Check out gnuplot as well (from output)
 
 May 12th, 2026
-    >>  Modify the vector behaviour to use v.at(10) = 5 rather than v[10] = 5 as it is safer
-    >>  Make a heatmap for each generation as a average of all the weights for each edge
-    >>  Modify the plot being made so that we have lines (of different colours) for the number of cats and number of mice surviving
-        >>  Modify the y-axis to scale with the number of members of the population
-        >>  Add a diversity metric for both cats and mice
-    >>  Expand epoch-log.txt to include additional data (like what we are printing to console (i.e., surviving cats/mice, mice eaten, etc.))
-        >>  Make this dynamic so we can choose what is included in foutput
-            >>  The easiest way to do this is probably with booleans and ternary operators
+    >>  Modify the plot being made so that we have lines (of different colours) for the number of cats and number of mice surviving [DONE]
+        >>  Add a diversity metric for both cats and mice [DONE]
+    >>  Expand epoch-log.txt to include additional data (like what we are printing to console (i.e., surviving cats/mice, mice eaten, etc.)) [DONE]
+        >>  Make this dynamic so we can choose what is included in foutput [DONE]
+            >>  The easiest way to do this is probably with booleans and ternary operators [DONE]
     >>  Keep track of how many timesteps a mouse stays on a food tile [DONE]
         >>  Modify the reproduction to favour those who ate more food [DONE]
+
+
+May 19th, 2026
+    >>  Modify the plot code so that the plot is made a single time at the end of evolution
+        >>  Ensure that the left y-axis is the height of the highest number of survivors throughout evolution
     >>  Modify the simulation so that we could have a dynamic population size (and ratio between cats/mice)
-        >>  Dyanmic: use equations on the sheet
+           >>  Dyanmic: use equations on the sheet
+    >>  Modify the vector behaviour to use v.at(10) = 5 rather than v[10] = 5 as it is safer
+        >>  Make a heatmap for each generation as a average of all the weights for each edge
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
