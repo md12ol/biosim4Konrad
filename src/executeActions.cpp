@@ -146,7 +146,7 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
                 #pragma omp critical
                 {
                 if (!indiv2.eatenByCat) {
-                    indiv.mouseKilled = indiv.mouseKilled + 1;
+                    indiv.foodEaten = indiv.foodEaten + 1;
                 }
                 indiv2.eatenByCat = true;
                 }

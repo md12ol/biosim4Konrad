@@ -341,8 +341,8 @@ std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned chal
     // is higher, if the cat has eaten more mice.
     case CHALLENGE_CATS:
         {
-            if (indiv.mouseKilled > 0) {
-                return { true, indiv.mouseKilled };
+            if (indiv.foodEaten > 0) {
+                return { true, indiv.foodEaten };
             } else {
                 return { false, 0.0 };
             }
@@ -350,8 +350,8 @@ std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned chal
 
     // Survivors are the mice which have passed through a food tile.
     case CHALLENGE_MICE:
-            if (indiv.challengeBits != 0) {
-                return { true, 1.0 };
+            if (indiv.foodEaten > 0) {
+                return { true, indiv.foodEaten };
             } else {
                 return { false, 0.0 };
             }

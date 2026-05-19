@@ -69,6 +69,14 @@ void ParamManager::setDefaults()
     privParams.displaySampleGenomes = 5;
     privParams.genomeComparisonMethod = 1;
     privParams.updateGraphLog = true;
+    privParams.logGeneration = true;
+    privParams.logSurvivors = true;
+    privParams.logDiversity = true;
+    privParams.logDiversityMice = true;
+    privParams.logDiversityCats = true;
+    privParams.logAverageGenomeLength = true;
+    privParams.logSurvivorsMice = true;
+    privParams.logSurvivorsCats = true;
     privParams.updateGraphLogStride = privParams.videoStride;
     privParams.deterministic = false;
     privParams.RNGSeed = 12345678;
@@ -281,6 +289,33 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "updategraphlog" && isBool) {
             privParams.updateGraphLog = bVal; break;
+        }
+        else if (name == "loggeneration" && isBool) {
+            privParams.logGeneration = bVal; break;
+        }
+        else if (name == "logsurvivors" && isBool) {
+            privParams.logSurvivors = bVal; break;
+        }
+        else if (name == "logdiversity" && isBool) {
+            privParams.logDiversity = bVal; break;
+        }
+        else if (name == "logdiversitymice" && isBool) {
+            privParams.logDiversityMice = bVal; break;
+        }
+        else if (name == "logdiversitycats" && isBool) {
+            privParams.logDiversityCats = bVal; break;
+        }
+        else if (name == "logaveragegenomelength" && isBool) {
+            privParams.logAverageGenomeLength = bVal; break;
+        }
+        else if (name == "logsurvivorsmice" && isBool) {
+            privParams.logSurvivorsMice= bVal; break;
+        }
+        else if (name == "logsurvivorscats" && isBool) {
+            privParams.logSurvivorsCats = bVal; break;
+        }
+        else if (name == "logeatenmice" && isBool) {
+            privParams.logEatenMice = bVal; break;
         }
         else if (name == "updategraphlogstride" && isUint && uVal > 0) {
             privParams.updateGraphLogStride = uVal; break;

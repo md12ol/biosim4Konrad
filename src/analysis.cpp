@@ -333,7 +333,7 @@ float averageGenomeLength()
 // The epoch log contains one line per generation in a format that can be
 // fed to graphlog.gp to produce a chart of the simulation progress.
 // ToDo: remove hardcoded filename.
-void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murderCount)
+void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount)
 {
     std::ofstream foutput;
 
@@ -345,13 +345,97 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murd
     foutput.open(p.logDir + "/epoch-log.txt", std::ios::app);
 
     if (foutput.is_open()) {
+        if (generation == 0) {
+            if (p.logGeneration == true) {
+                foutput << "generation";
+            }
+            if (p.logSurvivors == true) {
+                foutput << " Survivors";
+            }
+            if (p.logDiversity == true) {
+                foutput << " Diversity";
+            }
+            if (p.logDiversityMice ==  true) {
+                foutput << " DiversityMice";
+            }
+            if (p.logDiversityCats == true) {
+                foutput << " DiversityCats";
+            }
+            if (p.logAverageGenomeLength == true) {
+                foutput << " averageGenomeLength";
+            }
+            if (p.logSurvivorsMice ==  true) {
+                foutput << " SurvivedMice";
+            }
+            if (p.logSurvivorsCats == true) {
+                foutput << " SurvivedCats";
+            }
+            if (p.logEatenMice ==  true) {
+                foutput << " EatenMice";
+            }
+            foutput << std::endl;
+
+            /*
+            foutput << "generation " << "Survivors " << "Diversity "
+            << "DiversityMice " << "DiversityCats " << "averageGenomeLength "
+            << "survivedMice " << "survivedCats" << std::endl;
+            */
+        }
+
+        if (p.logGeneration == true) {
+            foutput << generation;
+        }
+        if (p.logSurvivors == true) {
+            foutput << " " << numberSurvivors;
+        }
+        if (p.logDiversity == true) {
+            foutput << " " << geneticDiversity();
+        }
+        if (p.logDiversityMice == true) {
+            foutput << " " << geneticDiversitySpecifiedPopulation("mouse");
+        }
+        if (p.logDiversityCats == true) {
+            foutput << " " << geneticDiversitySpecifiedPopulation("cat");
+        }
+        if (p.logAverageGenomeLength == true) {
+            foutput << " " << averageGenomeLength();
+        }
+        if (p.logSurvivorsMice == true) {
+            foutput << " " << survivedMice;
+        }
+        if (p.logSurvivorsCats == true) {
+            foutput << " " << survivedCats;
+        }
+        if (p.logEatenMice == true) {
+            foutput << " " << murderCount;
+        }
+        foutput << std::endl;
+
+        /*
         foutput << generation << " " << numberSurvivors << " " << geneticDiversity()
-                << " " << averageGenomeLength() << " " << murderCount << std::endl;
+                << " " << geneticDiversitySpecifiedPopulation("mouse")
+                << " " << geneticDiversitySpecifiedPopulation("cat")
+                << " " << averageGenomeLength() << " " << survivedMice << " "
+                << survivedCats << " " << murderCount << std::endl;
+                */
     } else {
         assert(false);
     }
 }
 
+
+// Create textfile which contains maximum population range
+void createPopulationRange()
+{
+    std::ofstream foutput;
+    foutput.open(p.logDir + "/population-range.txt");
+
+    if (foutput.is_open()) {
+        foutput << p.population << std::endl;
+    } else {
+        assert(false);
+    }
+}
 
 // Print stats about pheromone usage.
 void displaySignalUse()

@@ -12,20 +12,31 @@ set output "./images/log.png"
 #   1:4 Diversity 0..0.7      => 0..255
 #   1:5 Anxiety 0..255        => 0..255
 
+# Get the maximum number of population from the textfile
+XMAX = system("cat ./logs/population-range.txt")
+
 set mxtics
 set ytics autofreq nomirror tc lt 2
-set yrange [ 0:8000 ]
+set yrange [ 0:XMAX ]
 set y2range [ 0:1 ]
 set y2tics autofreq nomirror tc lt 1
 set grid
 set key lmargin
 
 ScaleSurvivors(s) = s
-ScaleGenomeLength(y)= y*2
-ScaleDiversity(d)= d
+ScaleGenomeLength(y) = y*2
+ScaleDiversity(d) = d
+ScaleDiversityMice(dm) = dm
+ScaleDiversityCats(dc) = dc
+ScaleSurvivedMice(sm) = sm
+ScaleSurvivedCats(sc) = sc
 #ScaleMurders(m) = m
 
 plot "./logs/epoch-log.txt" \
-       using 1:(ScaleSurvivors($2)) with lines lw 2 linecolor 2 title "Survivors", \
-    "" using 1:(ScaleDiversity($3)) with lines lw 2 linecolor 1 title "Diversity" axes x1y2
+       using 1:(column("Survivors")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
+    "" using 1:(column("Diversity")) with lines lw 2 linecolor 1 title "Diversity" axes x1y2, \
+    "" using 1:(column("DiversityMice")) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2, \
+    "" using 1:(column("DiversityCats")) with lines lw 2 linecolor 6 title "DiversityCats" axes x1y2, \
+    "" using 1:(column("SurvivedMice")) with lines lw 2 linecolor 3 title "SurvivedMice" axes x1y1, \
+    "" using 1:(column("SurvivedCats")) with lines lw 2 linecolor 4 title "SurvivedCats" axes x1y1
 

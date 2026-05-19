@@ -76,7 +76,7 @@ void endOfSimStep(unsigned simStep, unsigned generation)
         }
     }
 
-    // If the individual has moved on a food tile, we set its challengeFlag to true.
+    // If the individual has moved on a food tile or stays there, we add 1 to their eaten food.
     if (p.challengeMice == CHALLENGE_MICE) {
         auto const &foodAreaLocs = grid.getFoodAreaLocations();
         auto const &safeFoodAreaLocs = grid.getSafeFoodAreaLocations();
@@ -84,12 +84,12 @@ void endOfSimStep(unsigned simStep, unsigned generation)
             Indiv &indiv = peeps[index];
             for (Coord loc : foodAreaLocs) {
                 if (loc == indiv.loc) {
-                    indiv.challengeBits = true;
+                    indiv.foodEaten = indiv.foodEaten + 1;
                 }
             }
             for (Coord loc : safeFoodAreaLocs) {
                 if (loc == indiv.loc) {
-                    indiv.challengeBits = true;
+                    indiv.foodEaten = indiv.foodEaten + 1;
                 }
             }
         }
