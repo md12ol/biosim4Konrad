@@ -22,8 +22,15 @@ namespace BS {
      * [SensorN, Action0], [Sensor1, Action1], [Sensor1, Action2] ... [Sensor2, ActionN]
      */
 
+    struct HeatmapFrameData {
+        unsigned generation;
 
-    void createHeatmap();
+    };
+
+    void initHeatmap();
+    void fillHeatmap();
+    void saveHeatmapImage(unsigned generation);
+    void createHeatmapVideo(unsigned generation);
 
 }
 #endif //HEATMAPWRITER_H_INCLUDED

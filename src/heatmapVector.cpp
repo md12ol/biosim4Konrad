@@ -1,10 +1,5 @@
 #include <condition_variable>
-#include <chrono>
-#include "simulator.h"
 #include "heatmapVector.h"
-#define cimg_use_opencv 1
-#define cimg_display 0
-#include "CImg.h"
 
 namespace BS {
 

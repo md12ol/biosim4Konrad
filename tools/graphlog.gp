@@ -17,7 +17,7 @@ XMAX = system("cat ./logs/population-range.txt")
 
 set mxtics
 set ytics autofreq nomirror tc lt 2
-set yrange [ 0:XMAX ]
+set yrange [ 0:XMAX/4 ]
 set y2range [ 0:1 ]
 set y2tics autofreq nomirror tc lt 1
 set grid

@@ -37,7 +37,8 @@ void initializeGeneration0()
             peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
         }
     }
-    //createHeatmap();
+    fillHeatmap();
+    saveHeatmapImage(0);
 }
 
 
@@ -83,6 +84,11 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
                 peeps[index].initialize(index, grid.findValidLocation(false), generateChildGenome(parentGenomesCats), "cat");
             }
         }
+    }
+    fillHeatmap();
+    saveHeatmapImage(generation);
+    if (generation == 60) {
+        createHeatmapVideo(generation);
     }
 }
 

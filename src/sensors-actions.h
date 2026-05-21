@@ -120,6 +120,8 @@ enum Action {
 
 extern std::string sensorName(Sensor sensor);
 extern std::string actionName(Action action);
+extern std::string sensorShortName(Sensor sensor);
+extern std::string actionShortName(Action action);
 extern void printSensorsActions(); // list the names to stdout
 
 } // end namespace BS

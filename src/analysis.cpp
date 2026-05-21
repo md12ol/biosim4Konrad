@@ -374,12 +374,6 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
                 foutput << " EatenMice";
             }
             foutput << std::endl;
-
-            /*
-            foutput << "generation " << "Survivors " << "Diversity "
-            << "DiversityMice " << "DiversityCats " << "averageGenomeLength "
-            << "survivedMice " << "survivedCats" << std::endl;
-            */
         }
 
         if (p.logGeneration == true) {
@@ -410,14 +404,6 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
             foutput << " " << murderCount;
         }
         foutput << std::endl;
-
-        /*
-        foutput << generation << " " << numberSurvivors << " " << geneticDiversity()
-                << " " << geneticDiversitySpecifiedPopulation("mouse")
-                << " " << geneticDiversitySpecifiedPopulation("cat")
-                << " " << averageGenomeLength() << " " << survivedMice << " "
-                << survivedCats << " " << murderCount << std::endl;
-                */
     } else {
         assert(false);
     }
