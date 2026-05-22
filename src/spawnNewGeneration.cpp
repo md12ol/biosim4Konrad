@@ -87,7 +87,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     }
     fillHeatmap();
     saveHeatmapImage(generation);
-    if (generation == 60) {
+    if (generation == p.maxGenerations) {
         createHeatmapVideo(generation);
     }
 }

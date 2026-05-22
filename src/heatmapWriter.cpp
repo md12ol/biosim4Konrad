@@ -16,6 +16,7 @@
 namespace BS {
 
     HeatmapVector heatmap;
+    HeatmapVector heatmapCounter;
     cimg_library::CImgList<uint8_t> heatmapImageList;
 
     // Initializes a heatmap with size depending on Sensors, Neurons and Actions.
@@ -24,17 +25,19 @@ namespace BS {
         // Initialize the heatmap depending on the number of neurons
         std::cout << "heatmap initialized" << std::endl;
         heatmap.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapCounter.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
     }
 
     void fillHeatmap() {
         // Access the heatmap at the correct indices
-        uint16_t heatmapRow = -1;
-        uint16_t heatmapCol = -1;
+        uint16_t heatmapRow = 10000;
+        uint16_t heatmapCol = 10000;
 
-        // Check that heatmap is empty
+        // Check that heatmap and heatmapCounter are empty
         for (int x = 0; x < heatmap.sizeX(); x++) {
             for (int y = 0; y < heatmap.sizeY(); y++) {
                 assert(heatmap.at(x, y) == 0);
+                assert(heatmapCounter.at(x, y) == 0);
             }
         }
 
@@ -63,10 +66,27 @@ namespace BS {
                     heatmapCol = conn.sinkNum;
                 }
 
+                assert(heatmapCol < 10000);
+                assert(heatmapRow < 10000);
+
                 // Get the previous value for the connection in the heatmap
                 const int previousValue = heatmap.at(heatmapRow, heatmapCol);
+                const int previousCount = heatmapCounter.at(heatmapRow, heatmapCol);
                 // Set heatmap to the new value
                 heatmap.set(heatmapRow, heatmapCol, previousValue + conn.weight);
+                heatmapCounter.set(heatmapRow, heatmapCol, previousCount + 1);
+            }
+        }
+
+        // Calculate the average of each heatmap cell
+        for (int x = 0; x < heatmap.sizeX(); x++) {
+            for (int y = 0; y < heatmap.sizeY(); y++) {
+                if (heatmapCounter.at(x, y) > 1) {
+                    // Calculate the average (if there is only one value, we do not need to modify it)
+                    const int average = heatmap.at(x, y) / heatmapCounter.at(x, y);
+                    heatmap.set(x, y, average);
+                    assert(heatmap.at(x, y) == average);
+                }
             }
         }
     }
@@ -83,36 +103,27 @@ namespace BS {
             3,
             255);
 
-        uint8_t colorPositive[3];
-        uint8_t colorNegative[3];
-        uint8_t colorTextForeground[3];
-        uint8_t colorTextBackground[3];
+        uint8_t colorPositive[3] = {0, 255, 0};
+        uint8_t colorNegative[3] = {255, 0, 0};
+        uint8_t colorTextForeground[3] = {0, 0, 0};
+        uint8_t colorTextBackground[3] = {255, 255, 255};
+
         std::stringstream imageFilename;
         imageFilename << p.imageDir << "frame-"
         << std::setfill('0') << std::setw(6) << generation
         << ".png";
 
-        colorPositive[0] = 0;
-        colorPositive[1] = 255;
-        colorPositive[2] = 0;
-        colorNegative[0] = 255;
-        colorNegative[1] = 0;
-        colorNegative[2] = 0;
-        colorTextForeground[0] = 0;
-        colorTextForeground[1] = 0;
-        colorTextForeground[2] = 0;
-        colorTextBackground[0] = 255;
-        colorTextBackground[1] = 255;
-        colorTextBackground[2] = 255;
-        // ToDo: Find a good scale for visibility in the video.
-        // ToDo: Average the weights for the neuronal connections (maybe a second heatmap to count number of
-        // specific connections).
-        // ToDo: Prevent opacity from getting rounded down or up.
-        // ToDo: Choose a good video format (maybe mp4 is better because it is less susceptible to errors).
-        // ToDo: Make sure that creating a frame is thread-safe (maybe use an immutable copy of the population
-        // when function is called).
-
-
+        // Display a grid for better visibility
+        image.draw_grid(
+            heatmapImageScale,
+            heatmapImageScale,
+            heatmapImageScale / 2,
+            heatmapImageScale / 2,
+            false,
+            false,
+            colorTextForeground,
+            1.0
+            );
 
         // Display the strings of sensor and internal neurons
         for (int x = 0; x < heatmap.sizeX(); ++x) {
@@ -138,6 +149,7 @@ namespace BS {
                     heatmapImageScale / 3);
             }
         }
+
         // Display the strings for actions and internal neurons
         for (int y = 0; y < heatmap.sizeY(); ++y) {
             if (y < p.maxNumberNeurons) {
@@ -165,18 +177,31 @@ namespace BS {
 
         for (int x = 0; x < heatmap.sizeX(); x++) {
             for (int y = 0; y < heatmap.sizeY(); y++) {
-                image.draw_circle(
-                    (y+1) * heatmapImageScale,
-                    (x+1) * heatmapImageScale,
-                    heatmapImageScale / 2,
-                    heatmap.at(x, y) > 0 ? colorPositive : colorNegative,
-                    std::abs(std::tanh(heatmap.at(x, y))));
+                if (heatmap.at(x, y) > 0) {
+                    image.draw_circle(
+                        (y+1) * heatmapImageScale,
+                        (x+1) * heatmapImageScale,
+                        heatmapImageScale / 2,
+                        colorPositive,
+                        (double)heatmap.at(x, y) / 32767);
+                } else if (heatmap.at(x, y) < 0) {
+                    image.draw_circle(
+                        (y+1) * heatmapImageScale,
+                        (x+1) * heatmapImageScale,
+                        heatmapImageScale / 2,
+                        colorNegative,
+                        (double)heatmap.at(x, y) / -32767);
+                } else {
+                    // Do nothing since heatmap at this position is 0
+                    // -> weights cancel themselves out or individuals do not use this connection
+                }
             }
         }
         heatmapImageList.push_back(image);
 
-        // Clear the heatmap after saving an image
+        // Clear the heatmap and heatmap counter after saving an image
         heatmap.zeroFill();
+        heatmapCounter.zeroFill();
     }
 
     // Takes the list of all heatmap images and creates a video with one frame for each generation.
