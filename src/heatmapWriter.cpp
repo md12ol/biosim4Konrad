@@ -108,6 +108,7 @@ namespace BS {
         uint8_t colorTextForeground[3] = {0, 0, 0};
         uint8_t colorTextBackground[3] = {255, 255, 255};
 
+        // ToDo: Heatmapvisualisierung verbessern
         std::stringstream imageFilename;
         imageFilename << p.imageDir << "frame-"
         << std::setfill('0') << std::setw(6) << generation
@@ -135,7 +136,7 @@ namespace BS {
                     colorTextForeground,
                     colorTextBackground,
                     1.0,
-                    heatmapImageScale / 3
+                    heatmapImageScale / 2
                     );
             } else {
                 // Write text for internal neurons
@@ -146,7 +147,7 @@ namespace BS {
                     colorTextForeground,
                     colorTextBackground,
                     1.0,
-                    heatmapImageScale / 3);
+                    heatmapImageScale / 2);
             }
         }
 
@@ -160,7 +161,7 @@ namespace BS {
                     colorTextForeground,
                     colorTextBackground,
                     1.0,
-                    heatmapImageScale / 3
+                    heatmapImageScale / 2
                     );
             } else {
                 image.draw_text(
@@ -170,7 +171,7 @@ namespace BS {
                     colorTextForeground,
                     colorTextBackground,
                     1.0,
-                    heatmapImageScale / 3
+                    heatmapImageScale / 2
                     );
             }
         }

@@ -423,6 +423,44 @@ void createPopulationRange()
     }
 }
 
+// Create textfile which contains the survivors of the generation with the most survivors
+void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
+    int previousNumberSurvivors = 0;
+
+    // Get the previous number of survivors from the file.
+    std::ifstream finput(p.logDir + "/population-range-final.txt");
+
+    if (finput.is_open()) {
+        finput >> previousNumberSurvivors;
+        finput.close();
+    } else {
+        assert(false);
+    }
+
+    if (numberSurvivors > previousNumberSurvivors) {
+        // Empty the file and write the new value into it.
+        std::ofstream fempty(p.logDir + "/population-range-final.txt", std::ios::trunc);
+        if (fempty.is_open()) {
+            fempty << numberSurvivors << std::endl;
+            fempty.close();
+        } else {
+            assert(false);
+        }
+    }
+
+    if (generation == p.maxGenerations - 1) {
+        std::system("gnuplot --persist ./tools/graphlog-final.gp");
+
+        std::ofstream fempty(p.logDir + "/population-range-final.txt", std::ios::trunc);
+        if (fempty.is_open()) {
+            fempty << 0 << std::endl;
+            fempty.close();
+        } else {
+            assert(false);
+        }
+    }
+}
+
 // Print stats about pheromone usage.
 void displaySignalUse()
 {

@@ -111,6 +111,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
 
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
     extern void createPopulationRange();
+    extern void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation);
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
     extern void displaySignalUse();
 
@@ -246,6 +247,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     if (generation == 1) {
         createPopulationRange();
     }
+    createPopulationFinalRange(parentGenomesMice.size() + parentGenomesCats.size(), generation);
     //displaySignalUse(); // for debugging only
 
     // Now we have a container of zero or more parents' genomes

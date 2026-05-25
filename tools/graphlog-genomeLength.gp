@@ -5,7 +5,7 @@
 set term png size 2000, 400
 
 realpath = $(realpath)
-set output $realpath + "/images/log.png"
+set output $realpath + "/images/log-genome.png"
 
 # Left Y axis gets scaled to the max survivors.
 # Right Y axis gets scaled to 0..255.
