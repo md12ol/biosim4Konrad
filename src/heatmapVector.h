@@ -20,6 +20,7 @@ namespace BS {
         };
 
         void init(uint16_t sizeX, uint16_t sizeY);
+        int getAbsoluteMaximum() const;
         void zeroFill() { for (Row &row : data) row.zeroFill(); }
         uint16_t sizeX() const { return data.size(); }
         uint16_t sizeY() const { return data[0].size(); }

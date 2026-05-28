@@ -38,7 +38,7 @@ void initializeGeneration0()
         }
     }
     fillHeatmap();
-    saveHeatmapImage(0);
+    saveHeatmapImages(0);
 }
 
 
@@ -86,9 +86,9 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
         }
     }
     fillHeatmap();
-    saveHeatmapImage(generation);
+    saveHeatmapImages(generation);
     if (generation == p.maxGenerations) {
-        createHeatmapVideo(generation);
+        createHeatmapVideos(generation);
     }
 }
 
@@ -107,6 +107,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
 {
     unsigned sacrificedCount = 0; // for the altruism challenge
     unsigned numberOfMiceEaten = 0;
+    unsigned numberOfFoodEaten = 0;
     unsigned successfullCats = 0;
 
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
@@ -124,6 +125,9 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::vector<Genome> parentGenomesMice;
     std::vector<Genome> parentGenomesCats;
 
+    std::cout << "Is population at this point correct? population=" << p.population << std::endl;
+
+
     if (p.challengeMice != CHALLENGE_ALTRUISM && p.challengeCats != CHALLENGE_ALTRUISM) {
         // First, make a list of all the individuals who will become parents; save
         // their scores for later sorting. Indexes start at 1.
@@ -136,6 +140,10 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
             if (peeps[index].species == "mouse") {
                 std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeMice);
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
+                    if (peeps[index].alive == false) {
+                        std::cout << "Mouse is no longer alive" << std::endl;
+                    }
+                    numberOfFoodEaten = numberOfFoodEaten + peeps[index].foodEaten;
                     parentsMice.push_back( { index, passed.second } ); // passed.second = score
                 }
             } else if (peeps[index].species == "cat") {
@@ -242,6 +250,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
+    // ToDo: How to handle a scenario where no cats nor mice survive?
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
     // Create textfile to contain maximum population number
     if (generation == 1) {
@@ -254,10 +263,20 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
 
     if (!parentGenomesMice.empty() || !parentGenomesCats.empty()) {
         // Spawn a new generation
+/*
+        unsigned numberOfCats = p.population - p.population * p.miceRatio + numberOfMiceEaten / 200;
+        unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
+        std::cout << "number of mice eaten: " << numberOfMiceEaten << std::endl;
+        // Adjust the size of the population.
+        p.population = numberOfCats + numberOfMice;
+        p.miceRatio = (double)numberOfMice / p.population;
+        peeps.init(p.population);
+*/
         initializeNewGeneration(parentGenomesMice, parentGenomesCats, generation + 1);
     } else {
         // Special case: there are no surviving parents or only surviving parents from one species:
         // start the simulation over from scratch with randomly-generated genomes
+        // std::cout << "No survivors in the generation" << std::endl;
         initializeGeneration0();
     }
 

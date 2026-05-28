@@ -380,7 +380,9 @@ void ParamManager::updateFromConfigFile(unsigned generationNumber)
             value.erase(std::remove_if(value.begin(), value.end(), isspace),
                                  value.end());
             //std::cout << name << " " << value << '\n' << std::endl;
+            //if (generationNumber < 1 || (name != "miceratio" && name != "population")) {
             ingestParameter(name, value);
+            //}
         }
     }
     else {

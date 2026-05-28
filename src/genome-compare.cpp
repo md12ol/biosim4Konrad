@@ -1,6 +1,9 @@
 // genome-compare.cpp -- compute similarity of two genomes
 
 #include <cassert>
+#include <iostream>
+#include <__ostream/basic_ostream.h>
+
 #include "simulator.h"
 
 namespace BS {
@@ -176,6 +179,7 @@ float geneticDiversity()
 // Samples random pairs of mice regardless if they are alive or not
 float geneticDiversitySpecifiedPopulation(std::string species)
 {
+    std::cout << "geneticDiversitySpecifiedPopulation: " << species << std::endl;
     if (p.population < 2) {
         return 0.0;
     }
@@ -189,6 +193,7 @@ float geneticDiversitySpecifiedPopulation(std::string species)
         unsigned count = std::min(1000U, numMice - 1);
 
         while (count > 0) {
+            // std::cout << "Peeps at 0 species: " << peeps[1].species.c_str() << std::endl;
             unsigned index0 = randomUint(1, numMice - 1);
             unsigned index1 = index0 + 1;
             assert(peeps[index0].species == "mouse");
