@@ -105,8 +105,8 @@ namespace BS {
         cimg_library::CImgList<uint8_t>& heatmapList, const int heatmapImageScale, const std::string &type) {
         using namespace cimg_library;
 
-        CImg<uint8_t> image((hm.sizeX() + 1) * heatmapImageScale,
-            (hm.sizeY() + 1) * heatmapImageScale,
+        CImg<uint8_t> image((hm.sizeX() + 6) * heatmapImageScale,
+            (hm.sizeY() + 10) * heatmapImageScale,
             1,
             3,
             255);
@@ -116,34 +116,34 @@ namespace BS {
         << std::setfill('0') << std::setw(6) << generation
         << ".png";
 
-        // Display a grid for better visibility
-        image.draw_grid(
-            heatmapImageScale,
-            heatmapImageScale,
-            heatmapImageScale / 2,
-            heatmapImageScale / 2,
-            false,
-            false,
-            colorBlack,
-            1.0);
 
-        // Display the strings of sensor and internal neurons
+
+
+        // Display the strings for sensors and internal neurons
+
+        // First create an image which only contains the text
+        CImg<uint8_t> textImage(9 * heatmapImageScale,
+            hm.sizeX() * heatmapImageScale,
+            1,
+            3,
+            255);
+
+        // Then we add the text for the sensor and internal neurons to it
         for (int x = 0; x < hm.sizeX(); ++x) {
             if (x < NUM_SENSES) {
-                image.draw_text(
-                    (x + 1) * heatmapImageScale,
+                textImage.draw_text(
                     0,
+                    x * heatmapImageScale,
                     sensorName(static_cast<Sensor>(x)).c_str(),
                     colorBlack,
                     colorWhite,
                     1.0,
                     heatmapImageScale / 2);
             } else {
-                // Write text for internal neurons
-                image.draw_text(
-                    (x + 1) * heatmapImageScale,
+                textImage.draw_text(
                     0,
-                    "N",
+                    x * heatmapImageScale,
+                    ("N" + std::to_string(x - NUM_SENSES)).c_str(),
                     colorBlack,
                     colorWhite,
                     1.0,
@@ -151,13 +151,17 @@ namespace BS {
             }
         }
 
+        // Lastly we add our rotated text image to our main image
+        image.draw_image(heatmapImageScale * 6, 0, textImage.get_rotate(-90));
+
+
         // Display the strings for actions and internal neurons
         for (int y = 0; y < hm.sizeY(); ++y) {
             if (y < p.maxNumberNeurons) {
                 image.draw_text(
                     0,
-                    (y + 1) * heatmapImageScale,
-                    "N",
+                    (y + 10) * heatmapImageScale,
+                    ("N" + std::to_string(y)).c_str(),
                     colorBlack,
                     colorWhite,
                     1.0,
@@ -165,7 +169,7 @@ namespace BS {
             } else {
                 image.draw_text(
                     0,
-                    (y + 1) * heatmapImageScale,
+                    (y + 10) * heatmapImageScale,
                     actionName(static_cast<Action>(y - p.maxNumberNeurons)).c_str(),
                     colorBlack,
                     colorWhite,
@@ -180,15 +184,15 @@ namespace BS {
                 for (int y = 0; y < hm.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
                         image.draw_circle(
-                            (x+1) * heatmapImageScale,
-                            (y+1) * heatmapImageScale,
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
                             heatmapImageScale / 2,
                             colorGreen,
                             static_cast<double>(hm.at(x, y)) / 32767);
                     } else if (hm.at(x, y) < 0) {
                         image.draw_circle(
-                            (x+1) * heatmapImageScale,
-                            (y+1) * heatmapImageScale,
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
                             heatmapImageScale / 2,
                             colorRed,
                             static_cast<double>(hm.at(x, y)) / -32767);
@@ -203,8 +207,8 @@ namespace BS {
                 for (int y = 0; y < heatmap.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
                         image.draw_circle(
-                            (x+1) * heatmapImageScale,
-                            (y+1) * heatmapImageScale,
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
                             heatmapImageScale / 2,
                             colorGreen,
                             static_cast<double>(hm.at(x, y)) / p.population);
@@ -216,8 +220,8 @@ namespace BS {
             for (int x = 0; x < hm.sizeX(); x++) {
                 for (int y = 0; y < hm.sizeY(); y++) {
                     image.draw_circle(
-                    (x+1) * heatmapImageScale,
-                    (y+1) * heatmapImageScale,
+                    (x+6) * heatmapImageScale,
+                    (y+10) * heatmapImageScale,
                     heatmapImageScale / 2,
                     hm.at(x, y) > 0 ? colorGreen : colorRed,
                     hm.at(x, y) > 0 ? static_cast<double>(hm.at(x, y)) / absoluteMaximum : static_cast<double>(hm.at(x, y)) / -absoluteMaximum);
@@ -225,6 +229,25 @@ namespace BS {
             }
         }
 
+        // Draw horizontal lines for better visibility
+        for(int y = 0; y < heatmap.sizeX(); ++y) {
+            image.draw_line(
+            0,
+            (y + 9.5) * heatmapImageScale,
+            image.width(),
+            (y + 9.5) * heatmapImageScale,
+            colorBlack);
+        }
+
+        // Draw vertical lines for better visibility
+        for(int x = 0; x < heatmap.sizeX() + 1; ++x) {
+        image.draw_line(
+            (x + 5.5) * heatmapImageScale,
+            0,
+            (x + 5.5) * heatmapImageScale,
+            image.height(),
+            colorBlack);
+        }
         heatmapList.push_back(image);
     }
 
