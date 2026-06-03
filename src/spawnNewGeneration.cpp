@@ -61,6 +61,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
 
     // Spawn the population. This overwrites all the elements of peeps[]
     if (!parentGenomesMice.empty() && parentGenomesCats.empty()) {
+        std::cout << "Only mice survived" << std::endl;
         for (uint16_t index = 1; index <= p.population; ++index) {
             if (index <= p.population * p.miceRatio) {
                 peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateChildGenome(parentGenomesMice), "mouse");
@@ -69,6 +70,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
             }
         }
     } else if (parentGenomesMice.empty() && !parentGenomesCats.empty()) {
+        std::cout << "Only cats survived" << std::endl;
         for (uint16_t index = 1; index <= p.population; ++index) {
             if (index <= p.population * p.miceRatio) {
                 peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
@@ -77,6 +79,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
             }
         }
     } else {
+        std::cout << "Mice and cats survived" << std::endl;
         for (uint16_t index = 1; index <= p.population; ++index) {
             if (index <= p.population * p.miceRatio) {
                 peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateChildGenome(parentGenomesMice), "mouse");
@@ -125,7 +128,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::vector<Genome> parentGenomesMice;
     std::vector<Genome> parentGenomesCats;
 
-    std::cout << "Is population at this point correct? population=" << p.population << std::endl;
+    std::cout << "Starting population for generation: " << generation << " Population: " << p.population << std::endl;
 
 
     if (p.challengeMice != CHALLENGE_ALTRUISM && p.challengeCats != CHALLENGE_ALTRUISM) {
@@ -263,15 +266,17 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
 
     if (!parentGenomesMice.empty() || !parentGenomesCats.empty()) {
         // Spawn a new generation
-/*
-        unsigned numberOfCats = p.population - p.population * p.miceRatio + numberOfMiceEaten / 200;
-        unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
-        std::cout << "number of mice eaten: " << numberOfMiceEaten << std::endl;
-        // Adjust the size of the population.
-        p.population = numberOfCats + numberOfMice;
-        p.miceRatio = (double)numberOfMice / p.population;
-        peeps.init(p.population);
-*/
+
+        if (p.dynamicPopulation == true) {
+            unsigned numberOfCats = successfullCats + numberOfMiceEaten / 50;
+            unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
+
+            // Adjust the size of the population.
+            p.population = numberOfCats + numberOfMice;
+            p.miceRatio = static_cast<double>(numberOfMice) / p.population;
+            peeps.init(p.population);
+        }
+
         initializeNewGeneration(parentGenomesMice, parentGenomesCats, generation + 1);
     } else {
         // Special case: there are no surviving parents or only surviving parents from one species:

@@ -190,6 +190,11 @@ float geneticDiversitySpecifiedPopulation(std::string species)
     if (species == "mouse") {
         // count limits the number of genomes of mice sampled for performance reasons.
         unsigned numMice = p.population * p.miceRatio;
+
+        if (numMice < 2) {
+            return 0.0;
+        }
+
         unsigned count = std::min(1000U, numMice - 1);
 
         while (count > 0) {
@@ -207,6 +212,11 @@ float geneticDiversitySpecifiedPopulation(std::string species)
     } else {
         // count limits the number of genomes of cats sampled for performance reasons.
         unsigned numCats = p.population - p.population * p.miceRatio;
+
+        if (numCats < 2) {
+            return 0.0;
+        }
+
         unsigned count = std::min(1000U, numCats - 1);
 
         while (count > 0) {

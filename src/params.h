@@ -22,8 +22,9 @@ extern RunMode runMode;
 // updated, read-only, stable snapshot of Params with ParamManager::paramsSnapshot.
 
 struct Params {
-    unsigned population; // >= 0
-    double miceRatio; // 0.0..1.0
+    mutable unsigned population; // >= 0
+    mutable double miceRatio; // 0.0..1.0
+    bool dynamicPopulation;
     unsigned stepsPerGeneration; // > 0
     unsigned maxGenerations; // >= 0
     unsigned numThreads; // > 0

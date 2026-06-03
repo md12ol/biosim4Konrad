@@ -185,6 +185,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "miceratio" && isFloat && dVal >= 0.0 && dVal <= 1.0) {
             privParams.miceRatio = dVal; break;
         }
+        else if (name == "dynamicpopulation" && isBool) {
+            privParams.dynamicPopulation = bVal; break;
+        }
         else if (name == "stepspergeneration" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.stepsPerGeneration = uVal; break;
         }
@@ -380,9 +383,9 @@ void ParamManager::updateFromConfigFile(unsigned generationNumber)
             value.erase(std::remove_if(value.begin(), value.end(), isspace),
                                  value.end());
             //std::cout << name << " " << value << '\n' << std::endl;
-            //if (generationNumber < 1 || (name != "miceratio" && name != "population")) {
+            if (generationNumber < 1 || (name != "miceratio" && name != "population")) {
             ingestParameter(name, value);
-            //}
+            }
         }
     }
     else {
