@@ -294,7 +294,7 @@ void Indiv::printGenome() const
 
 // This prints a neural net in a form that can be processed with
 // graph-nnet.py to produce a graphic illustration of the net.
-void Indiv::printIGraphEdgeList() const
+void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
 {
     for (auto & conn : nnet.connections) {
         if (conn.sourceType == SENSOR) {
@@ -313,6 +313,37 @@ void Indiv::printIGraphEdgeList() const
 
         std::cout << " " << std::to_string(conn.weight) << std::endl;
     }
+    /*
+
+    std::string iGraphEdgeListFilename;
+    iGraphEdgeListFilename = iGraphEdgeListFilename + "net-gen-" +
+        std::to_string(generation) + "-" + std::to_string(index) + ".txt";
+
+
+    std::ofstream foutput;
+    foutput.open(iGraphEdgeListFilename, std::ios::app);
+
+    if (foutput.is_open()) {
+        for (auto & conn : nnet.connections) {
+            if (conn.sourceType == SENSOR) {
+                foutput << sensorShortName((Sensor)(conn.sourceNum));
+            } else {
+                foutput << "N" << std::to_string(conn.sourceNum);
+            }
+
+            foutput << " ";
+
+            if (conn.sinkType == ACTION) {
+                foutput << actionShortName((Action)(conn.sinkNum));
+            } else {
+                foutput << "N" << std::to_string(conn.sinkNum);
+            }
+
+            foutput << " " << std::to_string(conn.weight) << std::endl;
+        }
+    }
+    */
+
 }
 
 
@@ -523,7 +554,7 @@ void displaySensorActionReferenceCounts()
 }
 
 
-void displaySampleGenomes(unsigned count)
+void displaySampleGenomes(unsigned count, unsigned generation)
 {
     unsigned index = 1; // indexes start at 1
     for (index = 1; count > 0 && index <= p.population; ++index) {
@@ -533,7 +564,7 @@ void displaySampleGenomes(unsigned count)
             std::cout << std::endl;
 
             //peeps[index].printNeuralNet();
-            peeps[index].printIGraphEdgeList();
+            peeps[index].printIGraphEdgeList(index, generation);
 
 
             std::cout << "---------------------------" << std::endl;

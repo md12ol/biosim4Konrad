@@ -83,6 +83,8 @@ struct Params {
     unsigned genomeInitialLengthMax; // > 0 and < genomeInitialLengthMin
     std::string logDir;
     std::string imageDir;
+    std::string heatmapDir;
+    std::string netDir;
     std::string graphLogUpdateCommand;
 
     // These are updated automatically and not set via the parameter file

@@ -273,7 +273,7 @@ namespace BS {
             std::cout << "Frames are in the heatmapImageList" << std::endl;
             std::cout << "Number of frames in the heatmapImageList: " << heatmapImageList.size() << std::endl;
             std::stringstream videoFilename;
-            videoFilename << p.imageDir.c_str() << "heatmap-"
+            videoFilename << p.heatmapDir.c_str() << "/heatmap-"
             << std::setfill('0') << std::setw(6) << generation << ".mp4";
             heatmapImageList.save_video(videoFilename.str().c_str(),
                 1,
@@ -286,7 +286,7 @@ namespace BS {
             std::cout << "Frames are in the heatmapCounterImageList" << std::endl;
             std::cout << "Number of frames in the heatmapCounterImageList: " << heatmapCounterImageList.size() << std::endl;
             std::stringstream videoFilename;
-            videoFilename << p.imageDir.c_str() << "heatmapCounter-"
+            videoFilename << p.heatmapDir.c_str() << "/heatmapCounter-"
             << std::setfill('0') << std::setw(6) << generation << ".mp4";
             heatmapCounterImageList.save_video(videoFilename.str().c_str(),
                 1,
@@ -299,7 +299,7 @@ namespace BS {
             std::cout << "Frames are in the heatmapSumImageList" << std::endl;
             std::cout << "Number of frames in the heatmapSumImageList: " << heatmapSumImageList.size() << std::endl;
             std::stringstream videoFilename;
-            videoFilename << p.imageDir.c_str() << "heatmapSum-"
+            videoFilename << p.heatmapDir.c_str() << "/heatmapSum-"
             << std::setfill('0') << std::setw(6) << generation << ".mp4";
             heatmapSumImageList.save_video(videoFilename.str().c_str(),
                 1,

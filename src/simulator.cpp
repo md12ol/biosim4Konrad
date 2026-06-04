@@ -22,7 +22,7 @@ namespace BS {
 
 extern void initializeGeneration0();
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
-extern void displaySampleGenomes(unsigned count);
+extern void displaySampleGenomes(unsigned count, unsigned generation);
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
 extern void endOfSimStep(unsigned simStep, unsigned generation);
 extern void endOfGeneration(unsigned generation);
@@ -171,7 +171,7 @@ void simulator(int argc, char **argv)
                 paramManager.updateFromConfigFile(generation + 1);
                 unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
                 if (numberSurvivors > 0 && (generation % p.genomeAnalysisStride == 0)) {
-                    displaySampleGenomes(p.displaySampleGenomes);
+                    displaySampleGenomes(p.displaySampleGenomes, generation);
                 }
                 if (numberSurvivors == 0) {
                     generation = 0;  // start over
@@ -181,7 +181,7 @@ void simulator(int argc, char **argv)
             }
         }
     }
-    displaySampleGenomes(3); // final report, for debugging
+    displaySampleGenomes(3, generation); // final report, for debugging
 
     std::cout << "Simulator exit." << std::endl;
 
