@@ -36,6 +36,7 @@ void ParamManager::setDefaults()
     privParams.imageDir = "./images/";
     privParams.heatmapDir = "./heatmaps/";
     privParams.netDir = "./nets/";
+    privParams.graphDir = "./graphs/";
     privParams.population = 3000;
     privParams.miceRatio = 0.5;
     privParams.stepsPerGeneration = 300;

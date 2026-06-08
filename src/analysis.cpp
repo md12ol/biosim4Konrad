@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cstring>
 #include <string>
+#include <cstdlib>
 #include "simulator.h"
 
 namespace BS {
@@ -296,6 +297,7 @@ void Indiv::printGenome() const
 // graph-nnet.py to produce a graphic illustration of the net.
 void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
 {
+    /*
     for (auto & conn : nnet.connections) {
         if (conn.sourceType == SENSOR) {
             std::cout << sensorShortName((Sensor)(conn.sourceNum));
@@ -313,10 +315,11 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
 
         std::cout << " " << std::to_string(conn.weight) << std::endl;
     }
-    /*
+    */
+
 
     std::string iGraphEdgeListFilename;
-    iGraphEdgeListFilename = iGraphEdgeListFilename + "net-gen-" +
+    iGraphEdgeListFilename = p.netDir + "/net-gen-" +
         std::to_string(generation) + "-" + std::to_string(index) + ".txt";
 
 
@@ -338,11 +341,18 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
             } else {
                 foutput << "N" << std::to_string(conn.sinkNum);
             }
-
             foutput << " " << std::to_string(conn.weight) << std::endl;
         }
+    } else {
+        assert(false);
     }
-    */
+
+    foutput.close();
+
+    std::string netFilename = "net-gen-" + std::to_string(generation) + "-" + std::to_string(index) + ".txt";
+
+    std::string command = "python3.12 tools/graph-nnet.py " + p.netDir + " " + netFilename + " " + p.graphDir;
+    std::system(command.c_str());
 
 }
 

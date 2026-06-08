@@ -85,6 +85,7 @@ struct Params {
     std::string imageDir;
     std::string heatmapDir;
     std::string netDir;
+    std::string graphDir;
     std::string graphLogUpdateCommand;
 
     // These are updated automatically and not set via the parameter file
