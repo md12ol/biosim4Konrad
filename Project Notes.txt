@@ -200,14 +200,19 @@ May 19th, 2026
 May 26th, 2026
     >>  Finish making the three heatmaps:
         >>  Average degree of connection for genomes with that connection [DONE]
-        >>  Proportion of genomes with a connection
-        >>  The sum of weights divided by the maximum absolute sum of weights for all genomes
-        >>  Full action/sensor names
-        >>  Flip orientation
-        >>  Flip column header text
-        >>  Refactor the method
-    >>  Modify the simulation so that we could have a dynamic population size (and ratio between cats/mice)
-           >>  Dynamic: use equations on the sheet
+        >>  Proportion of genomes with a connection [DONE]
+        >>  The sum of weights divided by the maximum absolute sum of weights for all genomes [DONE]
+        >>  Full action/sensor names [DONE]
+        >>  Flip orientation [DONE]
+        >>  Flip column header text [DONE]
+        >>  Refactor the method [DONE]
+    >>  Modify the simulation so that we could have a dynamic population size (and ratio between cats/mice) [DONE]
+           >>  Dynamic: use equations on the sheet [DONE]
+    >>  Added the visualizations of the neural networks [DONE]
+
+June 9th, 2026
+    >>  Look into the bug when all the cats die to make sure that the next generation has cats again.
+    >>  Look into setting up the experiments to test different mice genomes.
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
