@@ -112,6 +112,8 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     unsigned numberOfMiceEaten = 0;
     unsigned numberOfFoodEaten = 0;
     unsigned successfullCats = 0;
+    unsigned unsuccessfullMice = 0;
+    unsigned unsuccessfullCats = 0;
 
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
     extern void createPopulationRange();
@@ -142,15 +144,18 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
             // the optimization would be noticeable.
             if (peeps[index].species == "mouse") {
                 std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeMice);
+                if (!passed.first) {
+                    unsuccessfullMice++;
+                }
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
-                    if (peeps[index].alive == false) {
-                        std::cout << "Mouse is no longer alive" << std::endl;
-                    }
                     numberOfFoodEaten = numberOfFoodEaten + peeps[index].foodEaten;
                     parentsMice.push_back( { index, passed.second } ); // passed.second = score
                 }
             } else if (peeps[index].species == "cat") {
                 std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeCats);
+                if (!passed.first) {
+                    unsuccessfullCats++;
+                }
                 if (passed.first && !peeps[index].nnet.connections.empty()) {
                     numberOfMiceEaten = numberOfMiceEaten + peeps[index].foodEaten;
                     successfullCats = successfullCats + 1;
@@ -249,7 +254,9 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     }
 
     std::cout << "Gen " << generation << ", " << parentGenomesMice.size() << " survived mice" << std::endl;
+    std::cout << "Gen " << generation << ", " << unsuccessfullMice << " mice which did not survive" << std::endl;
     std::cout << "Gen " << generation << ", " << parentGenomesCats.size() << " survived cats" << std::endl;
+    std::cout << "Gen " << generation << ", " << unsuccessfullCats << " cats which did not survive" << std::endl;
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
@@ -268,12 +275,22 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
         // Spawn a new generation
 
         if (p.dynamicPopulation == true) {
-            unsigned numberOfCats = successfullCats + numberOfMiceEaten / 50;
-            unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
+            if (parentGenomesCats.empty()) {
+                unsigned numberOfMice = p.population;
+                p.population = p.population / 10 + numberOfMice;
+                p.miceRatio = static_cast<double>(numberOfMice) / p.population;
+            } else if (parentGenomesMice.empty()) {
+                unsigned numberOfMice = p.population * 10;
+                p.population = p.population + numberOfMice;
+                p.miceRatio = static_cast<double>(numberOfMice) / p.population;
+            } else {
+                unsigned numberOfCats = successfullCats + numberOfMiceEaten / 50;
+                unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
 
-            // Adjust the size of the population.
-            p.population = numberOfCats + numberOfMice;
-            p.miceRatio = static_cast<double>(numberOfMice) / p.population;
+                // Adjust the size of the population.
+                p.population = numberOfCats + numberOfMice;
+                p.miceRatio = static_cast<double>(numberOfMice) / p.population;
+            }
             peeps.init(p.population);
         }
 

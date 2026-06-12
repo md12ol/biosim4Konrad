@@ -297,27 +297,6 @@ void Indiv::printGenome() const
 // graph-nnet.py to produce a graphic illustration of the net.
 void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
 {
-    /*
-    for (auto & conn : nnet.connections) {
-        if (conn.sourceType == SENSOR) {
-            std::cout << sensorShortName((Sensor)(conn.sourceNum));
-        } else {
-            std::cout << "N" << std::to_string(conn.sourceNum);
-        }
-
-        std::cout << " ";
-
-        if (conn.sinkType == ACTION) {
-            std::cout << actionShortName((Action)(conn.sinkNum));
-        } else {
-            std::cout << "N" << std::to_string(conn.sinkNum);
-        }
-
-        std::cout << " " << std::to_string(conn.weight) << std::endl;
-    }
-    */
-
-
     std::string iGraphEdgeListFilename;
     iGraphEdgeListFilename = p.netDir + "/net-gen-" +
         std::to_string(generation) + "-" + std::to_string(index) + ".txt";
