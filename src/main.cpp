@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
     // Start the simulator with optional config filename (default "biosim4.ini").
     // See simulator.cpp and simulator.h.
-    BS::simulator(argc, argv); 
+    BS::simulator(argc, argv);
 
     return 0;
 }

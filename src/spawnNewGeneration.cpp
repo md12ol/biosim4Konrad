@@ -12,6 +12,7 @@
 namespace BS {
 
 extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
+extern void displaySampleGenomes(unsigned count, unsigned generation);
 
 
 // Requires that the grid, signals, and peeps containers have been allocated.
@@ -260,8 +261,10 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
-    // ToDo: How to handle a scenario where no cats nor mice survive?
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
+    if ((parentGenomesCats.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) {
+        displaySampleGenomes(p.displaySampleGenomes, generation);
+    }
     // Create textfile to contain maximum population number
     if (generation == 1) {
         createPopulationRange();

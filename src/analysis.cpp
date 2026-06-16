@@ -208,8 +208,18 @@ void printSensorsActions()
 
 
 // Format: 32-bit hex strings, one per gene
-void Indiv::printGenome() const
+void Indiv::printGenome(std::ofstream& genomeTextfile) const
 {
+    if (genomeTextfile.is_open()) {
+        for (Gene gene : genome) {
+            uint32_t n;
+            std::memcpy(&n, &gene, sizeof(n));
+            genomeTextfile << " " << std::hex << std::setfill('0') << std::setw(8) << n;
+        }
+    } else {
+        assert(false);
+    }
+    /*
     constexpr unsigned genesPerLine = 8;
     unsigned count = 0;
     for (Gene gene : genome) {
@@ -227,6 +237,7 @@ void Indiv::printGenome() const
         ++count;
     }
     std::cout << std::dec << std::endl;
+    */
 }
 
 
@@ -546,6 +557,7 @@ void displaySensorActionReferenceCounts()
 void displaySampleGenomes(unsigned count, unsigned generation)
 {
     unsigned index = 1; // indexes start at 1
+    /*
     for (index = 1; count > 0 && index <= p.population; ++index) {
         if (peeps[index].alive) {
             std::cout << "---------------------------\nIndividual ID " << index << std::endl;
@@ -560,6 +572,30 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             --count;
         }
     }
+    */
+
+    std::string genomeMiceFilename = p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
+    std::ofstream fmouse;
+    fmouse.open(genomeMiceFilename);
+    for (index = 1; index <= p.population * p.miceRatio; ++index) {
+        assert(peeps[index].species == "mouse");
+        if (fmouse.is_open()) {
+            // Print the genomes of a mouse into the txt.
+            fmouse << std::dec << index;
+            peeps[index].printGenome(fmouse);
+            /*
+            for (Gene gene : peeps[index].genome) {
+                uint32_t n;
+                std::memcpy(&n, &gene, sizeof(n));
+                fmouse << " " << std::hex << std::setfill('0') << std::setw(8) << n;
+            }
+            */
+            fmouse << std::endl;
+        } else {
+            assert(false);
+        }
+    }
+    fmouse.close();
 
     displaySensorActionReferenceCounts();
 }

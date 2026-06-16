@@ -170,9 +170,8 @@ void simulator(int argc, char **argv)
                 endOfGeneration(generation);
                 paramManager.updateFromConfigFile(generation + 1);
                 unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
-                if (numberSurvivors > 0 && (generation % p.genomeAnalysisStride == 0)) {
-                    displaySampleGenomes(p.displaySampleGenomes, generation);
-                }
+                // ToDo: Display sample genomes could be done in spawn new generation, before adjusting population,
+                // ToDo (continued): for new generation.
                 if (numberSurvivors == 0) {
                     generation = 0;  // start over
                 } else {

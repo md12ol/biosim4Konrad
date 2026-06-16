@@ -35,7 +35,7 @@ struct Indiv {
     void createWiringFromGenome(); // creates .nnet member from .genome member
     void printNeuralNet() const;
     void printIGraphEdgeList(unsigned index, unsigned generation) const;
-    void printGenome() const;
+    void printGenome(std::ofstream& genomeTextfile) const;
 };
 
 } // end namespace BS
