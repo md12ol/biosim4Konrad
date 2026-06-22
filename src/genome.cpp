@@ -425,4 +425,9 @@ Genome generateChildGenome(const std::vector<Genome> &parentGenomes)
     return genome;
 }
 
+
+// Choose a random genome from a textfile as genome of the indiv.
+Genome generateGenomeFromTextFile() {
+
+}
 } // end namespace BS

@@ -219,25 +219,6 @@ void Indiv::printGenome(std::ofstream& genomeTextfile) const
     } else {
         assert(false);
     }
-    /*
-    constexpr unsigned genesPerLine = 8;
-    unsigned count = 0;
-    for (Gene gene : genome) {
-        if (count == genesPerLine) {
-            std::cout << std::endl;
-            count = 0;
-        } else if (count != 0) {
-            std::cout << " ";
-        }
-
-        assert(sizeof(Gene) == 4);
-        uint32_t n;
-        std::memcpy(&n, &gene, sizeof(n));
-        std::cout << std::hex << std::setfill('0') << std::setw(8) << n;
-        ++count;
-    }
-    std::cout << std::dec << std::endl;
-    */
 }
 
 
@@ -557,23 +538,6 @@ void displaySensorActionReferenceCounts()
 void displaySampleGenomes(unsigned count, unsigned generation)
 {
     unsigned index = 1; // indexes start at 1
-    /*
-    for (index = 1; count > 0 && index <= p.population; ++index) {
-        if (peeps[index].alive) {
-            std::cout << "---------------------------\nIndividual ID " << index << std::endl;
-            peeps[index].printGenome();
-            std::cout << std::endl;
-
-            //peeps[index].printNeuralNet();
-            peeps[index].printIGraphEdgeList(index, generation);
-
-
-            std::cout << "---------------------------" << std::endl;
-            --count;
-        }
-    }
-    */
-
     std::string genomeMiceFilename = p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
     std::ofstream fmouse;
     fmouse.open(genomeMiceFilename);
@@ -583,13 +547,6 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             // Print the genomes of a mouse into the txt.
             fmouse << std::dec << index;
             peeps[index].printGenome(fmouse);
-            /*
-            for (Gene gene : peeps[index].genome) {
-                uint32_t n;
-                std::memcpy(&n, &gene, sizeof(n));
-                fmouse << " " << std::hex << std::setfill('0') << std::setw(8) << n;
-            }
-            */
             fmouse << std::endl;
         } else {
             assert(false);
@@ -597,6 +554,20 @@ void displaySampleGenomes(unsigned count, unsigned generation)
     }
     fmouse.close();
 
+    std::string genomeCatsFilename = p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
+    std::ofstream fcat;
+    fcat.open(genomeCatsFilename);
+    for (index = p.population * p.miceRatio + 1; index < p.population; ++index) {
+        assert(peeps[index].species == "cat");
+        if (fcat.is_open()) {
+            // Print the genomes of a cat into the txt.
+            fcat << std::dec << index;
+            peeps[index].printGenome(fcat);
+            fcat << std::endl;
+        } else {
+            assert(false);
+        }
+    }
     displaySensorActionReferenceCounts();
 }
 

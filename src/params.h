@@ -28,6 +28,7 @@ struct Params {
     unsigned stepsPerGeneration; // > 0
     unsigned maxGenerations; // >= 0
     unsigned numThreads; // > 0
+    unsigned numRuns; // > 0
     unsigned signalLayers; // >= 0
     unsigned genomeMaxLength; // > 0
     unsigned maxNumberNeurons; // > 0

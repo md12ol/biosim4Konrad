@@ -103,90 +103,91 @@ The threads are:
     imageWriter - saves image frames used to make a movie (possibly not threaded
         due to unresolved bugs when threaded)
 ********************************************************************************/
-void simulator(int argc, char **argv)
-{
-    printSensorsActions(); // show the agents' capabilities
+void simulator(int argc, char **argv) {
+        printSensorsActions(); // show the agents' capabilities
 
-    // Simulator parameters are available read-only through the global
-    // variable p after paramManager is initialized.
-    // Todo: remove the hardcoded parameter filename.
-    paramManager.setDefaults();
-    paramManager.registerConfigFile(argc > 1 ? argv[1] : "biosim4.ini");
-    paramManager.updateFromConfigFile(0);
-    paramManager.checkParameters(); // check and report any problems
+        // Simulator parameters are available read-only through the global
+        // variable p after paramManager is initialized.
+        // Todo: remove the hardcoded parameter filename.
+        paramManager.setDefaults();
+        paramManager.registerConfigFile(argc > 1 ? argv[1] : "biosim4.ini");
+    for (int i = 0; i < p.numRuns; ++i) {
+        paramManager.updateFromConfigFile(0);
+        paramManager.checkParameters(); // check and report any problems
 
-    randomUint.initialize(); // seed the RNG for main-thread use
+        randomUint.initialize(); // seed the RNG for main-thread use
 
-    // Allocate container space. Once allocated, these container elements
-    // will be reused in each new generation.
-    initHeatmap(); // the heatmap of the connections
-    grid.init(p.sizeX, p.sizeY); // the land on which the peeps live
-    signals.init(p.signalLayers, p.sizeX, p.sizeY);  // where the pheromones waft
-    peeps.init(p.population); // the peeps themselves
+        // Allocate container space. Once allocated, these container elements
+        // will be reused in each new generation.
+        initHeatmap(); // the heatmap of the connections
+        grid.init(p.sizeX, p.sizeY); // the land on which the peeps live
+        signals.init(p.signalLayers, p.sizeX, p.sizeY);  // where the pheromones waft
+        peeps.init(p.population); // the peeps themselves
 
-    // If imageWriter is to be run in its own thread, start it here:
-    //std::thread t(&ImageWriter::saveFrameThread, &imageWriter);
+        // If imageWriter is to be run in its own thread, start it here:
+        //std::thread t(&ImageWriter::saveFrameThread, &imageWriter);
 
-    // Unit tests:
-    //unitTestConnectNeuralNetWiringFromGenome();
-    //unitTestGridVisitNeighborhood();
+        // Unit tests:
+        //unitTestConnectNeuralNetWiringFromGenome();
+        //unitTestGridVisitNeighborhood();
 
-    unsigned generation = 0;
-    initializeGeneration0(); // starting population
-    runMode = RunMode::RUN;
-    unsigned murderCount;
+        unsigned generation = 0;
+        initializeGeneration0(); // starting population
+        runMode = RunMode::RUN;
+        unsigned murderCount;
 
-    // Inside the parallel region, be sure that shared data is not modified. Do the
-    // modifications in the single-thread regions.
-    #pragma omp parallel num_threads(p.numThreads) default(shared)
-    {
-        randomUint.initialize(); // seed the RNG, each thread has a private instance
+        // Inside the parallel region, be sure that shared data is not modified. Do the
+        // modifications in the single-thread regions.
+#pragma omp parallel num_threads(p.numThreads) default(shared)
+        {
+            randomUint.initialize(); // seed the RNG, each thread has a private instance
 
-        while (runMode == RunMode::RUN && generation < p.maxGenerations) { // generation loop
-            #pragma omp single
-            murderCount = 0; // for reporting purposes
+            while (runMode == RunMode::RUN && generation < p.maxGenerations) { // generation loop
+#pragma omp single
+                murderCount = 0; // for reporting purposes
 
-            for (unsigned simStep = 0; simStep < p.stepsPerGeneration; ++simStep) {
+                for (unsigned simStep = 0; simStep < p.stepsPerGeneration; ++simStep) {
 
-                // multithreaded loop: index 0 is reserved, start at 1
-                #pragma omp for schedule(auto)
-                for (unsigned indivIndex = 1; indivIndex <= p.population; ++indivIndex) {
-                    if (peeps[indivIndex].alive) {
-                        simStepOneIndiv(peeps[indivIndex], simStep);
+                    // multithreaded loop: index 0 is reserved, start at 1
+#pragma omp for schedule(auto)
+                    for (unsigned indivIndex = 1; indivIndex <= p.population; ++indivIndex) {
+                        if (peeps[indivIndex].alive) {
+                            simStepOneIndiv(peeps[indivIndex], simStep);
+                        }
+                    }
+
+                    // In single-thread mode: this executes deferred, queued deaths and movements,
+                    // updates signal layers (pheromone), etc.
+#pragma omp single
+                    {
+                        murderCount += peeps.deathQueueSize();
+                        endOfSimStep(simStep, generation);
                     }
                 }
 
-                // In single-thread mode: this executes deferred, queued deaths and movements,
-                // updates signal layers (pheromone), etc.
-                #pragma omp single
+#pragma omp single
                 {
-                    murderCount += peeps.deathQueueSize();
-                    endOfSimStep(simStep, generation);
-                }
-            }
-
-            #pragma omp single
-            {
-                endOfGeneration(generation);
-                paramManager.updateFromConfigFile(generation + 1);
-                unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
-                // ToDo: Display sample genomes could be done in spawn new generation, before adjusting population,
-                // ToDo (continued): for new generation.
-                if (numberSurvivors == 0) {
-                    generation = 0;  // start over
-                } else {
-                    ++generation;
+                    endOfGeneration(generation);
+                    paramManager.updateFromConfigFile(generation + 1);
+                    unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
+                    // ToDo: Display sample genomes could be done in spawn new generation, before adjusting population,
+                    // ToDo (continued): for new generation.
+                    if (numberSurvivors == 0) {
+                        generation = 0;  // start over
+                    } else {
+                        ++generation;
+                    }
                 }
             }
         }
+        displaySampleGenomes(3, generation); // final report, for debugging
+
+        std::cout << "Simulator exit." << std::endl;
+
+        // If imageWriter is in its own thread, stop it and wait for it here:
+        //imageWriter.abort();
+        //t.join();
     }
-    displaySampleGenomes(3, generation); // final report, for debugging
-
-    std::cout << "Simulator exit." << std::endl;
-
-    // If imageWriter is in its own thread, stop it and wait for it here:
-    //imageWriter.abort();
-    //t.join();
 }
 
 } // end namespace BS
