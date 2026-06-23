@@ -211,8 +211,20 @@ May 26th, 2026
     >>  Added the visualizations of the neural networks [DONE]
 
 June 9th, 2026
-    >>  Look into the bug when all the cats die to make sure that the next generation has cats again.
-    >>  Look into setting up the experiments to test different mice genomes.
+    >>  Look into the bug when all the cats die to make sure that the next generation has cats again [DONE]
+    >>  Look into setting up the experiments to test different mice genomes
+        >>  Currently the printing of population genomes occurs on the children of the parents that survived the previous generation
+        >>  We now have the population being printed properly (we include all mice from that generation, not just the survivers)
+    >>  Begin implementing the Mice Testing Code:
+        >>  We need a method that gets Mice/Cat genomes from a file and loads them into the population [DONE]
+        >>  Store the placements for mice
+        >>  We want to be able to use a specified set of cat genomes OR generate them randomly
+        >>  We want to be able to take a set of placements from a parameter
+        >>  Etc.
+
+June 23rd, 2026
+    >>  Write a test function for generating a population from file/vector
+    >>  Begin implementing the simulation version of the code
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
