@@ -88,6 +88,8 @@ struct Params {
     std::string netDir;
     std::string graphDir;
     std::string genomeDir;
+    std::string genomeMiceTextFile;
+    std::string genomeCatsTextFile;
     std::string graphLogUpdateCommand;
 
     // These are updated automatically and not set via the parameter file

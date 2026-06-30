@@ -20,6 +20,8 @@ extern void displaySampleGenomes(unsigned count, unsigned generation);
 // the peeps container at random locations with random genomes.
 void initializeGeneration0()
 {
+    extern Genome generateGenomeFromVector(std::vector<std::string> lines);
+
     // The grid has already been allocated, just clear and reuse it
     grid.zeroFill();
     grid.createBarrier(p.barrierType);
@@ -31,11 +33,90 @@ void initializeGeneration0()
 
     // Spawn the population. The peeps container has already been allocated,
     // just clear and reuse it
-    for (uint16_t index = 1; index <= p.population; ++index) {
-        if (index <= p.population * p.miceRatio) {
-            peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
+    if (p.genomeMiceTextFile != "none" && p.genomeCatsTextFile == "none") {
+        std::ifstream finputMice(p.genomeMiceTextFile);
+
+        // Read in the genomes from the textfile into a vector.
+        // We can use this vector for each indiv, since it will contain the same genomes as in the textfile.
+        std::vector<std::string> genomesMice;
+        std::string genome;
+        if (finputMice.is_open()) {
+            // Read in the genomes from the textfile
+            while (std::getline(finputMice, genome)) {
+                genomesMice.push_back(genome);
+            }
         } else {
-            peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
+            assert(false);
+        }
+        finputMice.close();
+
+        // Individuals are initialized in the loop.
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
+            }
+        }
+    } else if (p.genomeMiceTextFile == "none" && p.genomeCatsTextFile != "none") {
+        std::ifstream finputCats(p.genomeCatsTextFile);
+
+        // Read in the genomes from the textfile into a vector.
+        // We can use this vector for each indiv, since it will contain the same genomes as in the textfile.
+        std::vector<std::string> genomesCat;
+        std::string genome;
+        if (finputCats.is_open()) {
+            while (std::getline(finputCats, genome)) {
+                genomesCat.push_back(genome);
+            }
+        } else {
+            assert(false);
+        }
+        finputCats.close();
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCat), "cat");
+            }
+        }
+    } else if (p.genomeMiceTextFile == "none" && p.genomeCatsTextFile == "none") {
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
+            }
+        }
+    } else {
+        std::ifstream finputMice(p.genomeMiceTextFile);
+        std::ifstream finputCats(p.genomeCatsTextFile);
+        std::vector<std::string> genomesMice;
+        std::string genomeMice;
+        std::vector<std::string> genomesCats;
+        std::string genomeCat;
+        if (finputMice.is_open()) {
+            while (std::getline(finputMice, genomeMice)) {
+                genomesMice.push_back(genomeMice);
+            }
+        } else {
+            assert(false);
+        }
+        finputMice.close();
+        if (finputCats.is_open()) {
+            while (std::getline(finputCats, genomeCat)) {
+                genomesCats.push_back(genomeCat);
+            }
+        } else {
+            assert(false);
+        }
+        finputCats.close();
+        for (uint16_t index = 1; index <= p.population; ++index) {
+            if (index <= p.population * p.miceRatio) {
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice), "mouse");
+            } else {
+                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCats), "cat");
+            }
         }
     }
     fillHeatmap();

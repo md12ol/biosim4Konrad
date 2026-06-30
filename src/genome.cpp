@@ -5,7 +5,10 @@
 #include <list>
 #include <iostream>
 #include <cassert>
+#include <cstdint>
+#include <fstream>
 #include <string>
+#include <sstream>
 #include "simulator.h"
 #include "random.h"
 
@@ -427,7 +430,32 @@ Genome generateChildGenome(const std::vector<Genome> &parentGenomes)
 
 
 // Choose a random genome from a textfile as genome of the indiv.
-Genome generateGenomeFromTextFile() {
+Genome generateGenomeFromVector(std::vector<std::string> lines) {
+    std::string line;
+    uint16_t index = (uint16_t)randomUint(0, lines.size() - 1);
 
+    // ToDo: Fix segmentation fault.
+    // Use the randomly chosen line as genome for the indiv.
+    line = lines[index];
+
+
+    // Delete the individual index.
+    std::size_t pos = line.find(' ');
+    if (pos != std::string::npos) {
+        line.erase(0, pos + 1);
+    }
+
+    // Generate genome from string, each hex value being a gene.
+    std::stringstream stream(line);
+    Genome genome;
+    std::string geneHexValue;
+    while (stream >> geneHexValue) {
+        Gene gene;
+        uint32_t n = static_cast<uint32_t>(std::stoul(geneHexValue, nullptr, 16));
+        std::memcpy(&gene, &n, sizeof(gene));
+        genome.push_back(gene);
+    }
+
+    return genome;
 }
 } // end namespace BS

@@ -38,6 +38,8 @@ void ParamManager::setDefaults()
     privParams.netDir = "./nets/";
     privParams.graphDir = "./graphs/";
     privParams.genomeDir = "./genomes/";
+    privParams.genomeMiceTextFile = "none";
+    privParams.genomeCatsTextFile = "none";
     privParams.population = 3000;
     privParams.miceRatio = 0.5;
     privParams.stepsPerGeneration = 300;
@@ -189,8 +191,15 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "netdir") {
             privParams.netDir = val; break;
-        } else if (name == "genomedir") {
+        }
+        else if (name == "genomedir") {
             privParams.genomeDir = val; break;
+        }
+        else if (name == "genomemicetextfile") {
+            privParams.genomeMiceTextFile = val; break;
+        }
+        else if (name == "genomecatstextfile") {
+            privParams.genomeCatsTextFile = val; break;
         }
         else if (name == "population" && isUint && uVal > 0 && uVal < (uint32_t)-1) {
             privParams.population = uVal; break;

@@ -130,6 +130,10 @@ void simulator(int argc, char **argv) {
         // Unit tests:
         //unitTestConnectNeuralNetWiringFromGenome();
         //unitTestGridVisitNeighborhood();
+        if (!unitTestGeneratingGenomesFromTextFile()) {
+            std::cout << "Something went wrong with the genome reading/writing from/to textfiles." << std::endl;
+        }
+        unitTestGeneratingGenomesFromTextFile();
 
         unsigned generation = 0;
         initializeGeneration0(); // starting population

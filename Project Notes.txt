@@ -232,6 +232,6 @@ Future Ideas
         >>  There is already a fitness-proportion selection mechanism, we may be able to edit this
     >>  Move the food areas between generations
     >>  Think about removing eaten food from the map that generation
-    >>  Dynamic food tiles that have a fixed amount of food and dissapear after depletion
+    >>  Dynamic food tiles that have a fixed amount of food and disappear after depletion
         >>  Dynamic food calculation, rather than keeping track of the number of time steps a mouse spends on a time we can actually count the number of food items it removed from the food tile
-        >>  We can also remove the doof tiles from the video simulation
+        >>  We can also remove the food tiles from the video simulation
