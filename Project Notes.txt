@@ -223,8 +223,17 @@ June 9th, 2026
         >>  Etc.
 
 June 23rd, 2026
-    >>  Write a test function for generating a population from file/vector
+    >>  Write a test function for generating a population from file/vector [DONE]
     >>  Begin implementing the simulation version of the code
+
+July 2nd, 2026
+    >>  For the Mice Testing Code:
+        >>  Make it so we get multiple video files, one per run, to compare between runs
+        >>  Also able to load in a set of cat genomes
+        >>  Add multiple parameters for static/dynamic mice/cat positions
+        >>  Only make heatmaps/graphs for the genomes that are randomly generated
+            >>  Save these as pictures, rather than a video, with the name 'mice_run25' (for example)
+        >>  Confirm that the mice are starting in the same positions
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
