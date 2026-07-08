@@ -356,11 +356,13 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
 
 
 // ToDo: put save_video() in its own thread
-void ImageWriter::saveGenerationVideo(unsigned generation)
+void ImageWriter::saveGenerationVideo(unsigned run, unsigned generation)
 {
     if (imageList.size() > 0) {
         std::stringstream videoFilename;
-        videoFilename << p.imageDir.c_str() << "/gen-"
+        videoFilename << p.imageDir.c_str() << "/run-"
+                      << std::setfill('0') << std::setw(6) << run
+                      << "-gen-"
                       << std::setfill('0') << std::setw(6) << generation
                       << ".avi";
         cv::setNumThreads(2);

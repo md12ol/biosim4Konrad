@@ -21,11 +21,13 @@
 namespace BS {
 
 extern void initializeGeneration0();
+extern void initializeGeneration0Once(unsigned run);
+extern unsigned getSimulationRunInformation(unsigned run, unsigned murderCount);
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
 extern void displaySampleGenomes(unsigned count, unsigned generation);
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
 extern void endOfSimStep(unsigned simStep, unsigned generation);
-extern void endOfGeneration(unsigned generation);
+extern void endOfGeneration(unsigned run, unsigned generation);
 
 RunMode runMode = RunMode::STOP;
 Grid grid;        // The 2D world where the creatures live
@@ -111,7 +113,10 @@ void simulator(int argc, char **argv) {
         // Todo: remove the hardcoded parameter filename.
         paramManager.setDefaults();
         paramManager.registerConfigFile(argc > 1 ? argv[1] : "biosim4.ini");
-    for (int i = 0; i < p.numRuns; ++i) {
+
+    // Run the simulation numRuns times.
+    for (int run = 0; run < p.numRuns; ++run) {
+
         paramManager.updateFromConfigFile(0);
         paramManager.checkParameters(); // check and report any problems
 
@@ -136,7 +141,11 @@ void simulator(int argc, char **argv) {
         unitTestGeneratingGenomesFromTextFile();
 
         unsigned generation = 0;
-        initializeGeneration0(); // starting population
+        if (p.numRuns == 1) {
+            initializeGeneration0(); // starting population
+        } else {
+            initializeGeneration0Once(run);
+        }
         runMode = RunMode::RUN;
         unsigned murderCount;
 
@@ -171,20 +180,28 @@ void simulator(int argc, char **argv) {
 
 #pragma omp single
                 {
-                    endOfGeneration(generation);
-                    paramManager.updateFromConfigFile(generation + 1);
-                    unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
-                    // ToDo: Display sample genomes could be done in spawn new generation, before adjusting population,
-                    // ToDo (continued): for new generation.
-                    if (numberSurvivors == 0) {
-                        generation = 0;  // start over
+                    endOfGeneration(run, generation);
+                    // Only spawn a new generation, if we have a single run
+                    if (p.numRuns == 1) {
+                        paramManager.updateFromConfigFile(generation + 1);
+                        unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
+                        if (numberSurvivors == 0) {
+                            generation = 0;  // start over
+                        } else {
+                            ++generation;
+                        }
                     } else {
-                        ++generation;
+                        getSimulationRunInformation(run, murderCount);
+                        runMode = RunMode::PAUSE;
                     }
                 }
             }
         }
-        displaySampleGenomes(3, generation); // final report, for debugging
+
+        // Only modify the textfiles containing the genomes if we have a single run.
+        if (p.numRuns == 1) {
+            displaySampleGenomes(3, generation); // final report, for debugging
+        }
 
         std::cout << "Simulator exit." << std::endl;
 

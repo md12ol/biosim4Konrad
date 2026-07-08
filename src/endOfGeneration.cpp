@@ -13,15 +13,25 @@ namespace BS {
 // At the end of each generation, we save a video file (if p.saveVideo is true) and
 // print some genomic statistics to stdout (if p.updateGraphLog is true).
 
-void endOfGeneration(unsigned generation)
+void endOfGeneration(unsigned run, unsigned generation)
 {
     {
-        if (p.saveVideo &&
-                ((generation % p.videoStride) == 0
-                 || generation <= p.videoSaveFirstFrames
-                 || (generation >= p.parameterChangeGenerationNumber
-                     && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-            imageWriter.saveGenerationVideo(generation);
+        if (p.numRuns == 1) {
+            if (p.saveVideo &&
+                    ((generation % p.videoStride) == 0
+                     || generation <= p.videoSaveFirstFrames
+                     || (generation >= p.parameterChangeGenerationNumber
+                         && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+                imageWriter.saveGenerationVideo(run, generation);
+                         }
+        } else {
+            if (p.saveVideo &&
+                ((run % p.videoStride) == 0
+                    || run <= p.videoSaveFirstFrames
+                    || (run >= p.parameterChangeGenerationNumber
+                        && run <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+                imageWriter.saveGenerationVideo(run, generation);
+            }
         }
     }
 

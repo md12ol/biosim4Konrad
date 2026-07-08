@@ -36,7 +36,7 @@ struct ImageWriter {
     void startNewGeneration();
     bool saveVideoFrame(unsigned simStep, unsigned generation);
     bool saveVideoFrameSync(unsigned simStep, unsigned generation);
-    void saveGenerationVideo(unsigned generation);
+    void saveGenerationVideo(unsigned run, unsigned generation);
     void abort();
     void saveFrameThread(); // runs in a thread
     std::atomic<unsigned> droppedFrameCount;

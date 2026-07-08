@@ -4,6 +4,7 @@
 // Global simulator parameters
 
 #include <string>
+#include "grid.h"
 
 // To add a new parameter:
 //    1. Add a member to struct Params in params.h.
@@ -68,6 +69,10 @@ struct Params {
     bool logEatenMice;
     unsigned challengeMice;
     unsigned challengeCats;
+    mutable std::vector<Coord> micePositions;
+    mutable std::vector<Coord> catPositions;
+    bool staticMicePositions;
+    bool staticCatPositions;
     unsigned foodAreaType; // >= 0
     bool displayFoodLocations;
     unsigned barrierType; // >= 0
