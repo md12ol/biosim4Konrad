@@ -245,6 +245,10 @@ July 9th, 2026
     >>  Separate the heatmap generation into cats, mice, and entire population => 9 videos in total
         >>  The same should happen for the simulation code providing up to 9 photos per run
     >>  There may be a bug with static positions, investigate this bug and try to solve it
+    >>  Run a long evolution (100 000)
+        >>  Use the simulation code to get data
+        >>  Get the mean values of things like mice eaten/food eaten/animals survived, etc
+            >>  Think about what might be interesting to look at and gather that data
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
