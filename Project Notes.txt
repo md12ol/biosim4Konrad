@@ -224,16 +224,27 @@ June 9th, 2026
 
 June 23rd, 2026
     >>  Write a test function for generating a population from file/vector [DONE]
-    >>  Begin implementing the simulation version of the code
+    >>  Begin implementing the simulation version of the code [DONE]
 
 July 2nd, 2026
     >>  For the Mice Testing Code:
-        >>  Make it so we get multiple video files, one per run, to compare between runs
-        >>  Also able to load in a set of cat genomes
-        >>  Add multiple parameters for static/dynamic mice/cat positions
-        >>  Only make heatmaps/graphs for the genomes that are randomly generated
+        >>  Make it so we get multiple video files, one per run, to compare between runs [DONE]
+        >>  Also able to load in a set of cat genomes [DONE]
+        >>  Add multiple parameters for static/dynamic mice/cat positions [DONE]
+        >>  Only make heatmaps/graphs for the genomes that are randomly generated [DONE]
             >>  Save these as pictures, rather than a video, with the name 'mice_run25' (for example)
-        >>  Confirm that the mice are starting in the same positions
+        >>  Confirm that the mice are starting in the same positions []
+
+July 9th, 2026
+    >>  Regarding when the number of cats/mice differs from the number of provided cat/mice genomes
+        >>  If the number of cats/mice is less than the number provided => just use the first x genomes from the file
+        >>  If the number of cats/mice is equal the number provided => use all of them
+        >>  If the number of cats/mice is more than the number provided => use all of them then randomly sample the rest
+    >>  Figure out how to fix the issue with PNG generation [DONE]
+        >>  Including "png.h" in the makefile, in the includes, or some other solution
+    >>  Separate the heatmap generation into cats, mice, and entire population => 9 videos in total
+        >>  The same should happen for the simulation code providing up to 9 photos per run
+    >>  There may be a bug with static positions, investigate this bug and try to solve it
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
