@@ -14,9 +14,10 @@ CXXFLAGS += \
   -fexceptions \
   -Xpreprocessor -fopenmp \
   -I$(OMP_PREFIX)/include \
-  $(shell pkg-config --cflags opencv4)
+  $(shell pkg-config --cflags opencv4) \
+  $(shell pkg-config --cflags libpng)
 
-LDFLAGS += -L$(OMP_PREFIX)/lib -lomp $(shell pkg-config --libs opencv4)
+LDFLAGS += -L$(OMP_PREFIX)/lib -lomp $(shell pkg-config --libs opencv4) $(shell pkg-config --libs libpng)
 
 ifeq ($(BUILD),debug)
   OUT_DIR = bin/Debug/

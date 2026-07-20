@@ -11,6 +11,7 @@
 #include "imageWriter.h"
 #define cimg_use_opencv 1
 #define cimg_display 0
+#define cimg_use_png 1
 #include "CImg.h"
 
 namespace BS {
@@ -372,6 +373,14 @@ void ImageWriter::saveGenerationVideo(unsigned run, unsigned generation)
         if (skippedFrames > 0) {
             std::cout << "Video skipped " << skippedFrames << " frames" << std::endl;
         }
+
+        std::stringstream imageFilename;
+        imageFilename << p.imageDir.c_str() << "/run-"
+                      << std::setfill('0') << std::setw(6) << run
+                      << "-gen-"
+                      << std::setfill('0') << std::setw(6) << generation
+                      << ".png";
+        imageList.at(0).save_png(imageFilename.str().c_str());
     }
     startNewGeneration();
 }

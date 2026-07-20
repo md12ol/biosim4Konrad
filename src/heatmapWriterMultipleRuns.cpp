@@ -262,7 +262,7 @@ namespace BS {
         }
 
         // Save the heatmap image as png on the local system.
-        image.save_png(imageFilename.str().c_str());
+        image.save(imageFilename.str().c_str());
     }
 
 
