@@ -20,7 +20,7 @@ extern void displaySampleGenomes(unsigned count, unsigned generation);
 // the peeps container at random locations with random genomes.
 void initializeGeneration0()
 {
-    extern Genome generateGenomeFromVector(std::vector<std::string> lines);
+    extern Genome generateGenomeFromVector(std::vector<std::string> lines, uint16_t index);
 
     // The grid has already been allocated, just clear and reuse it
     grid.zeroFill();
@@ -53,7 +53,7 @@ void initializeGeneration0()
         // Individuals are initialized in the loop.
         for (uint16_t index = 1; index <= p.population; ++index) {
             if (index <= p.population * p.miceRatio) {
-                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice), "mouse");
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice, index - 1), "mouse");
             } else {
                 peeps[index].initialize(index, grid.findValidLocation(false), makeRandomGenome(), "cat");
             }
@@ -77,7 +77,7 @@ void initializeGeneration0()
             if (index <= p.population * p.miceRatio) {
                 peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), makeRandomGenome(), "mouse");
             } else {
-                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCat), "cat");
+                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCat, index - static_cast<uint16_t>(p.population * p.miceRatio) - 1), "cat");
             }
         }
     } else if (p.genomeMiceTextFile == "none" && p.genomeCatsTextFile == "none") {
@@ -113,9 +113,9 @@ void initializeGeneration0()
         finputCats.close();
         for (uint16_t index = 1; index <= p.population; ++index) {
             if (index <= p.population * p.miceRatio) {
-                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice), "mouse");
+                peeps[index].initialize(index, grid.findValidLocation(p.spawnMiceInSafeAreas), generateGenomeFromVector(genomesMice, index - 1), "mouse");
             } else {
-                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCats), "cat");
+                peeps[index].initialize(index, grid.findValidLocation(false), generateGenomeFromVector(genomesCats, index - static_cast<uint16_t>(p.population * p.miceRatio) - 1), "cat");
             }
         }
     }
@@ -369,7 +369,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
                 p.miceRatio = static_cast<double>(numberOfMice) / p.population;
             } else {
                 unsigned numberOfCats = successfullCats + numberOfMiceEaten / 50;
-                unsigned numberOfMice = p.population * p.miceRatio - numberOfMiceEaten + numberOfFoodEaten / 200;
+                unsigned numberOfMice = static_cast<uint16_t>(p.population * p.miceRatio) - numberOfMiceEaten + numberOfFoodEaten / 200;
 
                 // Adjust the size of the population.
                 p.population = numberOfCats + numberOfMice;
