@@ -373,14 +373,6 @@ void ImageWriter::saveGenerationVideo(unsigned run, unsigned generation)
         if (skippedFrames > 0) {
             std::cout << "Video skipped " << skippedFrames << " frames" << std::endl;
         }
-
-        std::stringstream imageFilename;
-        imageFilename << p.imageDir.c_str() << "/run-"
-                      << std::setfill('0') << std::setw(6) << run
-                      << "-gen-"
-                      << std::setfill('0') << std::setw(6) << generation
-                      << ".png";
-        imageList.at(0).save_png(imageFilename.str().c_str());
     }
     startNewGeneration();
 }
