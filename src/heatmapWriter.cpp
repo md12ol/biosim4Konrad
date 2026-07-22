@@ -14,11 +14,23 @@
 namespace BS {
 
     HeatmapVector heatmap;
+    HeatmapVector heatmapMice;
+    HeatmapVector heatmapCats;
     HeatmapVector heatmapCounter;
+    HeatmapVector heatmapCounterMice;
+    HeatmapVector heatmapCounterCats;
     HeatmapVector heatmapSum;
+    HeatmapVector heatmapSumMice;
+    HeatmapVector heatmapSumCats;
     cimg_library::CImgList<uint8_t> heatmapImageList;
+    cimg_library::CImgList<uint8_t> heatmapImageListMice;
+    cimg_library::CImgList<uint8_t> heatmapImageListCats;
     cimg_library::CImgList<uint8_t> heatmapCounterImageList;
+    cimg_library::CImgList<uint8_t> heatmapCounterImageListMice;
+    cimg_library::CImgList<uint8_t> heatmapCounterImageListCats;
     cimg_library::CImgList<uint8_t> heatmapSumImageList;
+    cimg_library::CImgList<uint8_t> heatmapSumImageListMice;
+    cimg_library::CImgList<uint8_t> heatmapSumImageListCats;
 
     constexpr uint8_t colorGreen[3] = {0, 255, 0};
     constexpr uint8_t colorRed[3] = {255, 0, 0};
@@ -31,8 +43,14 @@ namespace BS {
         // Initialize the heatmap depending on the number of neurons
         std::cout << "heatmap initialized" << std::endl;
         heatmap.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapMice.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapCats.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
         heatmapCounter.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapCounterMice.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapCounterCats.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
         heatmapSum.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapSumMice.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
+        heatmapSumCats.init(NUM_SENSES + p.maxNumberNeurons, NUM_ACTIONS + p.maxNumberNeurons);
     }
 
     void fillHeatmap() {
@@ -44,8 +62,14 @@ namespace BS {
         for (int x = 0; x < heatmap.sizeX(); x++) {
             for (int y = 0; y < heatmap.sizeY(); y++) {
                 assert(heatmap.at(x, y) == 0);
+                assert(heatmapMice.at(x, y) == 0);
+                assert(heatmapCats.at(x, y) == 0);
                 assert(heatmapCounter.at(x, y) == 0);
+                assert(heatmapCounterMice.at(x, y) == 0);
+                assert(heatmapCounterCats.at(x, y) == 0);
                 assert(heatmapSum.at(x, y) == 0);
+                assert(heatmapSumMice.at(x, y) == 0);
+                assert(heatmapSumCats.at(x, y) == 0);
             }
         }
 
@@ -84,6 +108,20 @@ namespace BS {
                 heatmap.set(heatmapRow, heatmapCol, previousValue + conn.weight);
                 heatmapCounter.set(heatmapRow, heatmapCol, previousCount + 1);
                 heatmapSum.set(heatmapRow, heatmapCol, previousValue + conn.weight);
+
+                if (indiv.species == "mouse") {
+                    const int previousMiceValue = heatmapMice.at(heatmapRow, heatmapCol);
+                    const int previousMiceCount = heatmapCounterMice.at(heatmapRow, heatmapCol);
+                    heatmapMice.set(heatmapRow, heatmapCol, previousMiceValue + conn.weight);
+                    heatmapCounterMice.set(heatmapRow, heatmapCol, previousMiceCount + 1);
+                    heatmapSumMice.set(heatmapRow, heatmapCol, previousMiceValue + conn.weight);
+                } else {
+                    const int previousCatValue = heatmapCats.at(heatmapRow, heatmapCol);
+                    const int previousCatCount = heatmapCounterCats.at(heatmapRow, heatmapCol);
+                    heatmapCats.set(heatmapRow, heatmapCol, previousCatValue + conn.weight);
+                    heatmapCounterCats.set(heatmapRow, heatmapCol, previousCatCount + 1);
+                    heatmapSumCats.set(heatmapRow, heatmapCol, previousCatValue + conn.weight);
+                }
             }
         }
 
@@ -95,6 +133,16 @@ namespace BS {
                     // Calculate the average (if there is only one value, we do not need to modify it)
                     const int average = heatmap.at(x, y) / heatmapCounter.at(x, y);
                     heatmap.set(x, y, average);
+                }
+                if (heatmapCounterMice.at(x, y) > 1) {
+                    // Calculate the average (if there is only one value, we do not need to modify it)
+                    const int averageMice = heatmapMice.at(x, y) / heatmapCounterMice.at(x, y);
+                    heatmapMice.set(x, y, averageMice);
+                }
+                if (heatmapCounterCats.at(x, y) > 1) {
+                    // Calculate the average (if there is only one value, we do not need to modify it)
+                    const int averageCats = heatmapCats.at(x, y) / heatmapCounterCats.at(x, y);
+                    heatmapCats.set(x, y, averageCats);
                 }
             }
         }
@@ -257,55 +305,54 @@ namespace BS {
     void saveHeatmapImages(const unsigned generation) {
 
         drawImage(generation, heatmap, heatmapImageList, 32, "average");
+        drawImage(generation, heatmapMice, heatmapImageListMice, 32, "average");
+        drawImage(generation, heatmapCats, heatmapImageListCats, 32, "average");
         drawImage(generation, heatmapCounter, heatmapCounterImageList, 32, "counter");
+        drawImage(generation, heatmapCounterMice, heatmapCounterImageListMice, 32, "counter");
+        drawImage(generation, heatmapCounterCats, heatmapCounterImageListCats, 32, "counter");
         drawImage(generation, heatmapSum, heatmapSumImageList, 32, "sum");
+        drawImage(generation, heatmapSumMice, heatmapSumImageListMice, 32, "sum");
+        drawImage(generation, heatmapSumCats, heatmapSumImageListCats, 32, "sum");
 
         // Clear the heatmap and heatmap counter after saving an image
         heatmap.zeroFill();
+        heatmapMice.zeroFill();
+        heatmapCats.zeroFill();
         heatmapCounter.zeroFill();
+        heatmapCounterMice.zeroFill();
+        heatmapCounterCats.zeroFill();
         heatmapSum.zeroFill();
+        heatmapSumMice.zeroFill();
+        heatmapSumCats.zeroFill();
+    }
+
+    // Takes a list of heatmap images and creates a video with one frame for each generation.
+    void createSingleHeatmapVideo(cimg_library::CImgList<uint8_t>& heatmapList, const std::string &videoName, unsigned generation) {
+        if (heatmapList.size() > 0) {
+            std::cout << "Frames are in the " << videoName << std::endl;
+            std::cout << "Number of frames in the " << videoName << ": " << heatmapList.size() << std::endl;
+            std::stringstream videoFilename;
+            videoFilename << p.heatmapDir.c_str() << "/" << videoName << "-"
+            << std::setfill('0') << std::setw(6) << generation << ".mp4";
+            heatmapList.save_video(videoFilename.str().c_str(),
+            1,
+            "mp4v",
+            false);
+        }
+        heatmapList.clear();
     }
 
     // Takes the list of all heatmap images and creates a video with one frame for each generation.
     void createHeatmapVideos(unsigned generation) {
 
-        if (heatmapImageList.size() > 0) {
-            std::cout << "Frames are in the heatmapImageList" << std::endl;
-            std::cout << "Number of frames in the heatmapImageList: " << heatmapImageList.size() << std::endl;
-            std::stringstream videoFilename;
-            videoFilename << p.heatmapDir.c_str() << "/heatmap-"
-            << std::setfill('0') << std::setw(6) << generation << ".mp4";
-            heatmapImageList.save_video(videoFilename.str().c_str(),
-                1,
-                "mp4v",
-                false);
-        }
-        heatmapImageList.clear();
-
-        if (heatmapCounterImageList.size() > 0) {
-            std::cout << "Frames are in the heatmapCounterImageList" << std::endl;
-            std::cout << "Number of frames in the heatmapCounterImageList: " << heatmapCounterImageList.size() << std::endl;
-            std::stringstream videoFilename;
-            videoFilename << p.heatmapDir.c_str() << "/heatmapCounter-"
-            << std::setfill('0') << std::setw(6) << generation << ".mp4";
-            heatmapCounterImageList.save_video(videoFilename.str().c_str(),
-                1,
-                "mp4v",
-                false);
-        }
-        heatmapCounterImageList.clear();
-
-        if (heatmapSumImageList.size() > 0) {
-            std::cout << "Frames are in the heatmapSumImageList" << std::endl;
-            std::cout << "Number of frames in the heatmapSumImageList: " << heatmapSumImageList.size() << std::endl;
-            std::stringstream videoFilename;
-            videoFilename << p.heatmapDir.c_str() << "/heatmapSum-"
-            << std::setfill('0') << std::setw(6) << generation << ".mp4";
-            heatmapSumImageList.save_video(videoFilename.str().c_str(),
-                1,
-                "mp4v",
-                false);
-        }
-        heatmapSumImageList.clear();
+        createSingleHeatmapVideo(heatmapImageList, "heatmap", generation);
+        createSingleHeatmapVideo(heatmapImageListMice, "heatmapMice", generation);
+        createSingleHeatmapVideo(heatmapImageListCats, "heatmapCats", generation);
+        createSingleHeatmapVideo(heatmapCounterImageList, "heatmapCounter", generation);
+        createSingleHeatmapVideo(heatmapCounterImageListMice, "heatmapCounterMice", generation);
+        createSingleHeatmapVideo(heatmapCounterImageListCats, "heatmapCounterCats", generation);
+        createSingleHeatmapVideo(heatmapSumImageList, "heatmapSum", generation);
+        createSingleHeatmapVideo(heatmapSumImageListMice, "heatmapSumMice", generation);
+        createSingleHeatmapVideo(heatmapSumImageListCats, "heatmapSumCats", generation);
     }
 }

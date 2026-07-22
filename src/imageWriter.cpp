@@ -11,6 +11,7 @@
 #include "imageWriter.h"
 #define cimg_use_opencv 1
 #define cimg_display 0
+#define cimg_use_png 1
 #include "CImg.h"
 
 namespace BS {
