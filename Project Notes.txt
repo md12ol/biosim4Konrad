@@ -236,19 +236,44 @@ July 2nd, 2026
         >>  Confirm that the mice are starting in the same positions []
 
 July 9th, 2026
-    >>  Regarding when the number of cats/mice differs from the number of provided cat/mice genomes
+    >>  Regarding when the number of cats/mice differs from the number of provided cat/mice genomes [DONE]
         >>  If the number of cats/mice is less than the number provided => just use the first x genomes from the file
         >>  If the number of cats/mice is equal the number provided => use all of them
         >>  If the number of cats/mice is more than the number provided => use all of them then randomly sample the rest
     >>  Figure out how to fix the issue with PNG generation [DONE]
         >>  Including "png.h" in the makefile, in the includes, or some other solution
-    >>  Separate the heatmap generation into cats, mice, and entire population => 9 videos in total
+    >>  Separate the heatmap generation into cats, mice, and entire population => 9 videos in total [DONE]
         >>  The same should happen for the simulation code providing up to 9 photos per run
-    >>  There may be a bug with static positions, investigate this bug and try to solve it
+    >>  There may be a bug with static positions, investigate this bug and try to solve it [DONE]
     >>  Run a long evolution (100 000)
         >>  Use the simulation code to get data
         >>  Get the mean values of things like mice eaten/food eaten/animals survived, etc
             >>  Think about what might be interesting to look at and gather that data
+
+July 22nd, 2026
+    >>  Modify the video saving so that the first frame is before any movement of the mice/cats
+    >>  Try to fix the graph plotting bug for the y-axis bounds
+    >>  Look into bug for the network generation from genomes
+        >>  Also clarify when these are made and how many are made and which of the genomes are made
+        >>  Perhaps add a parameter for how often these graphs get made
+    >>  Add a parameter for how often the heatmaps are generated
+    >>  Add a parameter for how often we save the genomes
+    >>  Run a long evolution (100 000 generations)
+        >>  Use baseline_cats and baseline_mice as the genome files
+            >>  Choose the cat genomes with the most eaten mice, and the mice genomes with the most survivors
+        >>  Heatmap Every: 1000 generations
+        >>  Genome Saving: 1000 generations
+        >>  Net and Visual Net Graphs for up to 5 individuals: 1000 generations
+        >>  Video Generation: 1000 generations
+
+July 30th, 2026
+    >>  Static Mice Positions: [True, False]
+    >>  Static Cat Positions: [True, False]
+    >>  Mice Genomes from Text: [True, False]
+    >>  Cat Genomes from Text: [True, False]
+    >>  Random Food Positions: [True, False]
+    >>  Barrier Type: []
+
 
 Future Ideas
     >>  Add additional sensors for Cats and Mice for the pheromone and population sensors
