@@ -82,6 +82,14 @@ struct Params {
     bool deterministic;
     unsigned RNGSeed; // >= 0
 
+    // These are used to save parameters of a simulation with multiple runs
+    mutable unsigned meanSurvivors;
+    mutable unsigned meanSurvivorsMice;
+    mutable unsigned meanSurvivorsCats;
+    mutable unsigned meanEatenMice;
+    mutable unsigned meanFoodEaten;
+    mutable unsigned meanSuccessfullCats;
+
     // These must not change after initialization
     uint16_t sizeX; // 2..0x10000
     uint16_t sizeY; // 2..0x10000

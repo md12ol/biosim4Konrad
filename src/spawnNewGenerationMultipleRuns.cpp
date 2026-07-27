@@ -13,6 +13,7 @@ namespace BS {
 
 extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
 extern void displaySampleGenomes(unsigned count, unsigned generation);
+extern void displayMeanValues();
 
 
 // Requires that the grid, signals, and peeps containers have been allocated.
@@ -341,6 +342,14 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
         parentGenomesCats.push_back(peeps[parent.first].genome);
     }
 
+
+    p.meanSurvivors = p.meanSurvivors + parentGenomesMice.size() + parentGenomesCats.size();
+    p.meanSurvivorsMice = p.meanSurvivorsMice + parentGenomesMice.size();
+    p.meanSurvivorsCats = p.meanSurvivorsCats + parentGenomesCats.size();
+    p.meanEatenMice = p.meanEatenMice + numberOfMiceEaten;
+    p.meanFoodEaten = p.meanFoodEaten + numberOfFoodEaten;
+    p.meanSuccessfullCats = p.meanSuccessfullCats + successfullCats;
+
     std::cout << "Run " << run << ", " << parentGenomesMice.size() << " survived mice" << std::endl;
     std::cout << "Run " << run << ", " << unsuccessfullMice << " mice which did not survive" << std::endl;
     std::cout << "Run " << run << ", " << parentGenomesCats.size() << " survived cats" << std::endl;
@@ -355,6 +364,18 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
     }
     createPopulationFinalRange(parentGenomesMice.size() + parentGenomesCats.size(), run);
     //displaySignalUse(); // for debugging only
+
+    // After we get information from the last runs we calculate their mean values and print them to a textfile.
+    if (run == p.numRuns - 1) {
+        p.meanSurvivors = p.meanSurvivors / p.numRuns;
+        p.meanSurvivorsMice = p.meanSurvivorsMice / p.numRuns;
+        p.meanSurvivorsCats = p.meanSurvivorsCats / p.numRuns;
+        p.meanEatenMice = p.meanEatenMice / p.numRuns;
+        p.meanFoodEaten = p.meanFoodEaten / p.numRuns;
+        p.meanSuccessfullCats = p.meanSuccessfullCats / p.numRuns;
+
+        displayMeanValues();
+    }
 
     // Now we have a container of zero or more parents' genomes
 

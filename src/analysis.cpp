@@ -571,4 +571,22 @@ void displaySampleGenomes(unsigned count, unsigned generation)
     displaySensorActionReferenceCounts();
 }
 
+
+void displayMeanValues() {
+    std::string filename = p.logDir + "/mean-values.txt";
+    std::ofstream fmean;
+    fmean.open(filename);
+    if (fmean.is_open()) {
+        // Print the mean values into the txt.
+        fmean << "meanSurvivors: " << p.meanSurvivors << std::endl;
+        fmean << "meanSurvivorsMice: " << p.meanSurvivorsMice << std::endl;
+        fmean << "meanSurvivorsCats: " << p.meanSurvivorsCats << std::endl;
+        fmean << "meanEatenMice: " << p.meanEatenMice << std::endl;
+        fmean << "meanFoodEaten: " << p.meanFoodEaten << std::endl;
+        fmean << "meanSuccessfullCats: " << p.meanSuccessfullCats << std::endl;
+    } else {
+        assert(false);
+    }
+}
+
 } // end namespace BS
