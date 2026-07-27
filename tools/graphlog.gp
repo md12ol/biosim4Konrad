@@ -2,8 +2,15 @@
 
 # Requires a text file named "epoch-log.txt" in the log directory
 
+if(ARGC < 2) {
+    print "Errors: Missing Arguments. Usage: gnuplot -c graphlog.gp."
+}
+
 set term png size 2000, 400
-set output "./images/log.png"
+IMAGEPATH = sprintf("./%s/log.png", ARG1)
+LOGPATH = sprintf("./%s/epoch-log.txt", ARG2)
+GETMAXIMUMPOPULATION = sprintf("cat ./%s/population-range.txt", ARG2)
+set output IMAGEPATH
 
 # Left Y axis gets scaled to the max survivors.
 # Right Y axis gets scaled to 0..255.
@@ -13,7 +20,7 @@ set output "./images/log.png"
 #   1:5 Anxiety 0..255        => 0..255
 
 # Get the maximum number of population from the textfile
-XMAX = system("cat ./logs/population-range.txt")
+XMAX = system(GETMAXIMUMPOPULATION)
 
 set mxtics
 set ytics autofreq nomirror tc lt 2
@@ -32,7 +39,7 @@ ScaleSurvivedMice(sm) = sm
 ScaleSurvivedCats(sc) = sc
 #ScaleMurders(m) = m
 
-plot "./logs/epoch-log.txt" \
+plot LOGPATH \
        using 1:(column("Survivors")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
     "" using 1:(column("Diversity")) with lines lw 2 linecolor 1 title "Diversity" axes x1y2, \
     "" using 1:(column("DiversityMice")) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2, \

@@ -91,7 +91,8 @@ void ParamManager::setDefaults()
     privParams.updateGraphLogStride = privParams.videoStride;
     privParams.deterministic = false;
     privParams.RNGSeed = 12345678;
-    privParams.graphLogUpdateCommand = "gnuplot --persist ./tools/graphlog.gp";
+    privParams.graphLogUpdateCommand = "gnuplot --persist -c ./tools/graphlog.gp";
+    privParams.graphLogFinalUpdateCommand = "gnuplot --persist -c ./tools/graphlog-final.gp";
     privParams.parameterChangeGenerationNumber = 0;
 }
 

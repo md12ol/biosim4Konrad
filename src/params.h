@@ -104,6 +104,7 @@ struct Params {
     std::string genomeMiceTextFile;
     std::string genomeCatsTextFile;
     std::string graphLogUpdateCommand;
+    std::string graphLogFinalUpdateCommand;
 
     // These are updated automatically and not set via the parameter file
     unsigned parameterChangeGenerationNumber; // the most recent generation number that an automatic parameter change occured at

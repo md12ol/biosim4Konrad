@@ -208,7 +208,7 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
 
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
     extern void createPopulationRange();
-    extern void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation);
+    extern void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned run);
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
     extern void displaySignalUse();
 
@@ -362,7 +362,7 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
     if (run == 1) {
         createPopulationRange();
     }
-    createPopulationFinalRange(parentGenomesMice.size() + parentGenomesCats.size(), run);
+    createPopulationFinalRangeMultipleRuns(parentGenomesMice.size() + parentGenomesCats.size(), run);
     //displaySignalUse(); // for debugging only
 
     // After we get information from the last runs we calculate their mean values and print them to a textfile.

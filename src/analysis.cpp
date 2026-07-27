@@ -461,7 +461,48 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
     }
 
     if (generation == p.maxGenerations - 1) {
-        std::system("gnuplot --persist ./tools/graphlog-final.gp");
+        std::string command = p.graphLogFinalUpdateCommand + " " + p.imageDir + " " + p.logDir;
+        system(command.c_str());
+
+        std::ofstream fempty(p.logDir + "/population-range-final.txt", std::ios::trunc);
+        if (fempty.is_open()) {
+            fempty << 0 << std::endl;
+            fempty.close();
+        } else {
+            assert(false);
+        }
+    }
+}
+
+// Create textfile which contains the survivors of the run with the most survivors
+void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned run) {
+    int previousNumberSurvivors = 0;
+
+    // Get the previous number of survivors from the file.
+    std::ifstream finput(p.logDir + "/population-range-final.txt");
+
+    if (finput.is_open()) {
+        finput >> previousNumberSurvivors;
+        finput.close();
+    } else {
+        assert(false);
+    }
+
+    if (numberSurvivors > previousNumberSurvivors) {
+        // Empty the file and write the new value into it.
+        std::cout << "New number of survivors: " << numberSurvivors << std::endl;
+        std::ofstream fempty(p.logDir + "/population-range-final.txt", std::ios::trunc);
+        if (fempty.is_open()) {
+            fempty << numberSurvivors << std::endl;
+            fempty.close();
+        } else {
+            assert(false);
+        }
+    }
+
+    if (run == p.numRuns - 1) {
+        std::string command = p.graphLogFinalUpdateCommand + " " + p.imageDir + " " + p.logDir;
+        std::system(command.c_str());
 
         std::ofstream fempty(p.logDir + "/population-range-final.txt", std::ios::trunc);
         if (fempty.is_open()) {

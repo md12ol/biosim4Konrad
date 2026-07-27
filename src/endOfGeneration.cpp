@@ -37,8 +37,9 @@ void endOfGeneration(unsigned run, unsigned generation)
 
     {
         if (p.updateGraphLog && (generation == 1 || ((generation % p.updateGraphLogStride) == 0))) {
+            std::string command = p.graphLogUpdateCommand + " " + p.imageDir + " " + p.logDir;
 #pragma GCC diagnostic ignored "-Wunused-result"
-            std::system(p.graphLogUpdateCommand.c_str());
+            std::system(command.c_str());
         }
     }
 }
