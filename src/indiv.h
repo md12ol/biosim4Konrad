@@ -34,7 +34,7 @@ struct Indiv {
     void initialize(uint16_t index, Coord loc, Genome &&genome, std::string species);
     void createWiringFromGenome(); // creates .nnet member from .genome member
     void printNeuralNet() const;
-    void printIGraphEdgeList(unsigned index, unsigned generation) const;
+    void printIGraphEdgeList(unsigned index, unsigned generation, const std::string& species) const;
     void printGenome(std::ofstream& genomeTextfile) const;
 };
 

@@ -287,11 +287,12 @@ void Indiv::printGenome(std::ofstream& genomeTextfile) const
 
 // This prints a neural net in a form that can be processed with
 // graph-nnet.py to produce a graphic illustration of the net.
-void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
+void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::string& species) const
 {
     std::string iGraphEdgeListFilename;
     iGraphEdgeListFilename = p.netDir + "/net-gen-" +
-        std::to_string(generation) + "-" + std::to_string(index) + ".txt";
+        std::to_string(generation) + "-species-" + species + "-index-"
+        + std::to_string(index) + ".txt";
 
 
     std::ofstream foutput;
@@ -320,7 +321,8 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation) const
 
     foutput.close();
 
-    std::string netFilename = "net-gen-" + std::to_string(generation) + "-" + std::to_string(index) + ".txt";
+    std::string netFilename = "/net-gen-" + std::to_string(generation) +
+        "-species-" + species + "-index-" + std::to_string(index) + ".txt";
 
     std::string command = "python3.12 tools/graph-nnet.py " + p.netDir + " " + netFilename + " " + p.graphDir;
     std::system(command.c_str());
@@ -579,6 +581,7 @@ void displaySensorActionReferenceCounts()
 void displaySampleGenomes(unsigned count, unsigned generation)
 {
     unsigned index = 1; // indexes start at 1
+    unsigned catIndex = 1; // used to count cats from which neuronal nets are drawn
     std::string genomeMiceFilename = p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
     std::ofstream fmouse;
     fmouse.open(genomeMiceFilename);
@@ -589,6 +592,10 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             fmouse << std::dec << index;
             peeps[index].printGenome(fmouse);
             fmouse << std::endl;
+            // Draw the graph of a neuronal net from a mouse.
+            if (index <= count) {
+                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
+            }
         } else {
             assert(false);
         }
@@ -605,6 +612,11 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             fcat << std::dec << index;
             peeps[index].printGenome(fcat);
             fcat << std::endl;
+            // Draw the graph of a neuronal net from a cat.
+            if (catIndex <= count) {
+                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
+                catIndex = catIndex + 1;
+            }
         } else {
             assert(false);
         }

@@ -41,7 +41,7 @@ for e in g.es:
 
 # plot graph
 
-print(len(g.vs))
+# print(len(g.vs))
 
 if len(g.vs) < 6:
     bbox = (300,300)

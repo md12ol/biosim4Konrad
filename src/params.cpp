@@ -203,6 +203,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "netdir") {
             privParams.netDir = val; break;
         }
+        else if (name == "graphdir") {
+            privParams.graphDir = val; break;
+        }
         else if (name == "genomedir") {
             privParams.genomeDir = val; break;
         }
