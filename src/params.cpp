@@ -38,6 +38,7 @@ void ParamManager::setDefaults()
     privParams.genomeMaxLength = 300;
     privParams.logDir = "./logs/";
     privParams.imageDir = "./images/";
+    privParams.heatmapStride = 1;
     privParams.heatmapDir = "./heatmaps/";
     privParams.netDir = "./nets/";
     privParams.graphDir = "./graphs/";
@@ -196,6 +197,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "imagedir") {
             privParams.imageDir = val; break;
+        }
+        else if (name == "heatmapstride" && isUint && uVal > 0) {
+            privParams.heatmapStride = uVal; break;
         }
         else if (name == "heatmapdir") {
             privParams.heatmapDir = val; break;

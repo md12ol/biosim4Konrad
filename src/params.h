@@ -97,6 +97,7 @@ struct Params {
     unsigned genomeInitialLengthMax; // > 0 and < genomeInitialLengthMin
     std::string logDir;
     std::string imageDir;
+    unsigned heatmapStride; // > 0
     std::string heatmapDir;
     std::string netDir;
     std::string graphDir;

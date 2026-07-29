@@ -170,8 +170,10 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
             }
         }
     }
-    fillHeatmap();
-    saveHeatmapImages(generation);
+    if (generation % p.heatmapStride == 0) {
+        fillHeatmap();
+        saveHeatmapImages(generation);
+    }
     if (generation == p.maxGenerations) {
         createHeatmapVideos(generation);
     }
