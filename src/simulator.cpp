@@ -117,7 +117,7 @@ void simulator(int argc, char **argv) {
     // Run the simulation numRuns times.
     for (int run = 0; run < p.numRuns; ++run) {
 
-        paramManager.updateFromConfigFile(0);
+        paramManager.updateFromConfigFile(run);
         paramManager.checkParameters(); // check and report any problems
 
         randomUint.initialize(); // seed the RNG for main-thread use
