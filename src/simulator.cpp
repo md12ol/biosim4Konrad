@@ -159,10 +159,8 @@ void simulator(int argc, char **argv) {
 #pragma omp single
                 {
                     murderCount = 0; // for reporting purposes
-                    if (generation == 0) {
-                        // Save the first frame before individuals take any simulation steps.
-                        imageWriter.saveVideoFrameSync(-1, 0);
-                    }
+                    // Save the first frame before individuals take any simulation steps.
+                    imageWriter.saveVideoFrameSync(-1, generation);
                 }
 
                 for (unsigned simStep = 0; simStep < p.stepsPerGeneration; ++simStep) {

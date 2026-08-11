@@ -7,9 +7,9 @@ if(ARGC < 2) {
 }
 
 set term png size 2000, 400
-IMAGEPATH = sprintf("./%s/log-final.png", ARG1)
-LOGPATH = sprintf("./%s/epoch-log.txt", ARG2)
-GETMAXIMUMPOPULATION = sprintf("cat ./%s/population-range-final.txt", ARG2)
+IMAGEPATH = sprintf("./output/%s/log-final.png", ARG1)
+LOGPATH = sprintf("./output/%s/epoch-log.txt", ARG2)
+GETMAXIMUMPOPULATION = sprintf("cat ./output/%s/population-range-final.txt", ARG2)
 set output IMAGEPATH
 
 # Left Y axis gets scaled to the max survivors.

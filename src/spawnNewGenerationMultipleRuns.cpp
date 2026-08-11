@@ -361,7 +361,7 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
     std::cout << "Run " << run << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
     appendEpochLog(run, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
     // Create textfile to contain maximum population number
-    if (run == 1) {
+    if (run == 0) {
         createPopulationRange();
     }
     createPopulationFinalRangeMultipleRuns(parentGenomesMice.size() + parentGenomesCats.size(), run);

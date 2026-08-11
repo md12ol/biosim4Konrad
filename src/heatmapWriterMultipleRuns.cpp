@@ -150,7 +150,7 @@ namespace BS {
 
 
     // Draws the images for a specific heatmap
-    void drawImageMultipleRuns(const unsigned run, const HeatmapVector& hm, const int heatmapImageScale, const std::string &type, const std::string &imageName) {
+    void drawImageMultipleRuns(const unsigned run, const HeatmapVector &hm, const int heatmapImageScale, const std::string &imageName) {
         using namespace cimg_library;
 
         CImg<uint8_t> image((hm.sizeX() + 6) * heatmapImageScale,
@@ -160,7 +160,7 @@ namespace BS {
             255);
 
         std::stringstream imageFilename;
-        imageFilename << p.heatmapDir << "/" << imageName << "-"
+        imageFilename << "output/" << p.heatmapDir << "/" << imageName << "-"
         << std::setfill('0') << std::setw(6) << run
         << ".png";
 
@@ -227,7 +227,7 @@ namespace BS {
         }
 
         // Draw circles for values in the heatmap
-        if (type == "average") {
+        if (imageName == "heatmap" || imageName == "heatmapMice" || imageName == "heatmapCats") {
             for (int x = 0; x < hm.sizeX(); x++) {
                 for (int y = 0; y < hm.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -250,7 +250,7 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "counter") {
+        } else if (imageName == "heatmapCounter") {
             for (int x = 0; x < heatmapMultipleRuns.sizeX(); x++) {
                 for (int y = 0; y < heatmapMultipleRuns.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -263,7 +263,33 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "sum") {
+        } else if (imageName == "heatmapCounterMice") {
+            for (int x = 0; x < heatmapMultipleRuns.sizeX(); x++) {
+                for (int y = 0; y < heatmapMultipleRuns.sizeY(); y++) {
+                    if (hm.at(x, y) > 0) {
+                        image.draw_circle(
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
+                            heatmapImageScale / 2,
+                            colorGreen,
+                            static_cast<double>(hm.at(x, y)) / (p.population * p.miceRatio));
+                    }
+                }
+            }
+        } else if (imageName == "heatmapCounterCats") {
+            for (int x = 0; x < heatmapMultipleRuns.sizeX(); x++) {
+                for (int y = 0; y < heatmapMultipleRuns.sizeY(); y++) {
+                    if (hm.at(x, y) > 0) {
+                        image.draw_circle(
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
+                            heatmapImageScale / 2,
+                            colorGreen,
+                            static_cast<double>(hm.at(x, y)) / (p.population * - p.population * p.miceRatio));
+                    }
+                }
+            }
+        } else if (imageName == "heatmapSum" || imageName == "heatmapSumMice" || imageName == "heatmapSumCats") {
             const int absoluteMaximum = hm.getAbsoluteMaximum();
             for (int x = 0; x < hm.sizeX(); x++) {
                 for (int y = 0; y < hm.sizeY(); y++) {
@@ -306,15 +332,15 @@ namespace BS {
     // in CImg.h is in the upper left corner).
     void saveHeatmapImagesMultipleRuns(const unsigned run) {
 
-        drawImageMultipleRuns(run, heatmapMultipleRuns, 32, "average", "heatmap");
-        drawImageMultipleRuns(run, heatmapMultipleRunsMice, 32, "average", "heatmapMice");
-        drawImageMultipleRuns(run, heatmapMultipleRunsCats, 32, "average", "heatmapCats");
-        drawImageMultipleRuns(run, heatmapCounterMultipleRuns, 32, "counter", "heatmapCounter");
-        drawImageMultipleRuns(run, heatmapCounterMultipleRunsMice, 32, "counter", "heatmapCounterMice");
-        drawImageMultipleRuns(run, heatmapCounterMultipleRunsCats, 32, "counter", "heatmapCounterCats");
-        drawImageMultipleRuns(run, heatmapSumMultipleRuns, 32, "sum", "heatmapSum");
-        drawImageMultipleRuns(run, heatmapSumMultipleRunsMice, 32, "sum", "heatmapSumMice");
-        drawImageMultipleRuns(run, heatmapSumMultipleRunsCats, 32, "sum", "heatmapSumCats");
+        drawImageMultipleRuns(run, heatmapMultipleRuns, 32, "heatmap");
+        drawImageMultipleRuns(run, heatmapMultipleRunsMice, 32, "heatmapMice");
+        drawImageMultipleRuns(run, heatmapMultipleRunsCats, 32, "heatmapCats");
+        drawImageMultipleRuns(run, heatmapCounterMultipleRuns, 32, "heatmapCounter");
+        drawImageMultipleRuns(run, heatmapCounterMultipleRunsMice, 32, "heatmapCounterMice");
+        drawImageMultipleRuns(run, heatmapCounterMultipleRunsCats, 32, "heatmapCounterCats");
+        drawImageMultipleRuns(run, heatmapSumMultipleRuns, 32, "heatmapSum");
+        drawImageMultipleRuns(run, heatmapSumMultipleRunsMice, 32, "heatmapSumMice");
+        drawImageMultipleRuns(run, heatmapSumMultipleRunsCats, 32, "heatmapSumCats");
 
         // Clear the heatmap and heatmap counter after saving an image
         heatmapMultipleRuns.zeroFill();

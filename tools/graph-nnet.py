@@ -13,7 +13,7 @@ parser.add_argument("outputDir", type=str, help="Name of the directory, where th
 args = parser.parse_args()
 
 # load data into a graph
-g = igraph.Graph.Read_Ncol(f"./{args.netDir}/{args.netFilename}", names=True, weights=True)
+g = igraph.Graph.Read_Ncol(f"./output/{args.netDir}/{args.netFilename}", names=True, weights=True)
 
 for v in g.vs:
 	v['size'] = 35
@@ -79,6 +79,6 @@ else:
     layout = 'fruchterman_reingold'
 
 outputFilename = args.netFilename.split(".txt")[0]
-igraph.plot(g, f"./{args.outputDir}" + outputFilename + ".svg", edge_curved=True, bbox=bbox, margin=64, layout=layout)
+igraph.plot(g, f"./output/{args.outputDir}" + outputFilename + ".svg", edge_curved=True, bbox=bbox, margin=64, layout=layout)
 
 

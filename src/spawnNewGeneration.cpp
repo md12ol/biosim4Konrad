@@ -349,7 +349,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
         displaySampleGenomes(p.displaySampleGenomes, generation);
     }
     // Create textfile to contain maximum population number
-    if (generation == 1) {
+    if (generation == 0) {
         createPopulationRange();
     }
     createPopulationFinalRange(parentGenomesMice.size() + parentGenomesCats.size(), generation);

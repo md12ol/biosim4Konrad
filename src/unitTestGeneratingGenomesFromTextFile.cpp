@@ -12,7 +12,7 @@
 namespace BS {
 
     bool unitTestGeneratingGenomesFromTextFile() {
-        std::ifstream finputGenomes("./genomes/genome-mice-0-test.txt");
+        std::ifstream finputGenomes("./output/genomes/genome-mice-0-test.txt");
         std::vector<std::string> genomes;
 
         if (finputGenomes.is_open()) {
@@ -60,7 +60,7 @@ namespace BS {
         }
 
         // Now convert the individual genomes to hex strings again.
-        std::ofstream foutputGenomes("./genomes/genome-mice-test-output.txt");
+        std::ofstream foutputGenomes("./output/genomes/genome-mice-test-output.txt");
 
         for (int i = 0; i < testIndividuals.size(); i++) {
             if (foutputGenomes.is_open()) {
@@ -79,7 +79,7 @@ namespace BS {
         }
 
         foutputGenomes.close();
-        std::ifstream finputGenomes2("./genomes/genome-mice-test2.txt");
+        std::ifstream finputGenomes2("./output/genomes/genome-mice-test2.txt");
         std::vector<std::string> genomes2;
         std::string genome2;
 

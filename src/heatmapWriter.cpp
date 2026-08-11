@@ -160,7 +160,7 @@ namespace BS {
             255);
 
         std::stringstream imageFilename;
-        imageFilename << p.imageDir << "frame-"
+        imageFilename << "output/" << p.imageDir << "frame-"
         << std::setfill('0') << std::setw(6) << generation
         << ".png";
 
@@ -263,6 +263,32 @@ namespace BS {
                     }
                 }
             }
+        } else if (type == "counterMice") {
+            for (int x = 0; x < heatmap.sizeX(); x++) {
+                for (int y = 0; y < heatmap.sizeY(); y++) {
+                    if (hm.at(x, y) > 0) {
+                        image.draw_circle(
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
+                            heatmapImageScale / 2,
+                            colorGreen,
+                            static_cast<double>(hm.at(x, y)) / (p.population * p.miceRatio));
+                    }
+                }
+            }
+        } else if (type == "counterCats") {
+            for (int x = 0; x < heatmap.sizeX(); x++) {
+                for (int y = 0; y < heatmap.sizeY(); y++) {
+                    if (hm.at(x, y) > 0) {
+                        image.draw_circle(
+                            (x+6) * heatmapImageScale,
+                            (y+10) * heatmapImageScale,
+                            heatmapImageScale / 2,
+                            colorGreen,
+                            static_cast<double>(hm.at(x, y)) / (p.population - p.population * p.miceRatio));
+                    }
+                }
+            }
         } else if (type == "sum") {
             const int absoluteMaximum = hm.getAbsoluteMaximum();
             for (int x = 0; x < hm.sizeX(); x++) {
@@ -308,8 +334,8 @@ namespace BS {
         drawImage(generation, heatmapMice, heatmapImageListMice, 32, "average");
         drawImage(generation, heatmapCats, heatmapImageListCats, 32, "average");
         drawImage(generation, heatmapCounter, heatmapCounterImageList, 32, "counter");
-        drawImage(generation, heatmapCounterMice, heatmapCounterImageListMice, 32, "counter");
-        drawImage(generation, heatmapCounterCats, heatmapCounterImageListCats, 32, "counter");
+        drawImage(generation, heatmapCounterMice, heatmapCounterImageListMice, 32, "counterMice");
+        drawImage(generation, heatmapCounterCats, heatmapCounterImageListCats, 32, "counterCats");
         drawImage(generation, heatmapSum, heatmapSumImageList, 32, "sum");
         drawImage(generation, heatmapSumMice, heatmapSumImageListMice, 32, "sum");
         drawImage(generation, heatmapSumCats, heatmapSumImageListCats, 32, "sum");
@@ -332,7 +358,7 @@ namespace BS {
             std::cout << "Frames are in the " << videoName << std::endl;
             std::cout << "Number of frames in the " << videoName << ": " << heatmapList.size() << std::endl;
             std::stringstream videoFilename;
-            videoFilename << p.heatmapDir.c_str() << "/" << videoName << "-"
+            videoFilename << "output/" << p.heatmapDir.c_str() << "/" << videoName << "-"
             << std::setfill('0') << std::setw(6) << generation << ".mp4";
             heatmapList.save_video(videoFilename.str().c_str(),
             1,
