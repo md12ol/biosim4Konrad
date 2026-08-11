@@ -14,9 +14,11 @@
 #include <cassert>
 #include <utility>
 #include <algorithm>
+#include <filesystem>
 #include "simulator.h"     // the simulator data structures
 #include "heatmapWriter.h"
 #include "imageWriter.h"   // this is for generating the movies
+#include "clearDirectories.h" // clear directories at the beginning of a simulation
 
 namespace BS {
 
@@ -122,6 +124,11 @@ void simulator(int argc, char **argv) {
 
         randomUint.initialize(); // seed the RNG for main-thread use
 
+        // Clear given directories so that they only contain files from the current simulation
+        if (run == 0) {
+            clearDirectories();
+        }
+
         // Allocate container space. Once allocated, these container elements
         // will be reused in each new generation.
         p.numRuns == 1 ? initHeatmap() : initHeatmapMultipleRuns(); // the heatmap of the connections
@@ -135,10 +142,12 @@ void simulator(int argc, char **argv) {
         // Unit tests:
         //unitTestConnectNeuralNetWiringFromGenome();
         //unitTestGridVisitNeighborhood();
+        /*
         if (!unitTestGeneratingGenomesFromTextFile()) {
             std::cout << "Something went wrong with the genome reading/writing from/to textfiles." << std::endl;
         }
         unitTestGeneratingGenomesFromTextFile();
+        */
 
         unsigned generation = 0;
         if (p.numRuns == 1) {
