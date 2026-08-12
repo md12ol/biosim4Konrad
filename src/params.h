@@ -89,6 +89,8 @@ struct Params {
     mutable unsigned meanEatenMice;
     mutable unsigned meanFoodEaten;
     mutable unsigned meanSuccessfullCats;
+    mutable double meanScoreMice;
+    mutable double meanScoreCats;
 
     // These must not change after initialization
     uint16_t sizeX; // 2..0x10000

@@ -199,11 +199,15 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     unsigned unsuccessfullMice = 0;
     unsigned unsuccessfullCats = 0;
 
+    double meanScoreMice = 0.0;
+    double meanScoreCats = 0.0;
+
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
     extern void createPopulationRange();
     extern void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation);
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
     extern void displaySignalUse();
+    extern void saveBestGenomes(std::string species);
 
     // This container will hold the indexes and survival scores (0.0..1.0)
     // of all the survivors who will provide genomes for repopulation.
@@ -235,6 +239,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
                     numberOfFoodEaten = numberOfFoodEaten + peeps[index].foodEaten;
                     parentsMice.push_back( { index, passed.second } ); // passed.second = score
                 }
+                meanScoreMice = meanScoreMice + passed.second;
             } else if (peeps[index].species == "cat") {
                 std::pair<bool, float> passed = passedSurvivalCriterion(peeps[index], p.challengeCats);
                 if (!passed.first) {
@@ -245,8 +250,11 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
                     successfullCats = successfullCats + 1;
                     parentsCats.push_back( { index, passed.second } ); // passed.second = score
                 }
+                meanScoreCats = meanScoreCats + passed.second;
             }
         }
+        meanScoreMice = meanScoreMice / static_cast<uint16_t>(p.population * p.miceRatio);
+        meanScoreCats = meanScoreCats / static_cast<uint16_t>(p.population - p.population * p.miceRatio);
     }
     /*else {
         // For the altruism challenge, test if the agent is inside either the sacrificial
@@ -347,6 +355,14 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
     if ((parentGenomesCats.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) {
         displaySampleGenomes(p.displaySampleGenomes, generation);
+        if (meanScoreMice >= p.meanScoreMice) {
+            saveBestGenomes("mouse");
+            p.meanScoreMice = meanScoreMice;
+        }
+        if (meanScoreCats >= p.meanScoreCats) {
+            saveBestGenomes("cat");
+            p.meanScoreCats = meanScoreCats;
+        }
     }
     // Create textfile to contain maximum population number
     if (generation == 0) {

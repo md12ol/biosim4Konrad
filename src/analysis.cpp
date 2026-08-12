@@ -642,4 +642,41 @@ void displayMeanValues() {
     }
 }
 
+void saveBestGenomes(std::string species) {
+    if (species == "mouse") {
+        std::ofstream foutput("output/bestMice", std::ios::trunc);
+        if (foutput.is_open()) {
+            for (unsigned index = 1; index <= p.population * p.miceRatio; ++index) {
+                assert(peeps[index].species == "mouse");
+                if (foutput.is_open()) {
+                    // Print the genomes of a mouse into the txt.
+                    foutput << std::dec << index;
+                    peeps[index].printGenome(foutput);
+                    foutput << std::endl;
+                } else {
+                    assert(false);
+                }
+            }
+        } else {
+            assert(false);
+        }
+    } else {
+        std::ofstream foutput("output/bestCats", std::ios::trunc);
+        if (foutput.is_open()) {
+            for (unsigned index = p.population * p.miceRatio + 1; index < p.population; ++index) {
+                assert(peeps[index].species == "cat");
+                if (foutput.is_open()) {
+                    foutput << std::dec << index;
+                    peeps[index].printGenome(foutput);
+                    foutput << std::endl;
+                } else {
+                    assert(false);
+                }
+            }
+        } else {
+            assert(false);
+        }
+    }
+}
+
 } // end namespace BS
