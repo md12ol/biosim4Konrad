@@ -12,7 +12,7 @@
 namespace BS {
 
 extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
-extern void displaySampleGenomes(unsigned count, unsigned generation);
+extern void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {});
 
 
 // Requires that the grid, signals, and peeps containers have been allocated.
@@ -202,6 +202,9 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     double meanScoreMice = 0.0;
     double meanScoreCats = 0.0;
 
+    std::vector<uint16_t> highestScoredMice;
+    std::vector<uint16_t> highestScoredCats;
+
     extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
     extern void createPopulationRange();
     extern void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation);
@@ -334,6 +337,17 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
             return parent1.second > parent2.second;
         });
 
+    // Assemble the indexes of the best mice and cats into two vectors.
+    if (p.displayBestGenomes == true) {
+        uint16_t index = 0;
+        for (index = 0; index < std::min(static_cast<int>(parentsMice.size()), static_cast<int>(p.displaySampleGenomes)); ++index) {
+            highestScoredMice.push_back(parentsMice.at(index).first);
+        }
+        for (index = 0; index < std::min(static_cast<int>(parentsCats.size()), static_cast<int>(p.displaySampleGenomes)); ++index) {
+            highestScoredCats.push_back(parentsCats.at(index).first);
+        }
+    }
+
     // Assemble a list of all the parent genomes. These will be ordered by their
     // scores if the parents[] container was sorted by score
     parentGenomesMice.reserve(parentsMice.size());
@@ -354,7 +368,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
     if ((parentGenomesCats.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) {
-        displaySampleGenomes(p.displaySampleGenomes, generation);
+        displaySampleGenomes(p.displaySampleGenomes, generation, highestScoredMice, highestScoredCats);
         if (meanScoreMice >= p.meanScoreMice) {
             saveBestGenomes("mouse");
             p.meanScoreMice = meanScoreMice;

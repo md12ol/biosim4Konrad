@@ -79,6 +79,7 @@ void ParamManager::setDefaults()
     privParams.agentSize = 4;
     privParams.genomeAnalysisStride = privParams.videoStride;
     privParams.displaySampleGenomes = 5;
+    privParams.displayBestGenomes = true;
     privParams.genomeComparisonMethod = 1;
     privParams.updateGraphLog = true;
     privParams.logGeneration = true;
@@ -329,6 +330,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "displaysamplegenomes" && isUint) {
             privParams.displaySampleGenomes = uVal; break;
+        }
+        else if (name == "displaybestgenomes" && isBool) {
+            privParams.displayBestGenomes = bVal; break;
         }
         else if (name == "genomecomparisonmethod" && isUint) {
             privParams.genomeComparisonMethod = uVal; break;

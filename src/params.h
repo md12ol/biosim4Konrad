@@ -55,6 +55,7 @@ struct Params {
     unsigned agentSize;
     unsigned genomeAnalysisStride; // > 0
     unsigned displaySampleGenomes; // >= 0
+    bool displayBestGenomes;
     unsigned genomeComparisonMethod; // 0 = Jaro-Winkler; 1 = Hamming
     bool updateGraphLog;
     unsigned updateGraphLogStride; // > 0

@@ -578,7 +578,7 @@ void displaySensorActionReferenceCounts()
 }
 
 
-void displaySampleGenomes(unsigned count, unsigned generation)
+void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {})
 {
     unsigned index = 1; // indexes start at 1
     unsigned catIndex = 1; // used to count cats from which neuronal nets are drawn
@@ -593,7 +593,7 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             peeps[index].printGenome(fmouse);
             fmouse << std::endl;
             // Draw the graph of a neuronal net from a mouse.
-            if (index <= count) {
+            if (index <= count && p.displayBestGenomes == false) {
                 peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
             }
         } else {
@@ -613,12 +613,26 @@ void displaySampleGenomes(unsigned count, unsigned generation)
             peeps[index].printGenome(fcat);
             fcat << std::endl;
             // Draw the graph of a neuronal net from a cat.
-            if (catIndex <= count) {
+            if (catIndex <= count && p.displayBestGenomes == false) {
                 peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
                 catIndex = catIndex + 1;
             }
         } else {
             assert(false);
+        }
+    }
+    fcat.close();
+
+    if (p.displayBestGenomes == true) {
+        // Display the best mice
+        for (index = 0; index < miceIndexes.size(); ++index) {
+            assert(peeps[miceIndexes.at(index)].species == "mouse");
+            peeps[miceIndexes.at(index)].printIGraphEdgeList(miceIndexes.at(index), generation, peeps[miceIndexes.at(index)].species);
+        }
+        // Display the best cats
+        for (index = 0; index < catsIndexes.size(); ++index) {
+            assert(peeps[catsIndexes.at(index)].species == "cat");
+            peeps[miceIndexes.at(index)].printIGraphEdgeList(catsIndexes.at(index), generation, peeps[catsIndexes.at(index)].species);
         }
     }
     displaySensorActionReferenceCounts();

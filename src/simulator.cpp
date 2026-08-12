@@ -26,7 +26,7 @@ extern void initializeGeneration0();
 extern void initializeGeneration0Once(unsigned run);
 extern unsigned getSimulationRunInformation(unsigned run, unsigned murderCount);
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
-extern void displaySampleGenomes(unsigned count, unsigned generation);
+extern void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {});
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
 extern void endOfSimStep(unsigned simStep, unsigned generation);
 extern void endOfGeneration(unsigned run, unsigned generation);

@@ -12,7 +12,7 @@
 namespace BS {
 
 extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
-extern void displaySampleGenomes(unsigned count, unsigned generation);
+extern void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes, std::vector<uint16_t> catsIndexes);
 extern void displayMeanValues();
 
 
