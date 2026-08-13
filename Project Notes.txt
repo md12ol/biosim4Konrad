@@ -276,16 +276,23 @@ July 30th, 2026
     >>  Barrier Type: [7 Different Types, and the ability to add more]
 
 August 6th, 2026
-    >>  Have the program start by clearing output folders so the output is only from the most recent run
-    >>  Add a boolean so that the networks generated are either the best in the population (per species) OR the lowest-indexed population members
-    >>  Right now, for the counter heatmaps we use the overall population size, but we actually want to use the number of each of the species as the denominator
-    >>  Rearrange the output into a single output folder with subfolders for graphs, heatmaps, etc.
-        >>  Dynamically save the genomes (in hex) of the best population of cats/mice every genomeAnalysisStride generations
+    >>  Have the program start by clearing output folders so the output is only from the most recent run [DONE]
+    >>  Add a boolean so that the networks generated are either the best in the population (per species) OR the lowest-indexed population members [DONE]
+    >>  Right now, for the counter heatmaps we use the overall population size, but we actually want to use the number of each of the species as the denominator [DONE]
+    >>  Rearrange the output into a single output folder with subfolders for graphs, heatmaps, etc. [DONE]
+        >>  Dynamically save the genomes (in hex) of the best population of cats/mice every genomeAnalysisStride generations [DONE]
     >>  The cluster
-        >>  Log into the cluster via terminal
-        >>  Get your code onto the cluster
+        >>  Log into the cluster via terminal [DONE]
+        >>  Get your code onto the cluster [DONE]
         >>  Build the code
-        >>  Read through the documentation at code.ovgu.de/fin-all/cluster
+        >>  Read through the documentation at code.ovgu.de/fin-all/cluster [DONE]
+
+August 13th, 2026
+    >>  Build the code on the cluster
+    >>  Look into if you need to install anything to run your software
+        >>  If so, make sure you install it how the school wants you to do so
+    >>  Read through the docs about slurm files
+    >>  Make an example slurm file and try running it
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
