@@ -288,11 +288,70 @@ August 6th, 2026
         >>  Read through the documentation at code.ovgu.de/fin-all/cluster [DONE]
 
 August 13th, 2026
-    >>  Build the code on the cluster
-    >>  Look into if you need to install anything to run your software
+    >>  Build the code on the cluster [DONE]
+    >>  Look into if you need to install anything to run your software [DONE]
         >>  If so, make sure you install it how the school wants you to do so
-    >>  Read through the docs about slurm files
-    >>  Make an example slurm file and try running it
+    >>  Read through the docs about slurm files [DONE]
+    >>  Make an example slurm file and try running it [DONE]
+
+August 20th, 2026
+    >>  Some bugs with running on the cluster
+        >>  Some packages are missing
+            >>  Determine what packages are missing and install them onto the server
+                >>  pycairo, missing H264 codec for video, MP4 codec is missing
+            >>  Test these installed packages to remove the error messages when running jobs
+            >>  Current pip installs to python 3.9 but the code uses python which uses version 3.13
+                >>  Pip install into 3.13 so that python can still be used without version in the code
+                >>  We could add pip for 3.13 and install with that pip OR we could redirect the system pip to install for version 3.13
+            >>  Make sure the error file when running the code is clear (or only warnings)
+    >>  Look into aligning the remote code with the local (GitHub) code so that the code works in both places
+        >>  If not possible, lets document these differences and go over them
+    >>  We want to be able to run multiple experiments at the same time
+        >>  Right now when we run the code we provide an .ini file as input which has the parameters
+        >>  Add a parameter to .ini file that tells you the parentfolder to put all
+            These go into the .ini
+                output_folder = "output"
+                experiment_output = "output 1"
+
+            We make this a global parameter when we process the params
+                out_path  = "./" + output_folder + "/" + experiment_output + "/"
+
+            imageFilename << p.out_path << p.imageDir << "frame-"
+        >>  Overall File Structure
+            biosim4Konrad
+                ...
+                output
+                    output 1
+                        nets
+                        graphs
+                        ...
+                    output 2
+                        ...
+                    output 3
+                        ...
+                    ...
+                ...
+                .ini file
+                ...
+        >>  Setup first version of script (python) that does the following: create the file structure, create all the .ini files we need, create the slurm files we need
+            EXAMPLE PYTHON SCRIPT
+
+            population_label = "population"
+            population_size = [100, 200]
+            mouse_ratios_label = "miceratio"
+            mouse_ratios = [0.5, 0.75]
+            ...
+
+            starting_ini = "./biosim4.ini"
+            exp_index = 1
+
+            for popsize in population_size
+                for ratio in mouse_ratios
+                    exp_ini = copy(starting_ini)
+                    modify_ini(exp_ini, population_label, popsize)
+                    modify_ini(exp_ini, mouse_ratios_label, ratio)
+
+                    exp_ini.save("exp" + exp_index + ".ini")
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
