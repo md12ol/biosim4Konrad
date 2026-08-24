@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <vector>
 #include <sstream>
+#include <cstring>
 #include "simulator.h"
 
 namespace BS {
@@ -48,7 +49,7 @@ namespace BS {
             while (stream >> geneHexValue) {
                 Gene gene;
                 uint32_t n = static_cast<uint32_t>(std::stoul(geneHexValue, nullptr, 16));
-                std::memcpy(&gene, &n, sizeof(gene));
+                memcpy(&gene, &n, sizeof(gene));
                 indivGenome.push_back(gene);
             }
 
@@ -67,7 +68,7 @@ namespace BS {
                 foutputGenomes << std::dec << (i+1);
                 for (Gene gene : testIndividuals[i].genome) {
                     uint32_t n;
-                    std::memcpy(&n, &gene, sizeof(n));
+                    memcpy(&n, &gene, sizeof(n));
                     foutputGenomes << " " << std::hex << std::setfill('0') << std::setw(8) << n;
                 }
                 foutputGenomes << std::endl;

@@ -95,6 +95,7 @@ void ParamManager::setDefaults()
     privParams.RNGSeed = 12345678;
     privParams.graphLogUpdateCommand = "gnuplot --persist -c ./tools/graphlog.gp";
     privParams.graphLogFinalUpdateCommand = "gnuplot --persist -c ./tools/graphlog-final.gp";
+    privParams.pythonCommand = "python";
     privParams.parameterChangeGenerationNumber = 0;
 }
 
@@ -378,6 +379,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "rngseed" && isUint) {
             privParams.RNGSeed = uVal; break;
+        }
+        else if(name == "pythoncommand") {
+            privParams.pythonCommand = val; break;
         }
         else {
             std::cout << "Invalid param: " << name << " = " << val << std::endl;

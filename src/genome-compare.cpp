@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <__ostream/basic_ostream.h>
+#include <ostream>
 
 #include "simulator.h"
 

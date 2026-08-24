@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstring>
 #include "simulator.h"
 #include "random.h"
 
@@ -455,7 +456,7 @@ Genome generateGenomeFromVector(std::vector<std::string> lines, uint16_t index) 
     while (stream >> geneHexValue) {
         Gene gene;
         uint32_t n = static_cast<uint32_t>(std::stoul(geneHexValue, nullptr, 16));
-        std::memcpy(&gene, &n, sizeof(gene));
+        memcpy(&gene, &n, sizeof(gene));
         genome.push_back(gene);
     }
 
