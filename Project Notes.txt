@@ -295,7 +295,7 @@ August 13th, 2026
     >>  Make an example slurm file and try running it [DONE]
 
 August 20th, 2026
-    >>  Some bugs with running on the cluster
+    >>  Some bugs with running on the cluster [MOSTLY DONE, see next week's tasks]
         >>  Some packages are missing
             >>  Determine what packages are missing and install them onto the server
                 >>  pycairo, missing H264 codec for video, MP4 codec is missing
@@ -304,7 +304,7 @@ August 20th, 2026
                 >>  Pip install into 3.13 so that python can still be used without version in the code
                 >>  We could add pip for 3.13 and install with that pip OR we could redirect the system pip to install for version 3.13
             >>  Make sure the error file when running the code is clear (or only warnings)
-    >>  Look into aligning the remote code with the local (GitHub) code so that the code works in both places
+    >>  Look into aligning the remote code with the local (GitHub) code so that the code works in both places [MOSTLY DONE, see next week's tasks]
         >>  If not possible, lets document these differences and go over them
     >>  We want to be able to run multiple experiments at the same time
         >>  Right now when we run the code we provide an .ini file as input which has the parameters
@@ -320,21 +320,34 @@ August 20th, 2026
         >>  Overall File Structure
             biosim4Konrad
                 ...
-                output
-                    output 1
+                evolutionOutput
+                    experiment setup 1 (popsize, food distribution, etc.)
                         nets
                         graphs
                         ...
-                    output 2
+                        exp.ini file (for this experiment setup)
+                    experiment setup 2
+                        nets
+                        graphs
                         ...
-                    output 3
-                        ...
+                        exp.ini file (for this experiment setup)
                     ...
+                testingOutput
+                    output scenario 1
+                        images
+                            ... run 1
+                            ... run 2
+                            ...
+                        logs
+                            epoch log (one for all runs)
+                        ...
+                        scenario.ini file
                 ...
-                .ini file
+                starting.ini file (modified for each of the experiments)
                 ...
         >>  Setup first version of script (python) that does the following: create the file structure, create all the .ini files we need, create the slurm files we need
             EXAMPLE PYTHON SCRIPT
+            This should generate the folder structure, the ini files, and the slurm script
 
             population_label = "population"
             population_size = [100, 200]
@@ -352,6 +365,22 @@ August 20th, 2026
                     modify_ini(exp_ini, mouse_ratios_label, ratio)
 
                     exp_ini.save("exp" + exp_index + ".ini")
+
+August 27th, 2026
+    >>  Look more into the video codec issue and try to solve it, check generated videos for correctness
+        >>  There is a weird bug with the videos quickly increasing then decreasing in population
+    >>  Will unify the local python interpreter with the same version as on the server to unify the code
+    >>  Remove the redundant file for makeHeatmaps* however you think is best
+    >>  Email Michael Prueß to inquire about how much space can be used on the cluster for your account
+    >>  Finish writing and testing two setup python scripts (one for evolution and one for testing)
+        >>  Check for correct file structure and correct .ini files
+    >>  Run multiple evolutions on the cluster with the generated slurm script
+    >>  Run multiple testings on the cluster with the generated slurm script
+    >>  Validate the output to make sure it looks good
+    >>  See these links
+        >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/job_array.sh
+        >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/run_many.sh
+        >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/table.dat
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
