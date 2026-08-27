@@ -160,7 +160,7 @@ namespace BS {
             255);
 
         std::stringstream imageFilename;
-        imageFilename << "output/" << p.imageDir << "frame-"
+        imageFilename << p.outputPath << p.imageDir << "frame-"
         << std::setfill('0') << std::setw(6) << generation
         << ".png";
 
@@ -358,7 +358,7 @@ namespace BS {
             std::cout << "Frames are in the " << videoName << std::endl;
             std::cout << "Number of frames in the " << videoName << ": " << heatmapList.size() << std::endl;
             std::stringstream videoFilename;
-            videoFilename << "output/" << p.heatmapDir.c_str() << "/" << videoName << "-"
+            videoFilename << p.outputPath << p.heatmapDir.c_str() << "/" << videoName << "-"
             << std::setfill('0') << std::setw(6) << generation << ".mp4";
             heatmapList.save_video(videoFilename.str().c_str(),
             1,

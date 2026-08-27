@@ -160,7 +160,7 @@ namespace BS {
             255);
 
         std::stringstream imageFilename;
-        imageFilename << "output/" << p.heatmapDir << "/" << imageName << "-"
+        imageFilename << p.outputPath << p.heatmapDir << "/" << imageName << "-"
         << std::setfill('0') << std::setw(6) << run
         << ".png";
 

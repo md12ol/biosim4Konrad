@@ -6,14 +6,18 @@ import argparse
 # create parser to access arguments
 parser = argparse.ArgumentParser(description="Read in input file and output location.")
 
-parser.add_argument("netDir", type=str, help="Path to the directory, from which file is taken.")
-parser.add_argument("netFilename", type=str, help="Name of the file containing the connections.")
-parser.add_argument("outputDir", type=str, help="Name of the directory, where the svg is stored.")
+parser.add_argument("netPath", help="Path to the file containing the connections.")
+parser.add_argument("graphPath", help="Path to the file, which will contain the svg graph.")
+# parser.add_argument("outputPath", type=str, help="Directory, which contains graphs and nets directories.")
+# parser.add_argument("netDir", type=str, help="Path to the directory, from which file is taken.")
+# parser.add_argument("netFilename", type=str, help="Name of the file containing the connections.")
+# parser.add_argument("outputDir", type=str, help="Name of the directory, where the svg is stored.")
 
 args = parser.parse_args()
 
 # load data into a graph
-g = igraph.Graph.Read_Ncol(f"./output/{args.netDir}/{args.netFilename}", names=True, weights=True)
+# g = igraph.Graph.Read_Ncol(f"./output/{args.netDir}/{args.netFilename}", names=True, weights=True)
+g = igraph.Graph.Read_Ncol(f"./{args.netPath}", names=True, weights=True)
 
 for v in g.vs:
 	v['size'] = 35
@@ -78,7 +82,8 @@ else:
     bbox = (8000,8000)
     layout = 'fruchterman_reingold'
 
-outputFilename = args.netFilename.split(".txt")[0]
-igraph.plot(g, f"./output/{args.outputDir}" + outputFilename + ".svg", edge_curved=True, bbox=bbox, margin=64, layout=layout)
+#outputFilename = args.netFilename.split(".txt")[0]
+#igraph.plot(g, f"./output/{args.outputDir}" + outputFilename + ".svg", edge_curved=True, bbox=bbox, margin=64, layout=layout)
+igraph.plot(g, f"./{args.graphPath}", edge_curved=True, bbox=bbox, margin=64, layout=layout)
 
 

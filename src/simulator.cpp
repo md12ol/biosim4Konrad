@@ -124,8 +124,10 @@ void simulator(int argc, char **argv) {
 
         randomUint.initialize(); // seed the RNG for main-thread use
 
-        // Clear given directories so that they only contain files from the current simulation
+        // Set the path, where simulation data saved and also
+        // clear given directories so that they only contain files from the current simulation.
         if (run == 0) {
+            paramManager.setOutputPath();
             clearDirectories();
         }
 

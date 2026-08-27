@@ -105,7 +105,7 @@ void saveOneFrameImmed(const ImageFrameData &data)
                         255);  // initial value
     uint8_t color[3];
     std::stringstream imageFilename;
-    imageFilename << "output/" << p.imageDir << "frame-"
+    imageFilename << p.outputPath << p.imageDir << "frame-"
                   << std::setfill('0') << std::setw(6) << data.generation
                   << '-' << std::setfill('0') << std::setw(6) << data.simStep
                   << ".png";
@@ -361,7 +361,7 @@ void ImageWriter::saveGenerationVideo(unsigned run, unsigned generation)
 {
     if (imageList.size() > 0) {
         std::stringstream videoFilename;
-        videoFilename << "output/" << p.imageDir.c_str() << "/run-"
+        videoFilename << p.outputPath << p.imageDir.c_str() << "/run-"
                       << std::setfill('0') << std::setw(6) << run
                       << "-gen-"
                       << std::setfill('0') << std::setw(6) << generation

@@ -2,3 +2,4 @@ obj/
 tools/*.svg
 build/
 output/
+outputMultiple/

@@ -36,6 +36,9 @@ void ParamManager::setDefaults()
     privParams.genomeInitialLengthMin = 24;
     privParams.genomeInitialLengthMax = 24;
     privParams.genomeMaxLength = 300;
+    privParams.outputDir = "output";
+    privParams.experimentDir = "experiment1";
+    privParams.outputPath = "outputMultiple/experiment1";
     privParams.logDir = "logs";
     privParams.imageDir = "images";
     privParams.heatmapStride = 1;
@@ -193,6 +196,12 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "genomeinitiallengthmax" && isUint && uVal > 0 && uVal < (uint16_t)-1) {
             privParams.genomeInitialLengthMax = uVal; break;
+        }
+        else if (name == "outputdir") {
+            privParams.outputDir = val; break;
+        }
+        else if (name == "experimentdir") {
+            privParams.experimentDir = val; break;
         }
         else if (name == "logdir") {
             privParams.logDir = val; break;
@@ -452,6 +461,13 @@ void ParamManager::checkParameters()
     if (privParams.deterministic && privParams.numThreads != 1) {
         std::cerr << "Warning: When deterministic is true, you probably want to set numThreads = 1." << std::endl;
     }
+}
+
+
+// Set output path (the path to the folder, in which the output data of the simulation is saved)
+void ParamManager::setOutputPath()
+{
+    privParams.outputPath = privParams.outputDir + "/" + privParams.experimentDir + "/";
 }
 
 

@@ -2,14 +2,16 @@
 
 # Requires a text file named "epoch-log.txt" in the log directory
 
-if(ARGC < 2) {
+if(ARGC < 3) {
     print "Errors: Missing Arguments. Usage: gnuplot -c graphlog.gp."
 }
 
 set term png size 2000, 400
-IMAGEPATH = sprintf("./output/%s/log.png", ARG1)
-LOGPATH = sprintf("./output/%s/epoch-log.txt", ARG2)
-GETMAXIMUMPOPULATION = sprintf("cat ./output/%s/population-range.txt", ARG2)
+# IMAGEPATH = sprintf("./output/%s/log.png", ARG1)
+IMAGEPATH = sprintf("./%s%s/log.png", ARG1, ARG2)
+#LOGPATH = sprintf("./output/%s/epoch-log.txt", ARG2)
+LOGPATH = sprintf("./%s%s/epoch-log.txt", ARG1, ARG3)
+GETMAXIMUMPOPULATION = sprintf("cat ./%s%s/population-range.txt", ARG1, ARG3)
 set output IMAGEPATH
 
 # Left Y axis gets scaled to the max survivors.

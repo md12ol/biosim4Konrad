@@ -6,11 +6,11 @@
 
 namespace BS {
     void clearDirectories() {
-        std::filesystem::path genomeDir = "output/" + p.genomeDir;
-        std::filesystem::path graphDir = "output/" + p.graphDir;
-        std::filesystem::path heatmapDir = "output/" + p.heatmapDir;
-        std::filesystem::path imageDir = "output/" + p.imageDir;
-        std::filesystem::path netDir = "output/" + p.netDir;
+        std::filesystem::path genomeDir = p.outputPath + p.genomeDir;
+        std::filesystem::path graphDir = p.outputPath + p.graphDir;
+        std::filesystem::path heatmapDir = p.outputPath + p.heatmapDir;
+        std::filesystem::path imageDir = p.outputPath + p.imageDir;
+        std::filesystem::path netDir = p.outputPath + p.netDir;
 
         if (p.numRuns == 1) {
             for (const auto& entry : std::filesystem::directory_iterator(genomeDir)) {

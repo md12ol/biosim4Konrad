@@ -290,7 +290,7 @@ void Indiv::printGenome(std::ofstream& genomeTextfile) const
 void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::string& species) const
 {
     std::string iGraphEdgeListFilename;
-    iGraphEdgeListFilename = "output/" + p.netDir + "/net-gen-" +
+    iGraphEdgeListFilename = p.outputPath + p.netDir + "/net-gen-" +
         std::to_string(generation) + "-species-" + species + "-index-"
         + std::to_string(index) + ".txt";
 
@@ -321,10 +321,10 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
 
     foutput.close();
 
-    std::string netFilename = "/net-gen-" + std::to_string(generation) +
-        "-species-" + species + "-index-" + std::to_string(index) + ".txt";
+    std::string graphFilename = p.outputPath + p.graphDir + "/net-gen-" + std::to_string(generation) +
+        "-species-" + species + "-index-" + std::to_string(index) + ".svg";
 
-    std::string command = p.pythonCommand + " tools/graph-nnet.py " + p.netDir + " " + netFilename + " " + p.graphDir;
+    std::string command = p.pythonCommand + " tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
     std::system(command.c_str());
 
 }
@@ -352,11 +352,11 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
     std::ofstream foutput;
 
     if (generation == 0) {
-        foutput.open("output/" + p.logDir + "/epoch-log.txt");
+        foutput.open(p.outputPath + p.logDir + "/epoch-log.txt");
         foutput.close();
     }
 
-    foutput.open("output/" + p.logDir + "/epoch-log.txt", std::ios::app);
+    foutput.open(p.outputPath + p.logDir + "/epoch-log.txt", std::ios::app);
 
     if (foutput.is_open()) {
         if (generation == 0) {
@@ -428,7 +428,7 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
 void createPopulationRange()
 {
     std::ofstream foutput;
-    foutput.open("output/" + p.logDir + "/population-range.txt");
+    foutput.open(p.outputPath + p.logDir + "/population-range.txt");
 
     if (foutput.is_open()) {
         foutput << p.population << std::endl;
@@ -442,7 +442,7 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
     int previousNumberSurvivors = 0;
 
     // Get the previous number of survivors from the file.
-    std::ifstream finput("output/" + p.logDir + "/population-range-final.txt");
+    std::ifstream finput(p.outputPath + p.logDir + "/population-range-final.txt");
 
     if (finput.is_open()) {
         finput >> previousNumberSurvivors;
@@ -453,7 +453,7 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
 
     if (numberSurvivors > previousNumberSurvivors) {
         // Empty the file and write the new value into it.
-        std::ofstream fempty("output/" + p.logDir + "/population-range-final.txt", std::ios::trunc);
+        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
         if (fempty.is_open()) {
             fempty << numberSurvivors << std::endl;
             fempty.close();
@@ -463,10 +463,10 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
     }
 
     if (generation == p.maxGenerations - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.imageDir + " " + p.logDir;
+        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
         system(command.c_str());
 
-        std::ofstream fempty("output/" + p.logDir + "/population-range-final.txt", std::ios::trunc);
+        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
         if (fempty.is_open()) {
             fempty << 0 << std::endl;
             fempty.close();
@@ -481,7 +481,7 @@ void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned r
     int previousNumberSurvivors = 0;
 
     // Get the previous number of survivors from the file.
-    std::ifstream finput("output/" + p.logDir + "/population-range-final.txt");
+    std::ifstream finput(p.outputPath + p.logDir + "/population-range-final.txt");
 
     if (finput.is_open()) {
         finput >> previousNumberSurvivors;
@@ -493,7 +493,7 @@ void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned r
     if (numberSurvivors > previousNumberSurvivors) {
         // Empty the file and write the new value into it.
         std::cout << "New number of survivors: " << numberSurvivors << std::endl;
-        std::ofstream fempty("output/" + p.logDir + "/population-range-final.txt", std::ios::trunc);
+        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
         if (fempty.is_open()) {
             fempty << numberSurvivors << std::endl;
             fempty.close();
@@ -503,10 +503,10 @@ void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned r
     }
 
     if (run == p.numRuns - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.imageDir + " " + p.logDir;
+        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
         std::system(command.c_str());
 
-        std::ofstream fempty("output/" + p.logDir + "/population-range-final.txt", std::ios::trunc);
+        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
         if (fempty.is_open()) {
             fempty << 0 << std::endl;
             fempty.close();
@@ -582,7 +582,7 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
 {
     unsigned index = 1; // indexes start at 1
     unsigned catIndex = 1; // used to count cats from which neuronal nets are drawn
-    std::string genomeMiceFilename = "output/" + p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
+    std::string genomeMiceFilename = p.outputPath + p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
     std::ofstream fmouse;
     fmouse.open(genomeMiceFilename);
     for (index = 1; index <= p.population * p.miceRatio; ++index) {
@@ -602,7 +602,7 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     }
     fmouse.close();
 
-    std::string genomeCatsFilename = "output/" + p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
+    std::string genomeCatsFilename = p.outputPath + p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
     std::ofstream fcat;
     fcat.open(genomeCatsFilename);
     for (index = p.population * p.miceRatio + 1; index < p.population; ++index) {
@@ -640,7 +640,7 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
 
 
 void displayMeanValues() {
-    std::string filename = "output/" + p.logDir + "/mean-values.txt";
+    std::string filename = p.outputPath + p.logDir + "/mean-values.txt";
     std::ofstream fmean;
     fmean.open(filename);
     if (fmean.is_open()) {
@@ -658,7 +658,7 @@ void displayMeanValues() {
 
 void saveBestGenomes(std::string species) {
     if (species == "mouse") {
-        std::ofstream foutput("output/bestMice", std::ios::trunc);
+        std::ofstream foutput(p.outputPath + "bestMice", std::ios::trunc);
         if (foutput.is_open()) {
             for (unsigned index = 1; index <= p.population * p.miceRatio; ++index) {
                 assert(peeps[index].species == "mouse");
@@ -675,7 +675,7 @@ void saveBestGenomes(std::string species) {
             assert(false);
         }
     } else {
-        std::ofstream foutput("output/bestCats", std::ios::trunc);
+        std::ofstream foutput(p.outputPath + "bestCats", std::ios::trunc);
         if (foutput.is_open()) {
             for (unsigned index = p.population * p.miceRatio + 1; index < p.population; ++index) {
                 assert(peeps[index].species == "cat");

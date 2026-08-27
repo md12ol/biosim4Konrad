@@ -101,6 +101,9 @@ struct Params {
     std::string logDir;
     std::string imageDir;
     unsigned heatmapStride; // > 0
+    std::string outputDir;
+    std::string experimentDir;
+    std::string outputPath;
     std::string heatmapDir;
     std::string netDir;
     std::string graphDir;
@@ -122,6 +125,7 @@ public:
     void registerConfigFile(const char *filename);
     void updateFromConfigFile(unsigned generationNumber);
     void checkParameters();
+    void setOutputPath();
 private:
     Params privParams;
     std::string configFilename;
