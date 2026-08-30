@@ -28,7 +28,7 @@ extern unsigned getSimulationRunInformation(unsigned run, unsigned murderCount);
 extern unsigned spawnNewGeneration(unsigned generation, unsigned murderCount);
 extern void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {});
 extern void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &actionLevels);
-extern void endOfSimStep(unsigned simStep, unsigned generation);
+extern void endOfSimStep(unsigned simStep, unsigned run, unsigned generation);
 extern void endOfGeneration(unsigned run, unsigned generation);
 
 RunMode runMode = RunMode::STOP;
@@ -171,7 +171,27 @@ void simulator(int argc, char **argv) {
                 {
                     murderCount = 0; // for reporting purposes
                     // Save the first frame before individuals take any simulation steps.
-                    imageWriter.saveVideoFrameSync(-1, generation);
+                    if (p.numRuns == 1) {
+                        if (p.saveVideo &&
+                    ((generation % p.videoStride) == 0
+                     || generation <= p.videoSaveFirstFrames
+                     || (generation >= p.parameterChangeGenerationNumber
+                         && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+                            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+                                std::cout << "imageWriter busy" << std::endl;
+                            }
+                         }
+                    } else {
+                        if (p.saveVideo &&
+                ((run % p.videoStride) == 0
+                    || run <= p.videoSaveFirstFrames
+                    || (run >= p.parameterChangeGenerationNumber
+                        && run <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+                            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+                                std::cout << "imageWriter busy" << std::endl;
+                            }
+                        }
+                    }
                 }
 
                 for (unsigned simStep = 0; simStep < p.stepsPerGeneration; ++simStep) {
@@ -189,7 +209,7 @@ void simulator(int argc, char **argv) {
 #pragma omp single
                     {
                         murderCount += peeps.deathQueueSize();
-                        endOfSimStep(simStep, generation);
+                        endOfSimStep(simStep, run, generation);
                     }
                 }
 

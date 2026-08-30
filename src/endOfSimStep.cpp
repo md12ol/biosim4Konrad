@@ -21,8 +21,7 @@ mode to take care of several things:
    p.saveVideo is true).
 */
 
-void endOfSimStep(unsigned simStep, unsigned generation)
-{
+void endOfSimStep(unsigned simStep, unsigned run, unsigned generation) {
     if (p.challengeMice == CHALLENGE_RADIOACTIVE_WALLS) {
         // During the first half of the generation, the west wall is radioactive,
         // where X == 0. In the last half of the generation, the east wall is
@@ -52,7 +51,7 @@ void endOfSimStep(unsigned simStep, unsigned generation)
             if ((indiv.loc.x == 0 || indiv.loc.x == p.sizeX - 1
              || indiv.loc.y == 0 || indiv.loc.y == p.sizeY - 1) && indiv.species == "mouse") {
                 indiv.challengeBits = true;
-            }
+             }
         }
     }
 
@@ -69,7 +68,7 @@ void endOfSimStep(unsigned simStep, unsigned generation)
                     if (((indiv.loc - grid.getBarrierCenters()[n]).length() <= radius)
                         && indiv.species == "mouse") {
                         indiv.challengeBits |= bit;
-                    }
+                        }
                     break;
                 }
             }
@@ -100,14 +99,26 @@ void endOfSimStep(unsigned simStep, unsigned generation)
     signals.fade(0); // takes layerNum  todo!!!
 
     // saveVideoFrameSync() is the synchronous version of saveVideFrame()
-    if (p.saveVideo &&
-                ((generation % p.videoStride) == 0
-                 || generation <= p.videoSaveFirstFrames
-                 || (generation >= p.parameterChangeGenerationNumber
-                     && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-        if (!imageWriter.saveVideoFrameSync(simStep, generation)) {
-            std::cout << "imageWriter busy" << std::endl;
-        }
+    if (p.numRuns == 1) {
+        if (p.saveVideo &&
+                    ((generation % p.videoStride) == 0
+                     || generation <= p.videoSaveFirstFrames
+                     || (generation >= p.parameterChangeGenerationNumber
+                         && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+            if (!imageWriter.saveVideoFrameSync(simStep, generation)) {
+                std::cout << "imageWriter busy" << std::endl;
+            }
+                         }
+    } else {
+        if (p.saveVideo &&
+                ((run % p.videoStride) == 0
+                    || run <= p.videoSaveFirstFrames
+                    || (run >= p.parameterChangeGenerationNumber
+                        && run <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
+            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+                std::cout << "imageWriter busy" << std::endl;
+            }
+                        }
     }
 }
 
