@@ -324,7 +324,7 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
     std::string graphFilename = p.outputPath + p.graphDir + "/net-gen-" + std::to_string(generation) +
         "-species-" + species + "-index-" + std::to_string(index) + ".svg";
 
-    std::string command = p.pythonCommand + " tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
+    std::string command = "python3 tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
     std::system(command.c_str());
 
 }
