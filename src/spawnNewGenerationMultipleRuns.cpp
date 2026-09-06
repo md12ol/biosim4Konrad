@@ -181,8 +181,8 @@ void initializeGeneration0Once(unsigned run)
         }
     }
     if (run % p.heatmapStride == 0) {
-        fillHeatmapMultipleRuns();
-        saveHeatmapImagesMultipleRuns(run);
+        fillHeatmap();
+        saveHeatmapImages(run, 0);
     }
 }
 

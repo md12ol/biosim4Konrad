@@ -120,7 +120,7 @@ void initializeGeneration0()
         }
     }
     fillHeatmap();
-    saveHeatmapImages(0);
+    saveHeatmapImages(0, 0);
 }
 
 
@@ -172,7 +172,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     }
     if (generation % p.heatmapStride == 0) {
         fillHeatmap();
-        saveHeatmapImages(generation);
+        saveHeatmapImages(0, generation);
     }
     if (generation == p.maxGenerations) {
         createHeatmapVideos(generation);

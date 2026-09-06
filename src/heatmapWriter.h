@@ -29,11 +29,9 @@ namespace BS {
 
     void initHeatmap();
     void fillHeatmap();
-    void saveHeatmapImages(unsigned generation);
+    void saveHeatmapImages(unsigned run, unsigned generation);
     void createHeatmapVideos(unsigned generation);
 
-    void initHeatmapMultipleRuns();
-    void fillHeatmapMultipleRuns();
-    void saveHeatmapImagesMultipleRuns(unsigned run);
-}
+} // end namespace BS
+
 #endif //HEATMAPWRITER_H_INCLUDED

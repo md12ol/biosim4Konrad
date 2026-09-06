@@ -8,6 +8,7 @@
 #include "heatmapVector.h"
 #define cimg_use_opencv 1
 #define cimg_display 0
+#define cimg_use_png 1
 #include "CImg.h"
 #include <cassert>
 
@@ -75,7 +76,15 @@ namespace BS {
 
         // Calculate the weights in the fields
         for (uint16_t index = 1; index <= p.population; ++index) {
+
             const Indiv &indiv = peeps[index];
+
+            if (index <= p.population * p.miceRatio) {
+                assert(peeps[index].species == "mouse");
+            }
+            if (index > p.population * p.miceRatio) {
+                assert(peeps[index].species == "cat");
+            }
 
             // Check the neuronal net of an indiv
             for (auto &conn : indiv.nnet.connections) {
@@ -149,8 +158,8 @@ namespace BS {
     }
 
     // Draws the images for a specific heatmap
-    void drawImage(const unsigned generation, const HeatmapVector& hm,
-        cimg_library::CImgList<uint8_t>& heatmapList, const int heatmapImageScale, const std::string &type) {
+    void drawImage(const unsigned run, const unsigned generation, const HeatmapVector& hm,
+        cimg_library::CImgList<uint8_t>& heatmapList, const int heatmapImageScale, const std::string &imageName) {
         using namespace cimg_library;
 
         CImg<uint8_t> image((hm.sizeX() + 6) * heatmapImageScale,
@@ -160,8 +169,10 @@ namespace BS {
             255);
 
         std::stringstream imageFilename;
-        imageFilename << p.outputPath << p.imageDir << "frame-"
-        << std::setfill('0') << std::setw(6) << generation
+
+        imageFilename << p.outputPath << p.heatmapDir << "/" << imageName << "-run-"
+        << std::setfill('0') << std::setw(6) << run <<
+            "-gen-" << std::setfill('0') << std::setw(6) << generation
         << ".png";
 
 
@@ -227,7 +238,7 @@ namespace BS {
         }
 
         // Draw circles for values in the heatmap
-        if (type == "average") {
+        if (imageName == "heatmap" || imageName == "heatmapMice" || imageName == "heatmapCats") {
             for (int x = 0; x < hm.sizeX(); x++) {
                 for (int y = 0; y < hm.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -250,7 +261,7 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "counter") {
+        } else if (imageName == "heatmapCounter") {
             for (int x = 0; x < heatmap.sizeX(); x++) {
                 for (int y = 0; y < heatmap.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -263,7 +274,7 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "counterMice") {
+        } else if (imageName == "heatmapCounterMice") {
             for (int x = 0; x < heatmap.sizeX(); x++) {
                 for (int y = 0; y < heatmap.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -276,7 +287,7 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "counterCats") {
+        } else if (imageName == "heatmapCounterCats") {
             for (int x = 0; x < heatmap.sizeX(); x++) {
                 for (int y = 0; y < heatmap.sizeY(); y++) {
                     if (hm.at(x, y) > 0) {
@@ -289,7 +300,7 @@ namespace BS {
                     }
                 }
             }
-        } else if (type == "sum") {
+        } else if (imageName == "heatmapSum" || imageName == "heatmapSumMice" || imageName == "heatmapSumCats") {
             const int absoluteMaximum = hm.getAbsoluteMaximum();
             for (int x = 0; x < hm.sizeX(); x++) {
                 for (int y = 0; y < hm.sizeY(); y++) {
@@ -322,23 +333,26 @@ namespace BS {
             image.height(),
             colorBlack);
         }
-        heatmapList.push_back(image);
+
+        if (p.numRuns == 1) {
+            heatmapList.push_back(image);
+        } else {
+            image.save(imageFilename.str().c_str());
+        }
     }
 
+    // Pushes the heatmap images into their lists or saves them directly.
+    void saveHeatmapImages(const unsigned run, const unsigned generation) {
 
-    // Pushes the heatmap images into their lists (the origin of coordinates
-    // in CImg.h is in the upper left corner).
-    void saveHeatmapImages(const unsigned generation) {
-
-        drawImage(generation, heatmap, heatmapImageList, 32, "average");
-        drawImage(generation, heatmapMice, heatmapImageListMice, 32, "average");
-        drawImage(generation, heatmapCats, heatmapImageListCats, 32, "average");
-        drawImage(generation, heatmapCounter, heatmapCounterImageList, 32, "counter");
-        drawImage(generation, heatmapCounterMice, heatmapCounterImageListMice, 32, "counterMice");
-        drawImage(generation, heatmapCounterCats, heatmapCounterImageListCats, 32, "counterCats");
-        drawImage(generation, heatmapSum, heatmapSumImageList, 32, "sum");
-        drawImage(generation, heatmapSumMice, heatmapSumImageListMice, 32, "sum");
-        drawImage(generation, heatmapSumCats, heatmapSumImageListCats, 32, "sum");
+        drawImage(run, generation, heatmap, heatmapImageList, 32, "heatmap");
+        drawImage(run, generation, heatmapMice, heatmapImageListMice, 32, "heatmapMice");
+        drawImage(run, generation, heatmapCats, heatmapImageListCats, 32, "heatmapCats");
+        drawImage(run, generation, heatmapCounter, heatmapCounterImageList, 32, "heatmapCounter");
+        drawImage(run, generation, heatmapCounterMice, heatmapCounterImageListMice, 32, "heatmapCounterMice");
+        drawImage(run, generation, heatmapCounterCats, heatmapCounterImageListCats, 32, "heatmapCounterCats");
+        drawImage(run, generation, heatmapSum, heatmapSumImageList, 32, "heatmapSum");
+        drawImage(run, generation, heatmapSumMice, heatmapSumImageListMice, 32, "heatmapSumMice");
+        drawImage(run, generation, heatmapSumCats, heatmapSumImageListCats, 32, "heatmapSumCats");
 
         // Clear the heatmap and heatmap counter after saving an image
         heatmap.zeroFill();
