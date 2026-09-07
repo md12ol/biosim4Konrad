@@ -7,7 +7,7 @@
     wrap load() and save() operations.
     """
 
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 # Signal is used in class methods write_config() at the bottom
 # of this file. Signal lock forces exection to conclude before
@@ -18,17 +18,17 @@ from configparser import SafeConfigParser
 #     config.write_config(a,b,c)
 from .threadutils import Signal
 
-class TestConfig(SafeConfigParser):
+class TestConfig(ConfigParser):
     """ Return a config parser object with default values.
         """
 
     def __init__(self, filename, _DEFAULTS=[]):
         self.filename = filename
         self._DEFAULTS = _DEFAULTS
-        SafeConfigParser.__init__(self)
+        ConfigParser.__init__(self)
         self.load()
 
-        # Future use. Example of upgradimg deprecated key/val:
+        # Future use. Example of upgrading deprecated key/val:
         # upgrade from deprecated "currency" to "quote_currency"
         if self.has_option("forex", "currency"):
             self.set("forex", "quote_currency", self.get_string("forex", "currency"))
@@ -112,7 +112,7 @@ class TestConfig(SafeConfigParser):
             d = self._delimiters[0]
         if self._defaults:
             self._write_section(fp, self.default_section,
-                                    self._defaults.items(), d)
+                                    self._defaults.items(), d, sort)
         for section in self._sections:
             self._write_section(fp, section,
                                 self._sections[section].items(), d, sort)
