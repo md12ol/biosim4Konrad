@@ -46,19 +46,10 @@ deterministic = ["false"]
 RNGSeed = ["12345678"]
 
 
-
-
-# global parameters which influence the slurm scripts
-
-
-
-
-
 # modifies a single, specified line in the given config file
 def modify_ini(exp_ini, key, value):
     print("Modifying", key, value)
     exp_ini.write_config_setting("DEFAULT", key, value)
-
 
 
 # create the needed structure for a single experiment
@@ -89,7 +80,9 @@ def create_folders(index):
 
 
 
-
+def create_dat_table_entry(path):
+    with open("table.dat", "a") as datfile:
+        datfile.write("./bin/Release/biosim4 " + path + "\n")
 
 
 
@@ -166,15 +159,12 @@ def create_config_files():
         # Move the file to the corresponding experiment folder
         shutil.move("biosim4experiment.ini", outputDir + "/experiment" + str(index))
 
+        # Create table entry for specific experiment
+        create_dat_table_entry('"' + outputDir + '/experiment' + str(index) + '/biosim4experiment.ini"')
 
         index = index + 1
 
 
-
-
-
-
-#def create_slurm_script():
 def main():
     create_config_files()
 
