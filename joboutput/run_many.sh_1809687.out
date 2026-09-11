@@ -1,0 +1,1530 @@
+4; ./bin/Release/biosim4 "outputScript/experiment4/biosim4experiment.ini"
+Sensors:
+  loc X
+  loc Y
+  boundary dist X
+  boundary dist
+  boundary dist Y
+  genetic similarity fwd
+  last move dir X
+  last move dir Y
+  long probe population fwd
+  long probe population fwd inverse
+  long probe barrier fwd
+  long probe barrier fwd inverse
+  long probe safe area fwd
+  long probe safe area fwd inverse
+  long probe food area fwd
+  long probe food area fwd inverse
+  long probe mice fwd
+  long probe mice fwd inverse
+  long probe cats fwd
+  long probe cats fwd inverse
+  population
+  population mice
+  population cats
+  population fwd
+  population fwd inverse
+  population fwd mice
+  population fwd mice inverse
+  population fwd cats
+  population fwd cats inverse
+  population LR
+  population LR inverse
+  population LR mice
+  population LR mice inverse
+  population LR cats
+  population LR cats inverse
+  osc1
+  age
+  short probe barrier fwd-rev
+  short probe barrier fwd-rev inverse
+  short probe barrier left-right
+  short probe barrier left-right inverse
+  short probe safe area fwd-rev
+  short probe safe area fwd-rev inverse
+  short probe safe area left-right
+  short probe safe area left-right inverse
+  short probe food area fwd
+  short probe food area fwd inverse
+  short probe food area left-right
+  short probe food area left-right inverse
+  random
+  signal 0
+  signal 0 fwd
+  signal 0 LR
+Actions:
+  move X
+  move Y
+  move fwd
+  move R-L
+  move random
+  set osc1
+  set longprobe dist
+  set inv-responsiveness
+  emit signal 0
+  move east
+  move west
+  move north
+  move south
+  move left
+  move right
+  move reverse
+  kill fwd
+
+Invalid param: [default] = [DEFAULT]
+heatmap initialized
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 0 Population: 200
+Gen 0, 21 survived mice
+Gen 0, 129 mice which did not survive
+Gen 0, 1 survived cats
+Gen 0, 49 cats which did not survive
+Gen 0, 1 number of mice eaten
+Gen 0, 1 number of cats that ate mice
+Gen 0, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Sensors in use:
+  63 - loc X
+  58 - loc Y
+  55 - boundary dist X
+  45 - boundary dist
+  50 - boundary dist Y
+  58 - genetic similarity fwd
+  55 - last move dir X
+  52 - last move dir Y
+  40 - long probe population fwd
+  52 - long probe population fwd inverse
+  54 - long probe barrier fwd
+  52 - long probe barrier fwd inverse
+  50 - long probe safe area fwd
+  49 - long probe safe area fwd inverse
+  48 - long probe food area fwd
+  59 - long probe food area fwd inverse
+  62 - long probe mice fwd
+  41 - long probe mice fwd inverse
+  51 - long probe cats fwd
+  59 - long probe cats fwd inverse
+  52 - population
+  44 - population mice
+  32 - population cats
+  33 - population fwd
+  43 - population fwd inverse
+  41 - population fwd mice
+  33 - population fwd mice inverse
+  37 - population fwd cats
+  34 - population fwd cats inverse
+  35 - population LR
+  41 - population LR inverse
+  31 - population LR mice
+  18 - population LR mice inverse
+  26 - population LR cats
+  28 - population LR cats inverse
+  38 - osc1
+  47 - age
+  41 - short probe barrier fwd-rev
+  33 - short probe barrier fwd-rev inverse
+  32 - short probe barrier left-right
+  45 - short probe barrier left-right inverse
+  30 - short probe safe area fwd-rev
+  32 - short probe safe area fwd-rev inverse
+  40 - short probe safe area left-right
+  40 - short probe safe area left-right inverse
+  36 - short probe food area fwd
+  39 - short probe food area fwd inverse
+  34 - short probe food area left-right
+  33 - short probe food area left-right inverse
+  46 - random
+  28 - signal 0
+  36 - signal 0 fwd
+  28 - signal 0 LR
+Actions in use:
+  151 - move X
+  152 - move Y
+  145 - move fwd
+  173 - move R-L
+  162 - move random
+  148 - set osc1
+  162 - set longprobe dist
+  124 - set inv-responsiveness
+  135 - emit signal 0
+  134 - move east
+  120 - move west
+  109 - move north
+  127 - move south
+  132 - move left
+  114 - move right
+  109 - move reverse
+  119 - kill fwd
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 1 Population: 155
+Gen 1, 21 survived mice
+Gen 1, 133 mice which did not survive
+Gen 1, 1 survived cats
+Gen 1, 0 cats which did not survive
+Gen 1, 2 number of mice eaten
+Gen 1, 1 number of cats that ate mice
+Gen 1, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 2 Population: 157
+Gen 2, 19 survived mice
+Gen 2, 137 mice which did not survive
+Gen 2, 1 survived cats
+Gen 2, 0 cats which did not survive
+Gen 2, 2 number of mice eaten
+Gen 2, 1 number of cats that ate mice
+Gen 2, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 3 Population: 159
+Gen 3, 18 survived mice
+Gen 3, 140 mice which did not survive
+Gen 3, 1 survived cats
+Gen 3, 0 cats which did not survive
+Gen 3, 1 number of mice eaten
+Gen 3, 1 number of cats that ate mice
+Gen 3, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 4 Population: 163
+Gen 4, 19 survived mice
+Gen 4, 143 mice which did not survive
+Gen 4, 1 survived cats
+Gen 4, 0 cats which did not survive
+Gen 4, 1 number of mice eaten
+Gen 4, 1 number of cats that ate mice
+Gen 4, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 5 Population: 166
+Gen 5, 24 survived mice
+Gen 5, 141 mice which did not survive
+Gen 5, 0 survived cats
+Gen 5, 1 cats which did not survive
+Gen 5, 0 number of mice eaten
+Gen 5, 0 number of cats that ate mice
+Gen 5, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 6 Population: 182
+Gen 6, 25 survived mice
+Gen 6, 141 mice which did not survive
+Gen 6, 0 survived cats
+Gen 6, 16 cats which did not survive
+Gen 6, 0 number of mice eaten
+Gen 6, 0 number of cats that ate mice
+Gen 6, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 7 Population: 200
+Gen 7, 29 survived mice
+Gen 7, 153 mice which did not survive
+Gen 7, 0 survived cats
+Gen 7, 18 cats which did not survive
+Gen 7, 0 number of mice eaten
+Gen 7, 0 number of cats that ate mice
+Gen 7, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 8 Population: 220
+Gen 8, 20 survived mice
+Gen 8, 180 mice which did not survive
+Gen 8, 1 survived cats
+Gen 8, 19 cats which did not survive
+Gen 8, 3 number of mice eaten
+Gen 8, 1 number of cats that ate mice
+Gen 8, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 9 Population: 204
+Gen 9, 22 survived mice
+Gen 9, 181 mice which did not survive
+Gen 9, 0 survived cats
+Gen 9, 1 cats which did not survive
+Gen 9, 0 number of mice eaten
+Gen 9, 0 number of cats that ate mice
+Gen 9, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 10 Population: 224
+Gen 10, 31 survived mice
+Gen 10, 173 mice which did not survive
+Gen 10, 0 survived cats
+Gen 10, 20 cats which did not survive
+Gen 10, 0 number of mice eaten
+Gen 10, 0 number of cats that ate mice
+Gen 10, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 11 Population: 246
+Gen 11, 29 survived mice
+Gen 11, 195 mice which did not survive
+Gen 11, 1 survived cats
+Gen 11, 21 cats which did not survive
+Gen 11, 1 number of mice eaten
+Gen 11, 1 number of cats that ate mice
+Gen 11, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 12 Population: 230
+Gen 12, 35 survived mice
+Gen 12, 194 mice which did not survive
+Gen 12, 1 survived cats
+Gen 12, 0 cats which did not survive
+Gen 12, 4 number of mice eaten
+Gen 12, 1 number of cats that ate mice
+Gen 12, 4 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 13 Population: 235
+Gen 13, 39 survived mice
+Gen 13, 195 mice which did not survive
+Gen 13, 0 survived cats
+Gen 13, 1 cats which did not survive
+Gen 13, 0 number of mice eaten
+Gen 13, 0 number of cats that ate mice
+Gen 13, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 14 Population: 258
+Gen 14, 54 survived mice
+Gen 14, 181 mice which did not survive
+Gen 14, 0 survived cats
+Gen 14, 23 cats which did not survive
+Gen 14, 0 number of mice eaten
+Gen 14, 0 number of cats that ate mice
+Gen 14, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 15 Population: 283
+Gen 15, 48 survived mice
+Gen 15, 210 mice which did not survive
+Gen 15, 2 survived cats
+Gen 15, 23 cats which did not survive
+Gen 15, 5 number of mice eaten
+Gen 15, 2 number of cats that ate mice
+Gen 15, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 16 Population: 266
+Gen 16, 56 survived mice
+Gen 16, 208 mice which did not survive
+Gen 16, 0 survived cats
+Gen 16, 2 cats which did not survive
+Gen 16, 0 number of mice eaten
+Gen 16, 0 number of cats that ate mice
+Gen 16, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 17 Population: 292
+Gen 17, 54 survived mice
+Gen 17, 212 mice which did not survive
+Gen 17, 0 survived cats
+Gen 17, 26 cats which did not survive
+Gen 17, 0 number of mice eaten
+Gen 17, 0 number of cats that ate mice
+Gen 17, 0 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Only mice survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 18 Population: 321
+Gen 18, 40 survived mice
+Gen 18, 252 mice which did not survive
+Gen 18, 2 survived cats
+Gen 18, 27 cats which did not survive
+Gen 18, 4 number of mice eaten
+Gen 18, 2 number of cats that ate mice
+Gen 18, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 19 Population: 299
+Gen 19, 56 survived mice
+Gen 19, 241 mice which did not survive
+Gen 19, 2 survived cats
+Gen 19, 0 cats which did not survive
+Gen 19, 24 number of mice eaten
+Gen 19, 2 number of cats that ate mice
+Gen 19, 11 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 20 Population: 291
+Gen 20, 50 survived mice
+Gen 20, 239 mice which did not survive
+Gen 20, 2 survived cats
+Gen 20, 0 cats which did not survive
+Gen 20, 16 number of mice eaten
+Gen 20, 2 number of cats that ate mice
+Gen 20, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 21 Population: 290
+Gen 21, 49 survived mice
+Gen 21, 239 mice which did not survive
+Gen 21, 2 survived cats
+Gen 21, 0 cats which did not survive
+Gen 21, 15 number of mice eaten
+Gen 21, 2 number of cats that ate mice
+Gen 21, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 22 Population: 289
+Gen 22, 58 survived mice
+Gen 22, 229 mice which did not survive
+Gen 22, 2 survived cats
+Gen 22, 0 cats which did not survive
+Gen 22, 2 number of mice eaten
+Gen 22, 2 number of cats that ate mice
+Gen 22, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 23 Population: 301
+Gen 23, 54 survived mice
+Gen 23, 245 mice which did not survive
+Gen 23, 2 survived cats
+Gen 23, 0 cats which did not survive
+Gen 23, 22 number of mice eaten
+Gen 23, 2 number of cats that ate mice
+Gen 23, 7 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 24 Population: 294
+Gen 24, 50 survived mice
+Gen 24, 242 mice which did not survive
+Gen 24, 2 survived cats
+Gen 24, 0 cats which did not survive
+Gen 24, 16 number of mice eaten
+Gen 24, 2 number of cats that ate mice
+Gen 24, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 25 Population: 294
+Gen 25, 53 survived mice
+Gen 25, 239 mice which did not survive
+Gen 25, 2 survived cats
+Gen 25, 0 cats which did not survive
+Gen 25, 17 number of mice eaten
+Gen 25, 2 number of cats that ate mice
+Gen 25, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Sensors in use:
+  40 - loc Y
+  3 - boundary dist
+  275 - long probe population fwd
+  150 - long probe barrier fwd inverse
+  93 - long probe mice fwd
+  158 - long probe mice fwd inverse
+  2 - long probe cats fwd
+  287 - population fwd
+  11 - population fwd inverse
+  62 - population fwd mice
+  2 - population fwd mice inverse
+  299 - population fwd cats
+  275 - population fwd cats inverse
+  71 - population LR
+  205 - population LR inverse
+  41 - population LR cats inverse
+  2 - age
+  263 - short probe barrier left-right
+  2 - short probe barrier left-right inverse
+  56 - short probe safe area fwd-rev
+  23 - short probe safe area left-right
+  154 - short probe safe area left-right inverse
+  60 - short probe food area left-right
+  86 - signal 0
+  2 - signal 0 LR
+Actions in use:
+  442 - move X
+  274 - move Y
+  171 - move fwd
+  667 - move R-L
+  327 - move random
+  166 - set osc1
+  102 - set longprobe dist
+  4 - set inv-responsiveness
+  793 - move east
+  431 - move west
+  23 - move north
+  345 - move south
+  217 - move left
+  89 - move reverse
+  4 - kill fwd
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 26 Population: 288
+Gen 26, 46 survived mice
+Gen 26, 240 mice which did not survive
+Gen 26, 2 survived cats
+Gen 26, 0 cats which did not survive
+Gen 26, 21 number of mice eaten
+Gen 26, 2 number of cats that ate mice
+Gen 26, 10 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 27 Population: 280
+Gen 27, 53 survived mice
+Gen 27, 225 mice which did not survive
+Gen 27, 2 survived cats
+Gen 27, 0 cats which did not survive
+Gen 27, 10 number of mice eaten
+Gen 27, 2 number of cats that ate mice
+Gen 27, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 28 Population: 284
+Gen 28, 52 survived mice
+Gen 28, 230 mice which did not survive
+Gen 28, 2 survived cats
+Gen 28, 0 cats which did not survive
+Gen 28, 26 number of mice eaten
+Gen 28, 2 number of cats that ate mice
+Gen 28, 13 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 29 Population: 272
+Gen 29, 51 survived mice
+Gen 29, 219 mice which did not survive
+Gen 29, 2 survived cats
+Gen 29, 0 cats which did not survive
+Gen 29, 12 number of mice eaten
+Gen 29, 2 number of cats that ate mice
+Gen 29, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 30 Population: 273
+Gen 30, 58 survived mice
+Gen 30, 213 mice which did not survive
+Gen 30, 2 survived cats
+Gen 30, 0 cats which did not survive
+Gen 30, 8 number of mice eaten
+Gen 30, 2 number of cats that ate mice
+Gen 30, 4 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 31 Population: 283
+Gen 31, 58 survived mice
+Gen 31, 223 mice which did not survive
+Gen 31, 2 survived cats
+Gen 31, 0 cats which did not survive
+Gen 31, 3 number of mice eaten
+Gen 31, 2 number of cats that ate mice
+Gen 31, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 32 Population: 300
+Gen 32, 57 survived mice
+Gen 32, 241 mice which did not survive
+Gen 32, 2 survived cats
+Gen 32, 0 cats which did not survive
+Gen 32, 7 number of mice eaten
+Gen 32, 2 number of cats that ate mice
+Gen 32, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 33 Population: 312
+Gen 33, 55 survived mice
+Gen 33, 255 mice which did not survive
+Gen 33, 2 survived cats
+Gen 33, 0 cats which did not survive
+Gen 33, 7 number of mice eaten
+Gen 33, 2 number of cats that ate mice
+Gen 33, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 34 Population: 324
+Gen 34, 73 survived mice
+Gen 34, 249 mice which did not survive
+Gen 34, 2 survived cats
+Gen 34, 0 cats which did not survive
+Gen 34, 20 number of mice eaten
+Gen 34, 2 number of cats that ate mice
+Gen 34, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 35 Population: 327
+Gen 35, 73 survived mice
+Gen 35, 252 mice which did not survive
+Gen 35, 2 survived cats
+Gen 35, 0 cats which did not survive
+Gen 35, 19 number of mice eaten
+Gen 35, 2 number of cats that ate mice
+Gen 35, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 36 Population: 327
+Gen 36, 67 survived mice
+Gen 36, 258 mice which did not survive
+Gen 36, 2 survived cats
+Gen 36, 0 cats which did not survive
+Gen 36, 18 number of mice eaten
+Gen 36, 2 number of cats that ate mice
+Gen 36, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 37 Population: 333
+Gen 37, 68 survived mice
+Gen 37, 263 mice which did not survive
+Gen 37, 2 survived cats
+Gen 37, 0 cats which did not survive
+Gen 37, 20 number of mice eaten
+Gen 37, 2 number of cats that ate mice
+Gen 37, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 38 Population: 334
+Gen 38, 73 survived mice
+Gen 38, 259 mice which did not survive
+Gen 38, 2 survived cats
+Gen 38, 0 cats which did not survive
+Gen 38, 18 number of mice eaten
+Gen 38, 2 number of cats that ate mice
+Gen 38, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 39 Population: 335
+Gen 39, 78 survived mice
+Gen 39, 255 mice which did not survive
+Gen 39, 2 survived cats
+Gen 39, 0 cats which did not survive
+Gen 39, 14 number of mice eaten
+Gen 39, 2 number of cats that ate mice
+Gen 39, 4 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 40 Population: 350
+Gen 40, 70 survived mice
+Gen 40, 278 mice which did not survive
+Gen 40, 2 survived cats
+Gen 40, 0 cats which did not survive
+Gen 40, 20 number of mice eaten
+Gen 40, 2 number of cats that ate mice
+Gen 40, 7 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 41 Population: 352
+Gen 41, 86 survived mice
+Gen 41, 264 mice which did not survive
+Gen 41, 2 survived cats
+Gen 41, 0 cats which did not survive
+Gen 41, 10 number of mice eaten
+Gen 41, 2 number of cats that ate mice
+Gen 41, 4 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 42 Population: 371
+Gen 42, 82 survived mice
+Gen 42, 287 mice which did not survive
+Gen 42, 2 survived cats
+Gen 42, 0 cats which did not survive
+Gen 42, 17 number of mice eaten
+Gen 42, 2 number of cats that ate mice
+Gen 42, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 43 Population: 375
+Gen 43, 73 survived mice
+Gen 43, 300 mice which did not survive
+Gen 43, 2 survived cats
+Gen 43, 0 cats which did not survive
+Gen 43, 16 number of mice eaten
+Gen 43, 2 number of cats that ate mice
+Gen 43, 4 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 44 Population: 383
+Gen 44, 95 survived mice
+Gen 44, 286 mice which did not survive
+Gen 44, 2 survived cats
+Gen 44, 0 cats which did not survive
+Gen 44, 9 number of mice eaten
+Gen 44, 2 number of cats that ate mice
+Gen 44, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 45 Population: 407
+Gen 45, 78 survived mice
+Gen 45, 327 mice which did not survive
+Gen 45, 2 survived cats
+Gen 45, 0 cats which did not survive
+Gen 45, 28 number of mice eaten
+Gen 45, 2 number of cats that ate mice
+Gen 45, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 46 Population: 406
+Gen 46, 91 survived mice
+Gen 46, 313 mice which did not survive
+Gen 46, 2 survived cats
+Gen 46, 0 cats which did not survive
+Gen 46, 14 number of mice eaten
+Gen 46, 2 number of cats that ate mice
+Gen 46, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 47 Population: 424
+Gen 47, 84 survived mice
+Gen 47, 338 mice which did not survive
+Gen 47, 2 survived cats
+Gen 47, 0 cats which did not survive
+Gen 47, 25 number of mice eaten
+Gen 47, 2 number of cats that ate mice
+Gen 47, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 48 Population: 425
+Gen 48, 82 survived mice
+Gen 48, 341 mice which did not survive
+Gen 48, 2 survived cats
+Gen 48, 0 cats which did not survive
+Gen 48, 24 number of mice eaten
+Gen 48, 2 number of cats that ate mice
+Gen 48, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 49 Population: 426
+Gen 49, 84 survived mice
+Gen 49, 340 mice which did not survive
+Gen 49, 1 survived cats
+Gen 49, 1 cats which did not survive
+Gen 49, 8 number of mice eaten
+Gen 49, 1 number of cats that ate mice
+Gen 49, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 50 Population: 438
+Gen 50, 100 survived mice
+Gen 50, 337 mice which did not survive
+Gen 50, 1 survived cats
+Gen 50, 0 cats which did not survive
+Gen 50, 7 number of mice eaten
+Gen 50, 1 number of cats that ate mice
+Gen 50, 7 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Sensors in use:
+  1 - loc Y
+  1 - boundary dist X
+  1 - boundary dist
+  430 - long probe population fwd
+  6 - long probe barrier fwd
+  309 - long probe barrier fwd inverse
+  158 - long probe mice fwd
+  425 - long probe mice fwd inverse
+  1 - long probe cats fwd
+  135 - population fwd
+  48 - population fwd inverse
+  1 - population fwd mice inverse
+  431 - population fwd cats
+  426 - population fwd cats inverse
+  365 - population LR
+  1 - population LR inverse
+  93 - population LR cats inverse
+  1 - age
+  429 - short probe barrier left-right
+  1 - short probe barrier left-right inverse
+  324 - short probe safe area left-right inverse
+  171 - signal 0
+  1 - signal 0 LR
+Actions in use:
+  432 - move X
+  938 - move Y
+  630 - move fwd
+  1199 - move R-L
+  16 - move random
+  119 - set osc1
+  3 - set longprobe dist
+  3 - set inv-responsiveness
+  1290 - move east
+  756 - move west
+  494 - move south
+  430 - move left
+  2 - move reverse
+  2 - kill fwd
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 51 Population: 462
+Gen 51, 94 survived mice
+Gen 51, 367 mice which did not survive
+Gen 51, 1 survived cats
+Gen 51, 0 cats which did not survive
+Gen 51, 10 number of mice eaten
+Gen 51, 1 number of cats that ate mice
+Gen 51, 10 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 52 Population: 481
+Gen 52, 102 survived mice
+Gen 52, 378 mice which did not survive
+Gen 52, 1 survived cats
+Gen 52, 0 cats which did not survive
+Gen 52, 16 number of mice eaten
+Gen 52, 1 number of cats that ate mice
+Gen 52, 16 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 53 Population: 498
+Gen 53, 95 survived mice
+Gen 53, 402 mice which did not survive
+Gen 53, 1 survived cats
+Gen 53, 0 cats which did not survive
+Gen 53, 20 number of mice eaten
+Gen 53, 1 number of cats that ate mice
+Gen 53, 20 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 54 Population: 509
+Gen 54, 89 survived mice
+Gen 54, 419 mice which did not survive
+Gen 54, 1 survived cats
+Gen 54, 0 cats which did not survive
+Gen 54, 13 number of mice eaten
+Gen 54, 1 number of cats that ate mice
+Gen 54, 13 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 55 Population: 522
+Gen 55, 102 survived mice
+Gen 55, 419 mice which did not survive
+Gen 55, 1 survived cats
+Gen 55, 0 cats which did not survive
+Gen 55, 9 number of mice eaten
+Gen 55, 1 number of cats that ate mice
+Gen 55, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 56 Population: 546
+Gen 56, 112 survived mice
+Gen 56, 433 mice which did not survive
+Gen 56, 1 survived cats
+Gen 56, 0 cats which did not survive
+Gen 56, 2 number of mice eaten
+Gen 56, 1 number of cats that ate mice
+Gen 56, 2 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 57 Population: 575
+Gen 57, 118 survived mice
+Gen 57, 456 mice which did not survive
+Gen 57, 1 survived cats
+Gen 57, 0 cats which did not survive
+Gen 57, 9 number of mice eaten
+Gen 57, 1 number of cats that ate mice
+Gen 57, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 58 Population: 605
+Gen 58, 121 survived mice
+Gen 58, 483 mice which did not survive
+Gen 58, 1 survived cats
+Gen 58, 0 cats which did not survive
+Gen 58, 8 number of mice eaten
+Gen 58, 1 number of cats that ate mice
+Gen 58, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 59 Population: 633
+Gen 59, 125 survived mice
+Gen 59, 507 mice which did not survive
+Gen 59, 1 survived cats
+Gen 59, 0 cats which did not survive
+Gen 59, 5 number of mice eaten
+Gen 59, 1 number of cats that ate mice
+Gen 59, 5 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 60 Population: 662
+Gen 60, 134 survived mice
+Gen 60, 527 mice which did not survive
+Gen 60, 1 survived cats
+Gen 60, 0 cats which did not survive
+Gen 60, 3 number of mice eaten
+Gen 60, 1 number of cats that ate mice
+Gen 60, 3 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 61 Population: 703
+Gen 61, 141 survived mice
+Gen 61, 561 mice which did not survive
+Gen 61, 1 survived cats
+Gen 61, 0 cats which did not survive
+Gen 61, 6 number of mice eaten
+Gen 61, 1 number of cats that ate mice
+Gen 61, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 62 Population: 739
+Gen 62, 128 survived mice
+Gen 62, 610 mice which did not survive
+Gen 62, 1 survived cats
+Gen 62, 0 cats which did not survive
+Gen 62, 6 number of mice eaten
+Gen 62, 1 number of cats that ate mice
+Gen 62, 6 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 63 Population: 772
+Gen 63, 143 survived mice
+Gen 63, 628 mice which did not survive
+Gen 63, 1 survived cats
+Gen 63, 0 cats which did not survive
+Gen 63, 7 number of mice eaten
+Gen 63, 1 number of cats that ate mice
+Gen 63, 7 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 64 Population: 808
+Gen 64, 133 survived mice
+Gen 64, 674 mice which did not survive
+Gen 64, 1 survived cats
+Gen 64, 0 cats which did not survive
+Gen 64, 12 number of mice eaten
+Gen 64, 1 number of cats that ate mice
+Gen 64, 12 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 65 Population: 841
+Gen 65, 151 survived mice
+Gen 65, 689 mice which did not survive
+Gen 65, 1 survived cats
+Gen 65, 0 cats which did not survive
+Gen 65, 7 number of mice eaten
+Gen 65, 1 number of cats that ate mice
+Gen 65, 7 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 66 Population: 884
+Gen 66, 139 survived mice
+Gen 66, 744 mice which did not survive
+Gen 66, 1 survived cats
+Gen 66, 0 cats which did not survive
+Gen 66, 21 number of mice eaten
+Gen 66, 1 number of cats that ate mice
+Gen 66, 21 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 67 Population: 910
+Gen 67, 148 survived mice
+Gen 67, 761 mice which did not survive
+Gen 67, 1 survived cats
+Gen 67, 0 cats which did not survive
+Gen 67, 12 number of mice eaten
+Gen 67, 1 number of cats that ate mice
+Gen 67, 12 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 68 Population: 945
+Gen 68, 169 survived mice
+Gen 68, 775 mice which did not survive
+Gen 68, 1 survived cats
+Gen 68, 0 cats which did not survive
+Gen 68, 21 number of mice eaten
+Gen 68, 1 number of cats that ate mice
+Gen 68, 21 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 69 Population: 977
+Gen 69, 162 survived mice
+Gen 69, 814 mice which did not survive
+Gen 69, 1 survived cats
+Gen 69, 0 cats which did not survive
+Gen 69, 9 number of mice eaten
+Gen 69, 1 number of cats that ate mice
+Gen 69, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 70 Population: 1023
+Gen 70, 157 survived mice
+Gen 70, 865 mice which did not survive
+Gen 70, 1 survived cats
+Gen 70, 0 cats which did not survive
+Gen 70, 13 number of mice eaten
+Gen 70, 1 number of cats that ate mice
+Gen 70, 13 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 71 Population: 1060
+Gen 71, 170 survived mice
+Gen 71, 889 mice which did not survive
+Gen 71, 1 survived cats
+Gen 71, 0 cats which did not survive
+Gen 71, 13 number of mice eaten
+Gen 71, 1 number of cats that ate mice
+Gen 71, 13 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 72 Population: 1105
+Gen 72, 163 survived mice
+Gen 72, 941 mice which did not survive
+Gen 72, 1 survived cats
+Gen 72, 0 cats which did not survive
+Gen 72, 18 number of mice eaten
+Gen 72, 1 number of cats that ate mice
+Gen 72, 18 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 73 Population: 1145
+Gen 73, 168 survived mice
+Gen 73, 976 mice which did not survive
+Gen 73, 1 survived cats
+Gen 73, 0 cats which did not survive
+Gen 73, 16 number of mice eaten
+Gen 73, 1 number of cats that ate mice
+Gen 73, 16 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 74 Population: 1195
+Gen 74, 176 survived mice
+Gen 74, 1018 mice which did not survive
+Gen 74, 1 survived cats
+Gen 74, 0 cats which did not survive
+Gen 74, 8 number of mice eaten
+Gen 74, 1 number of cats that ate mice
+Gen 74, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 75 Population: 1252
+Gen 75, 186 survived mice
+Gen 75, 1065 mice which did not survive
+Gen 75, 1 survived cats
+Gen 75, 0 cats which did not survive
+Gen 75, 19 number of mice eaten
+Gen 75, 1 number of cats that ate mice
+Gen 75, 19 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Sensors in use:
+  1 - loc Y
+  2 - boundary dist
+  1233 - long probe population fwd
+  537 - long probe barrier fwd inverse
+  1082 - long probe mice fwd
+  1232 - long probe mice fwd inverse
+  1 - long probe cats fwd
+  695 - population fwd
+  366 - population fwd inverse
+  1 - population fwd mice inverse
+  1209 - population fwd cats
+  1251 - population fwd cats inverse
+  1111 - population LR
+  1 - population LR inverse
+  138 - population LR cats inverse
+  2 - osc1
+  1 - age
+  1 - short probe barrier fwd-rev
+  1230 - short probe barrier left-right
+  1 - short probe barrier left-right inverse
+  1010 - short probe safe area left-right inverse
+  714 - signal 0
+  1 - signal 0 LR
+Actions in use:
+  1234 - move X
+  2206 - move Y
+  2327 - move fwd
+  3578 - move R-L
+  695 - set osc1
+  26 - set longprobe dist
+  3 - set inv-responsiveness
+  3693 - move east
+  2243 - move west
+  1 - move north
+  1353 - move south
+  1232 - move left
+  1 - move reverse
+  2 - kill fwd
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 76 Population: 1298
+Gen 76, 184 survived mice
+Gen 76, 1113 mice which did not survive
+Gen 76, 1 survived cats
+Gen 76, 0 cats which did not survive
+Gen 76, 26 number of mice eaten
+Gen 76, 1 number of cats that ate mice
+Gen 76, 26 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 77 Population: 1338
+Gen 77, 191 survived mice
+Gen 77, 1146 mice which did not survive
+Gen 77, 1 survived cats
+Gen 77, 0 cats which did not survive
+Gen 77, 33 number of mice eaten
+Gen 77, 1 number of cats that ate mice
+Gen 77, 33 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 78 Population: 1370
+Gen 78, 202 survived mice
+Gen 78, 1167 mice which did not survive
+Gen 78, 1 survived cats
+Gen 78, 0 cats which did not survive
+Gen 78, 9 number of mice eaten
+Gen 78, 1 number of cats that ate mice
+Gen 78, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 79 Population: 1428
+Gen 79, 200 survived mice
+Gen 79, 1227 mice which did not survive
+Gen 79, 1 survived cats
+Gen 79, 0 cats which did not survive
+Gen 79, 16 number of mice eaten
+Gen 79, 1 number of cats that ate mice
+Gen 79, 16 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 80 Population: 1480
+Gen 80, 196 survived mice
+Gen 80, 1283 mice which did not survive
+Gen 80, 1 survived cats
+Gen 80, 0 cats which did not survive
+Gen 80, 12 number of mice eaten
+Gen 80, 1 number of cats that ate mice
+Gen 80, 12 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 81 Population: 1538
+Gen 81, 195 survived mice
+Gen 81, 1342 mice which did not survive
+Gen 81, 1 survived cats
+Gen 81, 0 cats which did not survive
+Gen 81, 24 number of mice eaten
+Gen 81, 1 number of cats that ate mice
+Gen 81, 24 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 82 Population: 1593
+Gen 82, 224 survived mice
+Gen 82, 1368 mice which did not survive
+Gen 82, 1 survived cats
+Gen 82, 0 cats which did not survive
+Gen 82, 30 number of mice eaten
+Gen 82, 1 number of cats that ate mice
+Gen 82, 30 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 83 Population: 1644
+Gen 83, 216 survived mice
+Gen 83, 1427 mice which did not survive
+Gen 83, 1 survived cats
+Gen 83, 0 cats which did not survive
+Gen 83, 26 number of mice eaten
+Gen 83, 1 number of cats that ate mice
+Gen 83, 26 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 84 Population: 1693
+Gen 84, 220 survived mice
+Gen 84, 1472 mice which did not survive
+Gen 84, 1 survived cats
+Gen 84, 0 cats which did not survive
+Gen 84, 9 number of mice eaten
+Gen 84, 1 number of cats that ate mice
+Gen 84, 9 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 85 Population: 1770
+Gen 85, 229 survived mice
+Gen 85, 1540 mice which did not survive
+Gen 85, 1 survived cats
+Gen 85, 0 cats which did not survive
+Gen 85, 35 number of mice eaten
+Gen 85, 1 number of cats that ate mice
+Gen 85, 35 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 86 Population: 1834
+Gen 86, 217 survived mice
+Gen 86, 1616 mice which did not survive
+Gen 86, 1 survived cats
+Gen 86, 0 cats which did not survive
+Gen 86, 8 number of mice eaten
+Gen 86, 1 number of cats that ate mice
+Gen 86, 8 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 87 Population: 1907
+Gen 87, 236 survived mice
+Gen 87, 1670 mice which did not survive
+Gen 87, 1 survived cats
+Gen 87, 0 cats which did not survive
+Gen 87, 24 number of mice eaten
+Gen 87, 1 number of cats that ate mice
+Gen 87, 24 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 88 Population: 1978
+Gen 88, 255 survived mice
+Gen 88, 1722 mice which did not survive
+Gen 88, 1 survived cats
+Gen 88, 0 cats which did not survive
+Gen 88, 44 number of mice eaten
+Gen 88, 1 number of cats that ate mice
+Gen 88, 44 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 89 Population: 2035
+Gen 89, 222 survived mice
+Gen 89, 1812 mice which did not survive
+Gen 89, 1 survived cats
+Gen 89, 0 cats which did not survive
+Gen 89, 1 number of mice eaten
+Gen 89, 1 number of cats that ate mice
+Gen 89, 1 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 90 Population: 2116
+Gen 90, 265 survived mice
+Gen 90, 1850 mice which did not survive
+Gen 90, 1 survived cats
+Gen 90, 0 cats which did not survive
+Gen 90, 10 number of mice eaten
+Gen 90, 1 number of cats that ate mice
+Gen 90, 10 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 91 Population: 2228
+Gen 91, 242 survived mice
+Gen 91, 1985 mice which did not survive
+Gen 91, 1 survived cats
+Gen 91, 0 cats which did not survive
+Gen 91, 16 number of mice eaten
+Gen 91, 1 number of cats that ate mice
+Gen 91, 16 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 92 Population: 2304
+Gen 92, 266 survived mice
+Gen 92, 2037 mice which did not survive
+Gen 92, 1 survived cats
+Gen 92, 0 cats which did not survive
+Gen 92, 30 number of mice eaten
+Gen 92, 1 number of cats that ate mice
+Gen 92, 30 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 93 Population: 2380
+Gen 93, 265 survived mice
+Gen 93, 2114 mice which did not survive
+Gen 93, 1 survived cats
+Gen 93, 0 cats which did not survive
+Gen 93, 13 number of mice eaten
+Gen 93, 1 number of cats that ate mice
+Gen 93, 13 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 94 Population: 2479
+Gen 94, 239 survived mice
+Gen 94, 2239 mice which did not survive
+Gen 94, 1 survived cats
+Gen 94, 0 cats which did not survive
+Gen 94, 17 number of mice eaten
+Gen 94, 1 number of cats that ate mice
+Gen 94, 17 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 95 Population: 2555
+Gen 95, 247 survived mice
+Gen 95, 2307 mice which did not survive
+Gen 95, 1 survived cats
+Gen 95, 0 cats which did not survive
+Gen 95, 23 number of mice eaten
+Gen 95, 1 number of cats that ate mice
+Gen 95, 23 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 96 Population: 2645
+Gen 96, 261 survived mice
+Gen 96, 2383 mice which did not survive
+Gen 96, 1 survived cats
+Gen 96, 0 cats which did not survive
+Gen 96, 37 number of mice eaten
+Gen 96, 1 number of cats that ate mice
+Gen 96, 37 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 97 Population: 2730
+Gen 97, 270 survived mice
+Gen 97, 2459 mice which did not survive
+Gen 97, 1 survived cats
+Gen 97, 0 cats which did not survive
+Gen 97, 5 number of mice eaten
+Gen 97, 1 number of cats that ate mice
+Gen 97, 5 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 98 Population: 2840
+Gen 98, 272 survived mice
+Gen 98, 2567 mice which did not survive
+Gen 98, 1 survived cats
+Gen 98, 0 cats which did not survive
+Gen 98, 41 number of mice eaten
+Gen 98, 1 number of cats that ate mice
+Gen 98, 41 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Invalid param: [default] = [DEFAULT]
+Starting population for generation: 99 Population: 2914
+Gen 99, 290 survived mice
+Gen 99, 2623 mice which did not survive
+Gen 99, 1 survived cats
+Gen 99, 0 cats which did not survive
+Gen 99, 26 number of mice eaten
+Gen 99, 1 number of cats that ate mice
+Gen 99, 26 median of eaten mice
+geneticDiversitySpecifiedPopulation: mouse
+geneticDiversitySpecifiedPopulation: cat
+Mice and cats survived
+Frames are in the heatmap
+Number of frames in the heatmap: 5
+Frames are in the heatmapMice
+Number of frames in the heatmapMice: 5
+Frames are in the heatmapCats
+Number of frames in the heatmapCats: 5
+Frames are in the heatmapCounter
+Number of frames in the heatmapCounter: 5
+Frames are in the heatmapCounterMice
+Number of frames in the heatmapCounterMice: 5
+Frames are in the heatmapCounterCats
+Number of frames in the heatmapCounterCats: 5
+Frames are in the heatmapSum
+Number of frames in the heatmapSum: 5
+Frames are in the heatmapSumMice
+Number of frames in the heatmapSumMice: 5
+Frames are in the heatmapSumCats
+Number of frames in the heatmapSumCats: 5
+Sensors in use:
+  1 - loc Y
+  1 - boundary dist
+  1 - last move dir Y
+  3017 - long probe population fwd
+  2 - long probe barrier fwd
+  2575 - long probe barrier fwd inverse
+  1 - long probe safe area fwd
+  3015 - long probe mice fwd
+  3016 - long probe mice fwd inverse
+  2 - long probe cats fwd
+  1 - population cats
+  394 - population fwd
+  846 - population fwd inverse
+  1 - population fwd mice inverse
+  3017 - population fwd cats
+  3016 - population fwd cats inverse
+  3067 - population LR
+  1 - population LR inverse
+  1 - osc1
+  1 - age
+  3017 - short probe barrier left-right
+  1 - short probe barrier left-right inverse
+  2 - short probe safe area left-right
+  879 - short probe safe area left-right inverse
+  1224 - signal 0
+  1 - signal 0 LR
+Actions in use:
+  3091 - move X
+  5604 - move Y
+  6030 - move fwd
+  9074 - move R-L
+  2 - move random
+  414 - set osc1
+  3 - set longprobe dist
+  2 - set inv-responsiveness
+  3 - emit signal 0
+  9011 - move east
+  3934 - move west
+  3019 - move south
+  3016 - move left
+  3 - move reverse
+  2 - kill fwd
+Simulator exit.

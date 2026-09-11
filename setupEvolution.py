@@ -8,7 +8,7 @@ import shutil
 # global parameters which influence the folder structure and the config files
 outputDir = "outputScript"
 
-# global parameters which influence the config files and slurm scripts
+# global parameters which influence the config files and data table
 # (the functionality of each parameter is described in "biosim4.ini")
 staticMicePositions = ["false"]
 staticCatPositions = ["false"]
@@ -80,9 +80,13 @@ def create_folders(index):
 
 
 
-def create_dat_table_entry(path):
-    with open("table.dat", "a") as datfile:
-        datfile.write("./bin/Release/biosim4 " + path + "\n")
+def create_dat_table_entry(path, index):
+    if index == 1:
+        with open("table.dat", "w") as datfile:
+            datfile.write("./bin/Release/biosim4 " + path + "\n")
+    else:
+        with open("table.dat", "a") as datfile:
+            datfile.write("./bin/Release/biosim4 " + path + "\n")
 
 
 
@@ -160,7 +164,7 @@ def create_config_files():
         shutil.move("biosim4experiment.ini", outputDir + "/experiment" + str(index))
 
         # Create table entry for specific experiment
-        create_dat_table_entry('"' + outputDir + '/experiment' + str(index) + '/biosim4experiment.ini"')
+        create_dat_table_entry('"' + outputDir + '/experiment' + str(index) + '/biosim4experiment.ini"', index)
 
         index = index + 1
 

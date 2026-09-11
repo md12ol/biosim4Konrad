@@ -1,0 +1,48 @@
+
+[CImg] *** CImgIOException *** [instance(301,512,0x7f9767c00178)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000000.avi', unable to initialize video writer with codec 'H264'.
+Could not set character size when opening font "arial", using internal non-scalable font
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+"./tools/graphlog.gp" line 50: warning: Skipping data file with no valid points
+
+plot LOGPATH        using 1:(column("Survivors")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1,     "" using 1:(column("Diversity")) with lines lw 2 linecolor 1 title "Diversity" axes x1y2,     "" using 1:(column("DiversityMice")) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2,     "" using 1:(column("DiversityCats")) with lines lw 2 linecolor 6 title "DiversityCats" axes x1y2,     "" using 1:(column("SurvivedMice")) with lines lw 2 linecolor 3 title "SurvivedMice" axes x1y1,     "" using 1:(column("SurvivedCats")) with lines lw 2 linecolor 4 title "SurvivedCats" axes x1y1
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^
+"./tools/graphlog.gp" line 50: x range is invalid
+
+
+[CImg] *** CImgIOException *** [instance(301,512,0x7f9783c02e18)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000001.avi', unable to initialize video writer with codec 'H264'.
+Could not set character size when opening font "arial", using internal non-scalable font
+Warning: empty x range [0:0], adjusting to [-1:1]
+
+[CImg] *** CImgIOException *** [instance(301,512,0x7f977c00e4a8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000002.avi', unable to initialize video writer with codec 'H264'.
+
+[CImg] *** CImgIOException *** [instance(301,512,0x1fd29a8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000025.avi', unable to initialize video writer with codec 'H264'.
+Could not set character size when opening font "arial", using internal non-scalable font
+
+[CImg] *** CImgIOException *** [instance(301,512,0x7f978000a398)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000050.avi', unable to initialize video writer with codec 'H264'.
+Could not set character size when opening font "arial", using internal non-scalable font
+
+[CImg] *** CImgIOException *** [instance(301,512,0x7f977c1f28b8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/images/run-000000-gen-000075.avi', unable to initialize video writer with codec 'H264'.
+Could not set character size when opening font "arial", using internal non-scalable font
+Could not set character size when opening font "arial", using internal non-scalable font
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1fe92a8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmap-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x2028888)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapMice-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x2028a98)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapCats-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1ff30e8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapCounter-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1ff32f8)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapCounterMice-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1fe9508)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapCounterCats-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1fe9718)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapSum-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1fe9928)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapSumMice-000100.mp4', unable to initialize video writer with codec 'MP4V'.
+
+[CImg] *** CImgIOException *** [instance(5,16,0x1fea248)] CImgList<uint8>::save_video(): File 'outputScript/experiment4/heatmaps/heatmapSumCats-000100.mp4', unable to initialize video writer with codec 'MP4V'.
