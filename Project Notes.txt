@@ -369,18 +369,25 @@ August 20th, 2026
 August 27th, 2026
     >>  Look more into the video codec issue and try to solve it, check generated videos for correctness
         >>  There is a weird bug with the videos quickly increasing then decreasing in population
-    >>  Will unify the local python interpreter with the same version as on the server to unify the code
-    >>  Remove the redundant file for makeHeatmaps* however you think is best
-    >>  Email Michael Prueß to inquire about how much space can be used on the cluster for your account
-    >>  Finish writing and testing two setup python scripts (one for evolution and one for testing)
+    >>  Will unify the local python interpreter with the same version as on the server to unify the code [DONE]
+    >>  Remove the redundant file for makeHeatmaps* however you think is best [DONE]
+    >>  Email Michael Prueß to inquire about how much space can be used on the cluster for your account [DONE]
+    >>  Finish writing and testing two setup python scripts (one for evolution and one for testing) [DONE]
         >>  Check for correct file structure and correct .ini files
-    >>  Run multiple evolutions on the cluster with the generated slurm script
+    >>  Run multiple evolutions on the cluster with the generated slurm script [DONE]
     >>  Run multiple testings on the cluster with the generated slurm script
     >>  Validate the output to make sure it looks good
     >>  See these links
         >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/job_array.sh
         >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/run_many.sh
         >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/table.dat
+
+September 11th, 2026
+    >>  Solve the problems in the .err files when you run on the cluster
+    >>  Confirm when you will be getting back
+    >>  Modify the config builder to setup the files and folder structure for both evolution (multiple replicates) AND for testing (multiple runs)
+    >>  Modify the remote runs to deal with the new folder structure from the previous point
+    >>  Actually run a large evolution with ~10 different parameter settings (experiments), each with 10 runs for evolution
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
