@@ -38,6 +38,7 @@ void ParamManager::setDefaults()
     privParams.genomeMaxLength = 300;
     privParams.outputDir = "output";
     privParams.experimentDir = "experiment1";
+    privParams.replicaDir = "replica1";
     privParams.outputPath = "outputMultiple/experiment1";
     privParams.logDir = "logs";
     privParams.imageDir = "images";
@@ -201,6 +202,9 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         }
         else if (name == "experimentdir") {
             privParams.experimentDir = val; break;
+        }
+        else if (name == "replicadir") {
+            privParams.replicaDir = val; break;
         }
         else if (name == "logdir") {
             privParams.logDir = val; break;
@@ -463,7 +467,7 @@ void ParamManager::checkParameters()
 // Set output path (the path to the folder, in which the output data of the simulation is saved)
 void ParamManager::setOutputPath()
 {
-    privParams.outputPath = privParams.outputDir + "/" + privParams.experimentDir + "/";
+    privParams.outputPath = privParams.outputDir + "/" + privParams.experimentDir + "/" + privParams.replicaDir + "/";
 }
 
 

@@ -1,5 +1,27 @@
 #!/usr/bin/python3
 
+# This file prepares a parallel simulation, setting up the folder structure, config files and table for
+# the slurm script.
+#
+# Terms:
+#
+# experiment: specific setting for a config file consisting of multiple replicas
+#
+# replica: a single evolution/testing with a specific config file setting,
+#   all replicas from the same experiment share the same config file settings except the replicaPath
+#
+# run: an evolution consists of a single run, a testing consists of multiple runs
+#
+# evolution: consists of multiple generations and a single run,
+#   children inherit genomes from their parent(s)
+#
+# testing: consists of multiple runs and a single generation,
+#   genomes are not inherited: they are randomly generated or taken from files
+#
+# parallel simulation: gets triggered by putting the job-array.sh into the job queue
+# consists of multiple evolutions or testings
+# The setting of this file influence the results
+
 import os
 from tests.pylib.config import TestConfig
 from itertools import product
@@ -7,6 +29,7 @@ import shutil
 
 # global parameters which influence the folder structure and the config files
 outputDir = "outputScript"
+numReplicas = 5
 
 # global parameters which influence the config files and data table
 # (the functionality of each parameter is described in "biosim4.ini")
@@ -53,12 +76,15 @@ def modify_ini(exp_ini, key, value):
 
 
 # create the needed structure for a single experiment
-def create_folders(index):
+def create_folders(experimentIndex, replicaIndex):
     if not os.path.isdir(outputDir):
         os.mkdir(outputDir)
     os.chdir(outputDir)
-    os.mkdir("experiment" + str(index))
-    os.chdir("experiment" + str(index))
+    if not os.path.isdir("experiment" + str(experimentIndex)):
+        os.mkdir("experiment" + str(experimentIndex))
+    os.chdir("experiment" + str(experimentIndex))
+    os.mkdir("replica" + str(replicaIndex))
+    os.chdir("replica" + str(replicaIndex))
     os.mkdir("genomes")
     os.mkdir("graphs")
     os.mkdir("heatmaps")
@@ -77,22 +103,21 @@ def create_folders(index):
     os.chdir("..")
     os.chdir("..")
     os.chdir("..")
+    os.chdir("..")
 
 
 
-def create_dat_table_entry(path, index):
-    if index == 1:
-        with open("table.dat", "w") as datfile:
-            datfile.write("./bin/Release/biosim4 " + path + "\n")
-    else:
-        with open("table.dat", "a") as datfile:
-            datfile.write("./bin/Release/biosim4 " + path + "\n")
+# Creates a single entry in the table for a replica.
+def create_dat_table_entry(path):
+     with open("table.dat", "a") as datfile:
+        datfile.write("./bin/Release/biosim4 " + path + "\n")
 
 
 
 # use itertools to create all possible combinations of given parameter arrays, each combination being an experiment
 def create_config_files():
-    index = 1
+    experimentIndex = 1
+    replicaIndex = 1
     for a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, ab, ac, ad, ae, af, ag, ah, ai in product(staticMicePositions, staticCatPositions,
     sizeX, sizeY, population, miceRatio, dynamicPopulation, stepsPerGeneration, maxGenerations, genomeInitialLengthMin, genomeInitialLengthMax,
     genomeMaxLength, maxNumberNeurons, killEnable, sexualReproduction, chooseParentsByFitness, pointMutationRate,
@@ -101,75 +126,84 @@ def create_config_files():
     challengeMice, challengeCats, foodAreaType, barrierType, safeAreaType,
     spawnMiceInSafeAreas, deterministic, RNGSeed):
 
-        # Create the needed folder structure for the experiment
-        create_folders(index)
+        # Create multiple replicas for each experiment
+        while replicaIndex <= numReplicas:
+            # Create the needed folder structure for the replica
+            create_folders(experimentIndex, replicaIndex)
 
-        shutil.copyfile("biosim4.ini", "biosim4experiment.ini")
+            shutil.copyfile("biosim4.ini", "biosim4replica.ini")
 
-        # Create needed default section in duplicate
-        with open("biosim4experiment.ini", "r", encoding="utf-8") as file:
-            content = file.read()
+            # Create needed default section in duplicate
+            with open("biosim4replica.ini", "r", encoding="utf-8") as configfile:
+                content = configfile.read()
 
-        with open("biosim4experiment.ini", "w", encoding="utf-8") as file:
-            file.write("[DEFAULT]\n" + content)
+            with open("biosim4replica.ini", "w", encoding="utf-8") as configfile:
+                configfile.write("[DEFAULT]\n" + content)
 
-        # Load the modified configuration
-        config = TestConfig("biosim4experiment.ini")
+            # Load the modified configuration
+            config = TestConfig("biosim4replica.ini")
 
-        # Modify parameters for the experiment
-        config.load()
-        modify_ini(config, "staticMicePositions", a)
-        modify_ini(config, "staticCatPositions", b)
-        modify_ini(config, "sizeX", c)
-        modify_ini(config, "sizeY", d)
-        modify_ini(config, "population", e)
-        modify_ini(config, "miceRatio", f)
-        modify_ini(config, "dynamicPopulation", g)
-        modify_ini(config, "stepsPerGeneration", h)
-        modify_ini(config, "maxGenerations", i)
-        modify_ini(config, "genomeInitialLengthMin", j)
-        modify_ini(config, "genomeInitialLengthMax", k)
-        modify_ini(config, "genomeMaxLength", l)
-        modify_ini(config, "maxNumberNeurons", m)
-        modify_ini(config, "killEnable", n)
-        modify_ini(config, "sexualReproduction", o)
-        modify_ini(config, "chooseParentsByFitness", p)
-        modify_ini(config, "pointMutationRate", q)
-        modify_ini(config, "responsivenessCurveKFactor", r)
-        modify_ini(config, "populationSensorRadius", s)
-        modify_ini(config, "longProbeDistance", t)
-        modify_ini(config, "shortProbeBarrierDistance", u)
-        modify_ini(config, "shortProbeSafeAreaDistance", v)
-        modify_ini(config, "shortProbeFoodAreaDistance", w)
-        modify_ini(config, "signalSensorRadius", x)
-        modify_ini(config, "genomeMiceTextFile", y)
-        modify_ini(config, "genomeCatsTextFile", z)
-        modify_ini(config, "challengeMice", ab)
-        modify_ini(config, "challengeCats", ac)
-        modify_ini(config, "foodAreaType", ad)
-        modify_ini(config, "barrierType", ae)
-        modify_ini(config, "safeAreaType", af)
-        modify_ini(config, "spawnMiceInSafeAreas", ag)
-        modify_ini(config, "deterministic", ah)
-        modify_ini(config, "RNGSeed", ai)
+            # Modify parameters for the replica
+            config.load()
+            modify_ini(config, "staticMicePositions", a)
+            modify_ini(config, "staticCatPositions", b)
+            modify_ini(config, "sizeX", c)
+            modify_ini(config, "sizeY", d)
+            modify_ini(config, "population", e)
+            modify_ini(config, "miceRatio", f)
+            modify_ini(config, "dynamicPopulation", g)
+            modify_ini(config, "stepsPerGeneration", h)
+            modify_ini(config, "maxGenerations", i)
+            modify_ini(config, "genomeInitialLengthMin", j)
+            modify_ini(config, "genomeInitialLengthMax", k)
+            modify_ini(config, "genomeMaxLength", l)
+            modify_ini(config, "maxNumberNeurons", m)
+            modify_ini(config, "killEnable", n)
+            modify_ini(config, "sexualReproduction", o)
+            modify_ini(config, "chooseParentsByFitness", p)
+            modify_ini(config, "pointMutationRate", q)
+            modify_ini(config, "responsivenessCurveKFactor", r)
+            modify_ini(config, "populationSensorRadius", s)
+            modify_ini(config, "longProbeDistance", t)
+            modify_ini(config, "shortProbeBarrierDistance", u)
+            modify_ini(config, "shortProbeSafeAreaDistance", v)
+            modify_ini(config, "shortProbeFoodAreaDistance", w)
+            modify_ini(config, "signalSensorRadius", x)
+            modify_ini(config, "genomeMiceTextFile", y)
+            modify_ini(config, "genomeCatsTextFile", z)
+            modify_ini(config, "challengeMice", ab)
+            modify_ini(config, "challengeCats", ac)
+            modify_ini(config, "foodAreaType", ad)
+            modify_ini(config, "barrierType", ae)
+            modify_ini(config, "safeAreaType", af)
+            modify_ini(config, "spawnMiceInSafeAreas", ag)
+            modify_ini(config, "deterministic", ah)
+            modify_ini(config, "RNGSeed", ai)
 
-        # Modify output and experiment dir
-        modify_ini(config, "outputDir", outputDir)
-        modify_ini(config, "experimentDir", "experiment" + str(index))
+            # Modify output dir, experiment dir and replica dir
+            modify_ini(config, "outputDir", outputDir)
+            modify_ini(config, "experimentDir", "experiment" + str(experimentIndex))
+            modify_ini(config, "replicaDir", "replica" + str(replicaIndex))
 
-        # Safe the configuration
-        config.save()
+            # Safe the configuration
+            config.save()
 
-        # Move the file to the corresponding experiment folder
-        shutil.move("biosim4experiment.ini", outputDir + "/experiment" + str(index))
+            # Move the file to the corresponding replica folder
+            shutil.move("biosim4replica.ini", outputDir + "/experiment" + str(experimentIndex) +
+                        "/replica" + str(replicaIndex))
 
-        # Create table entry for specific experiment
-        create_dat_table_entry('"' + outputDir + '/experiment' + str(index) + '/biosim4experiment.ini"', index)
+            # Create table entry for specific replica
+            create_dat_table_entry('"' + outputDir + '/experiment' + str(experimentIndex) +
+                                   '/replica' + str(replicaIndex) + '/biosim4replica.ini"')
 
-        index = index + 1
+            replicaIndex += 1
+        experimentIndex += 1
+        replicaIndex = 1
 
 
 def main():
+    with open("table.dat", "w"):
+        pass
     create_config_files()
 
 
