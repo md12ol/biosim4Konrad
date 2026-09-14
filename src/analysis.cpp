@@ -427,8 +427,7 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
 // Create textfile which contains maximum population range
 void createPopulationRange()
 {
-    std::ofstream foutput;
-    foutput.open(p.outputPath + p.logDir + "/population-range.txt");
+    std::ofstream foutput(p.outputPath + p.logDir + "/population-range.txt", std::ios::trunc);
 
     if (foutput.is_open()) {
         foutput << p.population << std::endl;
