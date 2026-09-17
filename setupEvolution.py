@@ -204,6 +204,8 @@ def create_config_files():
 def main():
     with open("table.dat", "w"):
         pass
+    if os.path.isdir(outputDir):
+        shutil.rmtree(outputDir)
     create_config_files()
 
 
