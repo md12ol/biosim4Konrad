@@ -383,11 +383,33 @@ August 27th, 2026
         >>  https://github.com/md12ol/WeightedSDA-for-Networks/blob/main/table.dat
 
 September 11th, 2026
-    >>  Solve the problems in the .err files when you run on the cluster
+    >>  Solve the problems in the .err files when you run on the cluster [IN PROGRESS]
     >>  Confirm when you will be getting back
-    >>  Modify the config builder to setup the files and folder structure for both evolution (multiple replicates) AND for testing (multiple runs)
-    >>  Modify the remote runs to deal with the new folder structure from the previous point
-    >>  Actually run a large evolution with ~10 different parameter settings (experiments), each with 10 runs for evolution
+    >>  Modify the config builder to setup the files and folder structure for both evolution (multiple replicates) AND for testing (multiple runs) [DONE]
+    >>  Modify the remote runs to deal with the new folder structure from the previous point [DONE]
+    >>  Actually run a large evolution with ~10 different parameter settings (experiments), each with 10 runs for evolution []
+
+October 2nd, 2026
+    >>  Experiment folders with replicate sub-folders
+    >>  Still an issue with the video generation on the cluster, will try to fix
+        >>  If not possible, will look into getting the necessary data for the images and make a seperate script to generate them locally
+    >>  Pad the experiemnt and replicate folders with three zeros (e.g., 001, 002, 003, etc.)
+    >>  Try to fix the colouring of the images made on the server
+        >>  You could change the colour of the safe areas or fix the settings of the photo generator on the server
+    >>  We want to run some evolution experiments, testing the following parameters:    
+        >>  Static Mice Positions: True, False [2]
+        >>  Static Cat Positions: True, False [2]
+        >>  Population Size: 1000 [1]
+        >>  Mice Ratio: 0.9 [1]
+        >>  Dynamic Population: True, False [2]
+        >>  Max Neurons: 5, 10 [2]
+        >>  Mutation Rate: 0.001, 0.01 [2]
+        >>  See your setupEvolution.py locally for other parameter settings
+        >>  Total Combinations = 2 x 2 x 2 x 2 x 2 = 32 x 10 = 320 runs
+    >>  Look into making a boxplot from the already run experiments
+        >>  Look at number of mice and cats survived for now
+        >>  Each box uses one number from the last epoch of each replicate
+        
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
