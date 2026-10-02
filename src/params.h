@@ -103,6 +103,7 @@ struct Params {
     unsigned heatmapStride; // > 0
     std::string outputDir;
     std::string experimentDir;
+    std::string replicaDir;
     std::string outputPath;
     std::string heatmapDir;
     std::string netDir;

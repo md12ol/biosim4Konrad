@@ -36,7 +36,7 @@ void endOfGeneration(unsigned run, unsigned generation)
     }
 
     {
-        if (p.updateGraphLog && (generation == 1 || ((generation % p.updateGraphLogStride) == 0))) {
+        if (p.updateGraphLog && generation > 0 && (generation == 1 || ((generation % p.updateGraphLogStride) == 0))) {
             std::string command = p.graphLogUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
 #pragma GCC diagnostic ignored "-Wunused-result"
             std::system(command.c_str());
