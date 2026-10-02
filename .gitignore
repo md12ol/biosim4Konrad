@@ -3,3 +3,4 @@ tools/*.svg
 build/
 output/
 outputMultiple/
+.idea/
