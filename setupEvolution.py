@@ -29,7 +29,7 @@ import shutil
 
 # global parameters which influence the folder structure and the config files
 outputDir = "outputScript"
-numReplicas = 5
+numReplicates = 10
 
 # global parameters which influence the config files and data table
 # (the functionality of each parameter is described in "biosim4.ini")
@@ -37,15 +37,15 @@ staticMicePositions = ["false"]
 staticCatPositions = ["false"]
 sizeX = ["128"]
 sizeY = ["128"]
-population = ["100", "200"]
-miceRatio = ["0.5", "0.75"]
+population = ["1000"]
+miceRatio = ["0.9"]
 dynamicPopulation = ["true"]
-stepsPerGeneration = ["300"]
-maxGenerations = ["100"]
+stepsPerGeneration = ["500"]
+maxGenerations = ["100000"] # set the strides to 1000
 genomeInitialLengthMin = ["24"]
 genomeInitialLengthMax = ["24"]
 genomeMaxLength = ["300"]
-maxNumberNeurons = ["5"]
+maxNumberNeurons = ["5", "10"]
 killEnable = ["true"]
 sexualReproduction = ["true"]
 chooseParentsByFitness = ["true"]
@@ -80,11 +80,11 @@ def create_folders(experimentIndex, replicaIndex):
     if not os.path.isdir(outputDir):
         os.mkdir(outputDir)
     os.chdir(outputDir)
-    if not os.path.isdir("experiment" + str(experimentIndex)):
-        os.mkdir("experiment" + str(experimentIndex))
-    os.chdir("experiment" + str(experimentIndex))
-    os.mkdir("replica" + str(replicaIndex))
-    os.chdir("replica" + str(replicaIndex))
+    if not os.path.isdir("experiment{0}".format(str(experimentIndex).zfill(3))):
+        os.mkdir("experiment{0}".format(str(experimentIndex).zfill(3)))
+    os.chdir("experiment{0}".format(str(experimentIndex).zfill(3)))
+    os.mkdir("replicate{0}".format(str(replicaIndex).zfill(3)))
+    os.chdir("replicate{0}".format(str(replicaIndex).zfill(3)))
     os.mkdir("genomes")
     os.mkdir("graphs")
     os.mkdir("heatmaps")
@@ -117,7 +117,7 @@ def create_dat_table_entry(path):
 # use itertools to create all possible combinations of given parameter arrays, each combination being an experiment
 def create_config_files():
     experimentIndex = 1
-    replicaIndex = 1
+    replicateIndex = 1
     for a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, ab, ac, ad, ae, af, ag, ah, ai in product(staticMicePositions, staticCatPositions,
     sizeX, sizeY, population, miceRatio, dynamicPopulation, stepsPerGeneration, maxGenerations, genomeInitialLengthMin, genomeInitialLengthMax,
     genomeMaxLength, maxNumberNeurons, killEnable, sexualReproduction, chooseParentsByFitness, pointMutationRate,
@@ -127,21 +127,21 @@ def create_config_files():
     spawnMiceInSafeAreas, deterministic, RNGSeed):
 
         # Create multiple replicas for each experiment
-        while replicaIndex <= numReplicas:
+        while replicateIndex <= numReplicates:
             # Create the needed folder structure for the replica
-            create_folders(experimentIndex, replicaIndex)
+            create_folders(experimentIndex, replicateIndex)
 
-            shutil.copyfile("biosim4.ini", "biosim4replica.ini")
+            shutil.copyfile("biosim4.ini", "biosim4replicate.ini")
 
             # Create needed default section in duplicate
-            with open("biosim4replica.ini", "r", encoding="utf-8") as configfile:
+            with open("biosim4replicate.ini", "r", encoding="utf-8") as configfile:
                 content = configfile.read()
 
-            with open("biosim4replica.ini", "w", encoding="utf-8") as configfile:
+            with open("biosim4replicate.ini", "w", encoding="utf-8") as configfile:
                 configfile.write("[DEFAULT]\n" + content)
 
             # Load the modified configuration
-            config = TestConfig("biosim4replica.ini")
+            config = TestConfig("biosim4replicate.ini")
 
             # Modify parameters for the replica
             config.load()
@@ -182,23 +182,24 @@ def create_config_files():
 
             # Modify output dir, experiment dir and replica dir
             modify_ini(config, "outputDir", outputDir)
-            modify_ini(config, "experimentDir", "experiment" + str(experimentIndex))
-            modify_ini(config, "replicaDir", "replica" + str(replicaIndex))
+            modify_ini(config, "experimentDir", "experiment{0}".format(str(experimentIndex).zfill(3)))
+            modify_ini(config, "replicateDir", "replicate{0}".format(str(replicateIndex).zfill(3)))
 
             # Safe the configuration
             config.save()
 
-            # Move the file to the corresponding replica folder
-            shutil.move("biosim4replica.ini", outputDir + "/experiment" + str(experimentIndex) +
-                        "/replica" + str(replicaIndex))
+            # Move the file to the corresponding replicate folder
+            shutil.move("biosim4replicate.ini", outputDir +
+                         "/experiment{0}".format(str(experimentIndex).zfill(3)) +
+             "/replicate{0}".format(str(replicateIndex).zfill(3)))
 
             # Create table entry for specific replica
-            create_dat_table_entry('"' + outputDir + '/experiment' + str(experimentIndex) +
-                                   '/replica' + str(replicaIndex) + '/biosim4replica.ini"')
+            create_dat_table_entry('"' + outputDir + '/experiment{0}'.format(str(experimentIndex).zfill(3)) +
+                                   '/replicate{0}'.format(str(replicateIndex).zfill(3)) + '/biosim4replicate.ini"')
 
-            replicaIndex += 1
+            replicateIndex += 1
         experimentIndex += 1
-        replicaIndex = 1
+        replicateIndex = 1
 
 
 def main():
