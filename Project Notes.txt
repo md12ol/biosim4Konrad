@@ -409,7 +409,10 @@ October 2nd, 2026
     >>  Look into making a boxplot from the already run experiments
         >>  Look at number of mice and cats survived for now
         >>  Each box uses one number from the last epoch of each replicate
-        
+    >>  Read the following paper (closest related work to this project):
+        >>  Olson, Hintze, Dyer, Knoester & Adami (2013), "Predator confusion is sufficient to evolve swarming behaviour", Journal of the Royal Society Interface 10(85): 20130305
+        >>  https://doi.org/10.1098/rsif.2013.0305 (free preprint: https://arxiv.org/abs/1209.3330)
+
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
