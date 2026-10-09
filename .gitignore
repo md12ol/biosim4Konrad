@@ -1,6 +1,5 @@
 obj/
 tools/*.svg
 build/
-output/
-outputMultiple/
+output*/
 .idea/
