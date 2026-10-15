@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 #include <cstdlib>
+#include <filesystem>
 #include "simulator.h"
 
 namespace BS {
@@ -296,7 +297,7 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
 
 
     std::ofstream foutput;
-    foutput.open(iGraphEdgeListFilename, std::ios::app);
+    foutput.open(iGraphEdgeListFilename, std::ios::trunc);
 
     if (foutput.is_open()) {
         for (auto & conn : nnet.connections) {
@@ -324,8 +325,13 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
     std::string graphFilename = p.outputPath + p.graphDir + "/net-gen-" + std::to_string(generation) +
         "-species-" + species + "-index-" + std::to_string(index) + ".svg";
 
-    std::string command = "python3 tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
-    std::system(command.c_str());
+    // Use the project venv's interpreter when one exists (see README, "Post-processing"),
+    // otherwise whatever python3 is on the PATH.
+    const std::string python = std::filesystem::exists(".venv/bin/python3") ? ".venv/bin/python3" : "python3";
+    std::string command = python + " tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
+    if (std::system(command.c_str()) != 0) {
+        std::cout << "Net graph command failed: " << command << std::endl;
+    }
 
 }
 
