@@ -583,23 +583,28 @@ void displaySensorActionReferenceCounts()
 }
 
 
+// Writes the genomes of the whole population to genomes/genome-mice-<gen>.txt
+// and genomes/genome-cats-<gen>.txt, and records in genomes/sample-indexes-<gen>.txt
+// which individuals' neural nets should be drawn. The nets themselves are drawn
+// after the run by "--postprocess" (see postProcess.cpp), which reads these files.
 void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {})
 {
     unsigned index = 1; // indexes start at 1
-    unsigned catIndex = 1; // used to count cats from which neuronal nets are drawn
+    const unsigned numberOfMice = p.population * p.miceRatio;
+    std::vector<std::pair<std::string, unsigned>> sampleIndexes; // (species, index) of the nets to draw
+
     std::string genomeMiceFilename = p.outputPath + p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
     std::ofstream fmouse;
     fmouse.open(genomeMiceFilename);
-    for (index = 1; index <= p.population * p.miceRatio; ++index) {
+    for (index = 1; index <= numberOfMice; ++index) {
         assert(peeps[index].species == "mouse");
         if (fmouse.is_open()) {
             // Print the genomes of a mouse into the txt.
             fmouse << std::dec << index;
             peeps[index].printGenome(fmouse);
             fmouse << std::endl;
-            // Draw the graph of a neuronal net from a mouse.
             if (index <= count && p.displayBestGenomes == false) {
-                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
+                sampleIndexes.emplace_back("mouse", index);
             }
         } else {
             assert(false);
@@ -610,17 +615,15 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     std::string genomeCatsFilename = p.outputPath + p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
     std::ofstream fcat;
     fcat.open(genomeCatsFilename);
-    for (index = p.population * p.miceRatio + 1; index <= p.population; ++index) { // <= : the last cat was skipped
+    for (index = numberOfMice + 1; index <= p.population; ++index) {
         assert(peeps[index].species == "cat");
         if (fcat.is_open()) {
             // Print the genomes of a cat into the txt.
             fcat << std::dec << index;
             peeps[index].printGenome(fcat);
             fcat << std::endl;
-            // Draw the graph of a neuronal net from a cat.
-            if (catIndex <= count && p.displayBestGenomes == false) {
-                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
-                catIndex = catIndex + 1;
+            if (index - numberOfMice <= count && p.displayBestGenomes == false) {
+                sampleIndexes.emplace_back("cat", index);
             }
         } else {
             assert(false);
@@ -629,17 +632,25 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     fcat.close();
 
     if (p.displayBestGenomes == true) {
-        // Display the best mice
-        for (index = 0; index < miceIndexes.size(); ++index) {
-            assert(peeps[miceIndexes.at(index)].species == "mouse");
-            peeps[miceIndexes.at(index)].printIGraphEdgeList(miceIndexes.at(index), generation, peeps[miceIndexes.at(index)].species);
+        for (uint16_t mouse : miceIndexes) {
+            assert(peeps[mouse].species == "mouse");
+            sampleIndexes.emplace_back("mouse", mouse);
         }
-        // Display the best cats
-        for (index = 0; index < catsIndexes.size(); ++index) {
-            assert(peeps[catsIndexes.at(index)].species == "cat");
-            peeps[catsIndexes.at(index)].printIGraphEdgeList(catsIndexes.at(index), generation, peeps[catsIndexes.at(index)].species); // was indexing peeps with miceIndexes: the file held a mouse's net
+        for (uint16_t cat : catsIndexes) {
+            assert(peeps[cat].species == "cat");
+            sampleIndexes.emplace_back("cat", cat);
         }
     }
+
+    std::ofstream fsamples(p.outputPath + p.genomeDir + "/sample-indexes-" + std::to_string(generation) + ".txt");
+    if (fsamples.is_open()) {
+        for (const auto &[species, sampleIndex] : sampleIndexes) {
+            fsamples << species << " " << sampleIndex << std::endl;
+        }
+    } else {
+        assert(false);
+    }
+
     displaySensorActionReferenceCounts();
 }
 
