@@ -119,8 +119,6 @@ void initializeGeneration0()
             }
         }
     }
-    fillHeatmap();
-    saveHeatmapImages(0, 0);
 }
 
 
@@ -170,13 +168,8 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
             }
         }
     }
-    if (generation % p.heatmapStride == 0) {
-        fillHeatmap();
-        saveHeatmapImages(0, generation);
-    }
-    if (generation == p.maxGenerations) {
-        createHeatmapVideos(generation);
-    }
+    // Heatmaps are no longer drawn here. They are rebuilt from the genome dumps
+    // after the run by "./biosim4 <config.ini> --postprocess" (see postProcess.cpp).
 }
 
 
