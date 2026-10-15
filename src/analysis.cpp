@@ -440,6 +440,16 @@ void createPopulationRange()
     } else {
         assert(false);
     }
+
+    // Start the running maximum of survivors from zero for this run. The final
+    // value is left in place when the run ends, because the gnuplot graphs read
+    // it during post-processing.
+    std::ofstream ffinal(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
+    if (ffinal.is_open()) {
+        ffinal << 0 << std::endl;
+    } else {
+        assert(false);
+    }
 }
 
 // Create textfile which contains the survivors of the generation with the most survivors
@@ -466,19 +476,7 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
             assert(false);
         }
     }
-
-    if (generation == p.maxGenerations - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
-        system(command.c_str());
-
-        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
-        if (fempty.is_open()) {
-            fempty << 0 << std::endl;
-            fempty.close();
-        } else {
-            assert(false);
-        }
-    }
+    // The gnuplot graph is produced after the run by "--postprocess".
 }
 
 // Create textfile which contains the survivors of the run with the most survivors
@@ -506,19 +504,7 @@ void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned r
             assert(false);
         }
     }
-
-    if (run == p.numRuns - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
-        std::system(command.c_str());
-
-        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
-        if (fempty.is_open()) {
-            fempty << 0 << std::endl;
-            fempty.close();
-        } else {
-            assert(false);
-        }
-    }
+    // The gnuplot graph is produced after the run by "--postprocess".
 }
 
 // Print stats about pheromone usage.
