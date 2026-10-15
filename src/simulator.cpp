@@ -116,6 +116,15 @@ void simulator(int argc, char **argv) {
         paramManager.setDefaults();
         paramManager.registerConfigFile(argc > 1 ? argv[1] : "biosim4.ini");
 
+        // "--postprocess" rebuilds heatmaps, net graphs and the survival graph
+        // from the genome dumps and logs of a finished run. See postProcess.cpp.
+        for (int arg = 1; arg < argc; ++arg) {
+            if (std::string(argv[arg]) == "--postprocess") {
+                postProcess();
+                return;
+            }
+        }
+
     // Run the simulation numRuns times.
     for (int run = 0; run < p.numRuns; ++run) {
 
