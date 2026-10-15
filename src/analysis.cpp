@@ -676,7 +676,7 @@ void saveBestGenomes(std::string species) {
     } else {
         std::ofstream foutput(p.outputPath + "bestCats", std::ios::trunc);
         if (foutput.is_open()) {
-            for (unsigned index = p.population * p.miceRatio + 1; index < p.population; ++index) {
+            for (unsigned index = p.population * p.miceRatio + 1; index <= p.population; ++index) { // <= : the last cat was skipped
                 assert(peeps[index].species == "cat");
                 if (foutput.is_open()) {
                     foutput << std::dec << index;
