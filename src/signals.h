@@ -4,6 +4,7 @@
 // Container for pheromones.
 
 #include <vector>
+#include <utility>
 #include <cstdint>
 #include "basicTypes.h"
 
@@ -39,11 +40,14 @@ struct Signals {
     Layer& operator[](uint16_t layerNum) { return data[layerNum]; }
     const Layer& operator[](uint16_t layerNum) const { return data[layerNum]; }
     uint8_t getMagnitude(uint16_t layerNum, Coord loc) const { return (*this)[layerNum][loc.x][loc.y]; }
-    void increment(uint16_t layerNum, Coord loc);
+    void queueIncrement(uint16_t layerNum, Coord loc);
+    void drainIncrementQueue();
     void zeroFill() { for (Layer &layer : data) { layer.zeroFill(); } }
     void fade(unsigned layerNum);
 private:
+    void increment(uint16_t layerNum, Coord loc);
     std::vector<Layer> data;
+    std::vector<std::pair<uint16_t, Coord>> incrementQueue; // (layer, location)
 };
 
 } // end namespace BS

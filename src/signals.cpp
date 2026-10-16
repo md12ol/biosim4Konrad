@@ -12,18 +12,35 @@ void Signals::init(uint16_t numLayers, uint16_t sizeX, uint16_t sizeY)
 }
 
 
+// Safe to call during multithread mode. Records a signal emission; it is applied by
+// drainIncrementQueue() at the end of the simulator step.
+void Signals::queueIncrement(uint16_t layerNum, Coord loc)
+{
+#pragma omp critical
+    {
+        incrementQueue.emplace_back(layerNum, loc);
+    }
+}
+
+
+// Called in single-thread mode at the end of the simulator step, before fade().
+void Signals::drainIncrementQueue()
+{
+    for (auto const &[layerNum, loc] : incrementQueue) {
+        increment(layerNum, loc);
+    }
+    incrementQueue.clear();
+}
+
+
 // Increases the specified location by centerIncreaseAmount,
 // and increases the neighboring cells by neighborIncreaseAmount
-
-// Is it ok that multiple readers are reading this container while
-// this single thread is writing to it?  todo!!!
 void Signals::increment(uint16_t layerNum, Coord loc)
 {
     constexpr float radius = 1.5;
     constexpr uint8_t centerIncreaseAmount = 2;
     constexpr uint8_t neighborIncreaseAmount = 1;
 
-#pragma omp critical
     {
         visitNeighborhood(loc, radius, [layerNum](Coord loc) {
             if (signals[layerNum][loc.x][loc.y] < SIGNAL_MAX) {
