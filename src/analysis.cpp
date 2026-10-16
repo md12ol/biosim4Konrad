@@ -604,7 +604,7 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     std::string genomeCatsFilename = p.outputPath + p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
     std::ofstream fcat;
     fcat.open(genomeCatsFilename);
-    for (index = p.population * p.miceRatio + 1; index < p.population; ++index) {
+    for (index = p.population * p.miceRatio + 1; index <= p.population; ++index) { // <= : the last cat was skipped
         assert(peeps[index].species == "cat");
         if (fcat.is_open()) {
             // Print the genomes of a cat into the txt.
@@ -631,7 +631,7 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
         // Display the best cats
         for (index = 0; index < catsIndexes.size(); ++index) {
             assert(peeps[catsIndexes.at(index)].species == "cat");
-            peeps[miceIndexes.at(index)].printIGraphEdgeList(catsIndexes.at(index), generation, peeps[catsIndexes.at(index)].species);
+            peeps[catsIndexes.at(index)].printIGraphEdgeList(catsIndexes.at(index), generation, peeps[catsIndexes.at(index)].species); // was indexing peeps with miceIndexes: the file held a mouse's net
         }
     }
     displaySensorActionReferenceCounts();
@@ -676,7 +676,7 @@ void saveBestGenomes(std::string species) {
     } else {
         std::ofstream foutput(p.outputPath + "bestCats", std::ios::trunc);
         if (foutput.is_open()) {
-            for (unsigned index = p.population * p.miceRatio + 1; index < p.population; ++index) {
+            for (unsigned index = p.population * p.miceRatio + 1; index <= p.population; ++index) { // <= : the last cat was skipped
                 assert(peeps[index].species == "cat");
                 if (foutput.is_open()) {
                     foutput << std::dec << index;

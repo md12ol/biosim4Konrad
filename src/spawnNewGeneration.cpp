@@ -367,7 +367,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
     appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
-    if ((parentGenomesCats.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) {
+    if ((parentGenomesMice.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) { // was counting cats twice and mice never
         displaySampleGenomes(p.displaySampleGenomes, generation, highestScoredMice, highestScoredCats);
         if (meanScoreMice >= p.meanScoreMice) {
             saveBestGenomes("mouse");
