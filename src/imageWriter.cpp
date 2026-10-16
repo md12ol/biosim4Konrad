@@ -89,9 +89,25 @@ Array3 waveLengthToRGB(double Wavelength) {
     return rgb;
 }
 
-cimg_library::CImgList<uint8_t> imageList;
+// Frames are streamed straight into the generation's video file as they are
+// drawn, instead of being buffered until the generation ends. At displayScale 8
+// a generation's 300 frames were 900 MB of RAM; now only one frame exists at a time.
+static bool videoOpen = false;
+static std::string openVideoFilename;
 
-// Pushes a new image frame onto .imageList.
+static std::string videoFilename(unsigned run, unsigned generation)
+{
+    std::stringstream name;
+    name << p.outputPath << p.imageDir.c_str() << "/run-"
+         << std::setfill('0') << std::setw(6) << run
+         << "-gen-"
+         << std::setfill('0') << std::setw(6) << generation
+         << ".avi";
+    return name.str();
+}
+
+// Draws one image frame and appends it to the current generation's video,
+// opening the video file on the first frame.
 //
 
 
@@ -184,7 +200,16 @@ void saveOneFrameImmed(const ImageFrameData &data)
     }
 
     //image.save_png(imageFilename.str().c_str(), 3);
-    imageList.push_back(image);
+
+    // Append the frame to the open video. CImg keeps the writer open between
+    // calls when keep_open is true; saveGenerationVideo() closes it.
+    if (!videoOpen) {
+        openVideoFilename = videoFilename(data.run, data.generation);
+        videoOpen = true;
+        cv::setNumThreads(2);
+    }
+    CImgList<uint8_t> frame(image, true); // shared: no copy of the frame
+    frame.save_video(openVideoFilename.c_str(), 25, "H264", true);
 
     //CImgDisplay local(image, "biosim3");
 }
@@ -201,7 +226,6 @@ ImageWriter::ImageWriter()
 
 void ImageWriter::startNewGeneration()
 {
-    imageList.clear();
     skippedFrames = 0;
 }
 
@@ -247,7 +271,7 @@ double makeGeneticColor(const Genome &genome, const std::string &species)
 // function: there's no consequence other than a harmless frame-drop.
 // The condition variable allows the saveFrameThread() to wait until
 // there's a job to do.
-bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
+bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned run, unsigned generation)
 {
     if (!busy) {
         busy = true;
@@ -256,6 +280,7 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
         // those objects will change by the main thread at the same time our
         // saveFrameThread() is using it to output a video frame.
         data.simStep = simStep;
+        data.run = run;
         data.generation = generation;
         data.indivLocs.clear();
         data.indivColors.clear();
@@ -308,12 +333,13 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
 
 
 // Synchronous version, always returns true
-bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
+bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned run, unsigned generation)
 {
     // We cache a local copy of data from params, grid, and peeps because
     // those objects will change by the main thread at the same time our
     // saveFrameThread() is using it to output a video frame.
     data.simStep = simStep;
+    data.run = run;
     data.generation = generation;
     data.indivLocs.clear();
     data.indivColors.clear();
@@ -356,20 +382,15 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
 }
 
 
-// ToDo: put save_video() in its own thread
+// Closes the generation's video file. The frames were already written as
+// they were drawn (see saveOneFrameImmed()).
 void ImageWriter::saveGenerationVideo(unsigned run, unsigned generation)
 {
-    if (imageList.size() > 0) {
-        std::stringstream videoFilename;
-        videoFilename << p.outputPath << p.imageDir.c_str() << "/run-"
-                      << std::setfill('0') << std::setw(6) << run
-                      << "-gen-"
-                      << std::setfill('0') << std::setw(6) << generation
-                      << ".avi";
-        cv::setNumThreads(2);
-        imageList.save_video(videoFilename.str().c_str(),
-                             25,
-                             "H264");
+    if (videoOpen) {
+        // An empty list with keep_open = false flushes and releases the writer
+        // that was opened under this filename.
+        cimg_library::CImgList<uint8_t>().save_video(videoFilename(run, generation).c_str(), 25, "H264", false);
+        videoOpen = false;
         if (skippedFrames > 0) {
             std::cout << "Video skipped " << skippedFrames << " frames" << std::endl;
         }

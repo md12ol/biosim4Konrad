@@ -105,7 +105,7 @@ void endOfSimStep(unsigned simStep, unsigned run, unsigned generation) {
                      || generation <= p.videoSaveFirstFrames
                      || (generation >= p.parameterChangeGenerationNumber
                          && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-            if (!imageWriter.saveVideoFrameSync(simStep, generation)) {
+            if (!imageWriter.saveVideoFrameSync(simStep, run, generation)) {
                 std::cout << "imageWriter busy" << std::endl;
             }
                          }
@@ -115,7 +115,7 @@ void endOfSimStep(unsigned simStep, unsigned run, unsigned generation) {
                     || run <= p.videoSaveFirstFrames
                     || (run >= p.parameterChangeGenerationNumber
                         && run <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+            if (!imageWriter.saveVideoFrameSync(-1, run, generation)) {
                 std::cout << "imageWriter busy" << std::endl;
             }
                         }
