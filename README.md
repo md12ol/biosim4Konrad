@@ -114,6 +114,37 @@ a single generation.
 connections throughout the population from each possible sensory input neuron and to each
 possible action output neuron.
 
+* At intervals (genomeAnalysisStride), the genomes of the whole population are
+written to genomes/genome-mice-N.txt and genomes/genome-cats-N.txt.
+
+#### Post-processing
+
+The heatmaps, the heatmap videos, the neural net edge lists and graph pictures,
+and the gnuplot survival graph are not produced while evolution is running.
+They only depend on the genome dumps and the epoch log, so they are rebuilt
+afterwards with:
+
+```
+./biosim4 biosim4.ini --postprocess
+```
+
+Use the same config file as the run, because the output directory and the net
+parameters are read from it. The nets drawn are the ones the run selected
+(recorded in genomes/sample-indexes-N.txt). Only this step needs gnuplot and
+the Python igraph package, so neither has to be installed where the evolution runs.
+
+gnuplot comes from the system package manager (`sudo apt install gnuplot`).
+igraph goes into a project venv, which the post-processing step picks up
+automatically when `.venv/bin/python3` exists:
+
+```
+python3 -m venv --system-site-packages .venv
+.venv/bin/pip install igraph
+```
+
+`--system-site-packages` lets igraph use the system's python3-cairo for
+drawing the SVG files, which avoids building pycairo from source.
+
 <a name="MainProgramLoop"></a>
 ### Main program loop
 

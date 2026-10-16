@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 #include <cstdlib>
+#include <filesystem>
 #include "simulator.h"
 
 namespace BS {
@@ -296,7 +297,7 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
 
 
     std::ofstream foutput;
-    foutput.open(iGraphEdgeListFilename, std::ios::app);
+    foutput.open(iGraphEdgeListFilename, std::ios::trunc);
 
     if (foutput.is_open()) {
         for (auto & conn : nnet.connections) {
@@ -324,8 +325,13 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
     std::string graphFilename = p.outputPath + p.graphDir + "/net-gen-" + std::to_string(generation) +
         "-species-" + species + "-index-" + std::to_string(index) + ".svg";
 
-    std::string command = "python3 tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
-    std::system(command.c_str());
+    // Use the project venv's interpreter when one exists (see README, "Post-processing"),
+    // otherwise whatever python3 is on the PATH.
+    const std::string python = std::filesystem::exists(".venv/bin/python3") ? ".venv/bin/python3" : "python3";
+    std::string command = python + " tools/graph-nnet.py " + iGraphEdgeListFilename + " " + graphFilename;
+    if (std::system(command.c_str()) != 0) {
+        std::cout << "Net graph command failed: " << command << std::endl;
+    }
 
 }
 
@@ -434,6 +440,16 @@ void createPopulationRange()
     } else {
         assert(false);
     }
+
+    // Start the running maximum of survivors from zero for this run. The final
+    // value is left in place when the run ends, because the gnuplot graphs read
+    // it during post-processing.
+    std::ofstream ffinal(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
+    if (ffinal.is_open()) {
+        ffinal << 0 << std::endl;
+    } else {
+        assert(false);
+    }
 }
 
 // Create textfile which contains the survivors of the generation with the most survivors
@@ -460,19 +476,7 @@ void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation) {
             assert(false);
         }
     }
-
-    if (generation == p.maxGenerations - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
-        system(command.c_str());
-
-        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
-        if (fempty.is_open()) {
-            fempty << 0 << std::endl;
-            fempty.close();
-        } else {
-            assert(false);
-        }
-    }
+    // The gnuplot graph is produced after the run by "--postprocess".
 }
 
 // Create textfile which contains the survivors of the run with the most survivors
@@ -500,19 +504,7 @@ void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned r
             assert(false);
         }
     }
-
-    if (run == p.numRuns - 1) {
-        std::string command = p.graphLogFinalUpdateCommand + " " + p.outputPath + " " + p.imageDir + " " + p.logDir;
-        std::system(command.c_str());
-
-        std::ofstream fempty(p.outputPath + p.logDir + "/population-range-final.txt", std::ios::trunc);
-        if (fempty.is_open()) {
-            fempty << 0 << std::endl;
-            fempty.close();
-        } else {
-            assert(false);
-        }
-    }
+    // The gnuplot graph is produced after the run by "--postprocess".
 }
 
 // Print stats about pheromone usage.
@@ -577,23 +569,28 @@ void displaySensorActionReferenceCounts()
 }
 
 
+// Writes the genomes of the whole population to genomes/genome-mice-<gen>.txt
+// and genomes/genome-cats-<gen>.txt, and records in genomes/sample-indexes-<gen>.txt
+// which individuals' neural nets should be drawn. The nets themselves are drawn
+// after the run by "--postprocess" (see postProcess.cpp), which reads these files.
 void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint16_t> miceIndexes = {}, std::vector<uint16_t> catsIndexes = {})
 {
     unsigned index = 1; // indexes start at 1
-    unsigned catIndex = 1; // used to count cats from which neuronal nets are drawn
+    const unsigned numberOfMice = p.population * p.miceRatio;
+    std::vector<std::pair<std::string, unsigned>> sampleIndexes; // (species, index) of the nets to draw
+
     std::string genomeMiceFilename = p.outputPath + p.genomeDir + "/genome-mice-" + std::to_string(generation) + ".txt";
     std::ofstream fmouse;
     fmouse.open(genomeMiceFilename);
-    for (index = 1; index <= p.population * p.miceRatio; ++index) {
+    for (index = 1; index <= numberOfMice; ++index) {
         assert(peeps[index].species == "mouse");
         if (fmouse.is_open()) {
             // Print the genomes of a mouse into the txt.
             fmouse << std::dec << index;
             peeps[index].printGenome(fmouse);
             fmouse << std::endl;
-            // Draw the graph of a neuronal net from a mouse.
             if (index <= count && p.displayBestGenomes == false) {
-                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
+                sampleIndexes.emplace_back("mouse", index);
             }
         } else {
             assert(false);
@@ -604,17 +601,15 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     std::string genomeCatsFilename = p.outputPath + p.genomeDir + "/genome-cats-" + std::to_string(generation) + ".txt";
     std::ofstream fcat;
     fcat.open(genomeCatsFilename);
-    for (index = p.population * p.miceRatio + 1; index <= p.population; ++index) { // <= : the last cat was skipped
+    for (index = numberOfMice + 1; index <= p.population; ++index) {
         assert(peeps[index].species == "cat");
         if (fcat.is_open()) {
             // Print the genomes of a cat into the txt.
             fcat << std::dec << index;
             peeps[index].printGenome(fcat);
             fcat << std::endl;
-            // Draw the graph of a neuronal net from a cat.
-            if (catIndex <= count && p.displayBestGenomes == false) {
-                peeps[index].printIGraphEdgeList(index, generation, peeps[index].species);
-                catIndex = catIndex + 1;
+            if (index - numberOfMice <= count && p.displayBestGenomes == false) {
+                sampleIndexes.emplace_back("cat", index);
             }
         } else {
             assert(false);
@@ -623,17 +618,25 @@ void displaySampleGenomes(unsigned count, unsigned generation, std::vector<uint1
     fcat.close();
 
     if (p.displayBestGenomes == true) {
-        // Display the best mice
-        for (index = 0; index < miceIndexes.size(); ++index) {
-            assert(peeps[miceIndexes.at(index)].species == "mouse");
-            peeps[miceIndexes.at(index)].printIGraphEdgeList(miceIndexes.at(index), generation, peeps[miceIndexes.at(index)].species);
+        for (uint16_t mouse : miceIndexes) {
+            assert(peeps[mouse].species == "mouse");
+            sampleIndexes.emplace_back("mouse", mouse);
         }
-        // Display the best cats
-        for (index = 0; index < catsIndexes.size(); ++index) {
-            assert(peeps[catsIndexes.at(index)].species == "cat");
-            peeps[catsIndexes.at(index)].printIGraphEdgeList(catsIndexes.at(index), generation, peeps[catsIndexes.at(index)].species); // was indexing peeps with miceIndexes: the file held a mouse's net
+        for (uint16_t cat : catsIndexes) {
+            assert(peeps[cat].species == "cat");
+            sampleIndexes.emplace_back("cat", cat);
         }
     }
+
+    std::ofstream fsamples(p.outputPath + p.genomeDir + "/sample-indexes-" + std::to_string(generation) + ".txt");
+    if (fsamples.is_open()) {
+        for (const auto &[species, sampleIndex] : sampleIndexes) {
+            fsamples << species << " " << sampleIndex << std::endl;
+        }
+    } else {
+        assert(false);
+    }
+
     displaySensorActionReferenceCounts();
 }
 
