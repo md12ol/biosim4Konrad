@@ -171,13 +171,14 @@ void simulator(int argc, char **argv) {
         unsigned murderCount;
 
         // Inside the parallel region, be sure that shared data is not modified. Do the
-        // modifications in the single-thread regions.
+        // modifications in the master regions, which always run on thread 0 so that they
+        // draw from the same random number generator in every run.
 #pragma omp parallel num_threads(p.numThreads) default(shared)
         {
             randomUint.initialize(); // seed the RNG, each thread has a private instance
 
             while (runMode == RunMode::RUN && generation < p.maxGenerations) { // generation loop
-#pragma omp single
+#pragma omp master
                 {
                     murderCount = 0; // for reporting purposes
                     // Save the first frame before individuals take any simulation steps.
@@ -203,11 +204,12 @@ void simulator(int argc, char **argv) {
                         }
                     }
                 }
+#pragma omp barrier
 
                 for (unsigned simStep = 0; simStep < p.stepsPerGeneration; ++simStep) {
 
                     // multithreaded loop: index 0 is reserved, start at 1
-#pragma omp for schedule(auto)
+#pragma omp for schedule(static)
                     for (unsigned indivIndex = 1; indivIndex <= p.population; ++indivIndex) {
                         if (peeps[indivIndex].alive) {
                             simStepOneIndiv(peeps[indivIndex], simStep);
@@ -216,14 +218,15 @@ void simulator(int argc, char **argv) {
 
                     // In single-thread mode: this executes deferred, queued deaths and movements,
                     // updates signal layers (pheromone), etc.
-#pragma omp single
+#pragma omp master
                     {
                         murderCount += peeps.deathQueueSize();
                         endOfSimStep(simStep, run, generation);
                     }
+#pragma omp barrier
                 }
 
-#pragma omp single
+#pragma omp master
                 {
                     endOfGeneration(run, generation);
                     // Only spawn a new generation, if we have a single run
@@ -240,6 +243,7 @@ void simulator(int argc, char **argv) {
                         runMode = RunMode::PAUSE;
                     }
                 }
+#pragma omp barrier
             }
         }
 
