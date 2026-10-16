@@ -59,7 +59,7 @@ accessibility are:
 
     grid - read-only
     signals - (pheromones) read-write for the location where our agent lives
-        using signals.increment(), read-only for other locations
+        using signals.queueIncrement(), read-only for other locations
     peeps - for other individuals, we can only read their index and genome.
         We have read-write access to our individual through the indiv argument.
 

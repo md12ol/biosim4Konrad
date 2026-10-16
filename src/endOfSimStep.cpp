@@ -97,6 +97,7 @@ void endOfSimStep(unsigned simStep, unsigned run, unsigned generation) {
     peeps.drainKillQueue();
     peeps.drainDeathQueue();
     peeps.drainMoveQueue();
+    signals.drainIncrementQueue();
     signals.fade(0); // takes layerNum  todo!!!
 
     // saveVideoFrameSync() is the synchronous version of saveVideFrame()
