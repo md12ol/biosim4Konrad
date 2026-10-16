@@ -67,6 +67,7 @@
 		<Unit filename="src/params.cpp" />
 		<Unit filename="src/params.h" />
 		<Unit filename="src/peeps.cpp" />
+		<Unit filename="src/postProcess.cpp" />
 		<Unit filename="src/peeps.h" />
 		<Unit filename="src/random.cpp" />
 		<Unit filename="src/random.h" />

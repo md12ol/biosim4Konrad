@@ -431,7 +431,7 @@ Genome generateChildGenome(const std::vector<Genome> &parentGenomes)
 
 
 // Choose a random genome from a textfile as genome of the indiv.
-Genome generateGenomeFromVector(std::vector<std::string> lines, uint16_t index) {
+Genome generateGenomeFromVector(const std::vector<std::string> &lines, uint16_t index) {
     std::string line;
     // If we have more individuals than genomes take random genomes from the provided vector from the textfile.
     if (index >= lines.size()) {

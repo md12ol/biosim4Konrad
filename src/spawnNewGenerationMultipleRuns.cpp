@@ -23,7 +23,7 @@ void initializeGeneration0Once(unsigned run)
 {
     std::cout << "Create a single generation for multiple simulation runs..." << std::endl;
 
-    extern Genome generateGenomeFromVector(std::vector<std::string> lines, uint16_t index);
+    extern Genome generateGenomeFromVector(const std::vector<std::string> &lines, uint16_t index);
 
     // The grid has already been allocated, just clear and reuse it
     grid.zeroFill();
