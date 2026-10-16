@@ -1,8 +1,8 @@
 #ifndef IMAGEWRITER_H_INCLUDED
 #define IMAGEWRITER_H_INCLUDED
 
-// Creates a graphic frame for each simStep, then
-// assembles them into a video at the end of a generation.
+// Creates a graphic frame for each simStep and streams it into the
+// generation's video file; the file is closed at the end of the generation.
 
 #include <atomic>
 #include <mutex>
@@ -19,6 +19,7 @@ namespace BS {
 // a separate thread while the main thread starts a new simstep.
 struct ImageFrameData {
     unsigned simStep;
+    unsigned run;
     unsigned generation;
     std::vector<Coord> indivLocs;
     std::vector<double> indivColors;
@@ -34,8 +35,8 @@ struct ImageFrameData {
 struct ImageWriter {
     ImageWriter();
     void startNewGeneration();
-    bool saveVideoFrame(unsigned simStep, unsigned generation);
-    bool saveVideoFrameSync(unsigned simStep, unsigned generation);
+    bool saveVideoFrame(unsigned simStep, unsigned run, unsigned generation);
+    bool saveVideoFrameSync(unsigned simStep, unsigned run, unsigned generation);
     void saveGenerationVideo(unsigned run, unsigned generation);
     void abort();
     void saveFrameThread(); // runs in a thread

@@ -187,7 +187,7 @@ void simulator(int argc, char **argv) {
                      || generation <= p.videoSaveFirstFrames
                      || (generation >= p.parameterChangeGenerationNumber
                          && generation <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-                            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+                            if (!imageWriter.saveVideoFrameSync(-1, run, generation)) {
                                 std::cout << "imageWriter busy" << std::endl;
                             }
                          }
@@ -197,7 +197,7 @@ void simulator(int argc, char **argv) {
                     || run <= p.videoSaveFirstFrames
                     || (run >= p.parameterChangeGenerationNumber
                         && run <= p.parameterChangeGenerationNumber + p.videoSaveFirstFrames))) {
-                            if (!imageWriter.saveVideoFrameSync(-1, generation)) {
+                            if (!imageWriter.saveVideoFrameSync(-1, run, generation)) {
                                 std::cout << "imageWriter busy" << std::endl;
                             }
                         }
