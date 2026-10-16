@@ -141,15 +141,8 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
                     std::cerr << "Cats cannot be killed in the simulation." << std::endl;
                 }
                 assert((indiv.loc - indiv2.loc).length() == 1);
-                // Only one cat at once can attempt to eat a mouse.
                 peeps.queueForDeath(indiv2);
-                #pragma omp critical
-                {
-                if (!indiv2.eatenByCat) {
-                    indiv.foodEaten = indiv.foodEaten + 1;
-                }
-                indiv2.eatenByCat = true;
-                }
+                peeps.queueForKill(indiv, indiv2);
             }
         }
     }

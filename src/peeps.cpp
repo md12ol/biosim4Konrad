@@ -150,4 +150,29 @@ void Peeps::drainMoveQueue()
     moveQueue.clear();
 }
 
+// Safe to call during multithread mode. Records that a cat attacked a mouse this simulator
+// step; the cat is credited by drainKillQueue().
+void Peeps::queueForKill(const Indiv &cat, const Indiv &mouse)
+{
+    #pragma omp critical
+    {
+        killQueue.emplace_back(cat.index, mouse.index);
+    }
+}
+
+
+// Called in single-thread mode at end of sim step, before drainDeathQueue(). Each mouse
+// credits one kill, to the lowest-index cat that attacked it.
+void Peeps::drainKillQueue()
+{
+    std::sort(killQueue.begin(), killQueue.end());
+    for (auto const &[cat, mouse] : killQueue) {
+        if (!individuals[mouse].eatenByCat) {
+            individuals[cat].foodEaten = individuals[cat].foodEaten + 1;
+        }
+        individuals[mouse].eatenByCat = true;
+    }
+    killQueue.clear();
+}
+
 } // end namespace BS
