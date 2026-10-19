@@ -176,7 +176,7 @@ void simulator(int argc, char **argv) {
         {
             randomUint.initialize(); // seed the RNG, each thread has a private instance
 
-            while (runMode == RunMode::RUN && generation < p.maxGenerations) { // generation loop
+            while (runMode == RunMode::RUN && generation <= p.maxGenerations) { // generation loop
 #pragma omp single
                 {
                     murderCount = 0; // for reporting purposes
