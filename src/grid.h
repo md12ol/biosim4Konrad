@@ -57,6 +57,7 @@ public:
     void set(Coord loc, uint16_t val) { data[loc.x][loc.y] = val; }
     void set(uint16_t x, uint16_t y, uint16_t val) { data[x][y] = val; }
     Coord findValidLocation(bool isMouse) const;
+    uint16_t countLocations(uint16_t type) const;
     void createBarrier(unsigned barrierType);
     void createSafeArea(unsigned safeAreaType);
     void createFoodArea(unsigned foodAreaType);
