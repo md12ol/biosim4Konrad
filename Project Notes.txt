@@ -421,6 +421,19 @@ October 14th, 2026
     >>  Do the task from overleaf
     >>  Add some papers to a research rabbit and read another related paper
 
+October 21st, 2026
+    >>  Re-run the eight experiments that I ran
+    >>  Run the post-processing on them
+    >>  We want a single line graph per experiment with all 10 lines visible (one per replicate). 10 lines transparent and grayed out. Then one additional line thats the mean value of the 10 lines at that generation.
+    >>  Generate the boxplots for the above data
+    >>  Put all python files in folder
+    >>  Finish and test issue for the dynamic population
+    >>  Go through the draft issue, understand it, and merge it
+    >>  Add stuff to overleaf
+    >>  Find and read two papers (one on other predator pray and one on something similar with neural networks)
+    >>  Be ready to talk about them similar to the last paper
+    >>  Think about other ways to limit the population while maintaining fair reproduction rights for each species
+
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
         >>  Add a parameter to set the fps for the heatmaps
