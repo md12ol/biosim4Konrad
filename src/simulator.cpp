@@ -243,10 +243,6 @@ void simulator(int argc, char **argv) {
             }
         }
 
-        // Only modify the textfiles containing the genomes if we have a single run.
-        if (p.numRuns == 1) {
-            displaySampleGenomes(3, generation); // final report, for debugging
-        }
 
         std::cout << "Simulator exit." << std::endl;
 
