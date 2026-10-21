@@ -139,6 +139,26 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     grid.createSafeArea(p.safeAreaType);
     signals.zeroFill();
 
+    // Limit the population if necessary and make sure at least one cat and mouse are spawn
+    if (p.population >= grid.countLocations(EMPTY)) {
+        p.population = std::max(grid.countLocations(EMPTY) - 10, 2); // edge case: population falls below 2
+
+        // Adjust miceRatio if necessary to ensure that at least one cat spawns
+        while (p.population - p.population * p.miceRatio < 1) {
+            p.miceRatio = p.miceRatio - 0.01;
+        }
+
+        // Adjust miceRatio if necessary to ensure that at least one mouse spawns
+        while (p.population * p.miceRatio < 1) {
+            p.miceRatio = p.miceRatio + 0.01;
+        }
+
+        // Edge case: if population is 2, set miceRatio to 0.5
+        if (p.population == 2) {
+            p.miceRatio = 0.5;
+        }
+    }
+
     // Spawn the population. This overwrites all the elements of peeps[]
     if (!parentGenomesMice.empty() && parentGenomesCats.empty()) {
         std::cout << "Only mice survived" << std::endl;
