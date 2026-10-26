@@ -23,6 +23,9 @@
 # The setting of this file influence the results
 
 import os
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from tests.pylib.config import TestConfig
 from itertools import product
 import shutil
@@ -132,7 +135,6 @@ def create_config_files():
         while replicateIndex <= numReplicates:
             # Create the needed folder structure for the replicate
             create_folders(experimentIndex, replicateIndex)
-
             shutil.copyfile("biosim4.ini", "biosim4replicate.ini")
 
             # Create needed default section in duplicate
@@ -205,6 +207,8 @@ def create_config_files():
 
 
 def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.chdir("..")
     with open("table.dat", "w"):
         pass
     with open("table_postprocess.dat", "w"):
