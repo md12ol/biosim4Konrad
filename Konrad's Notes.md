@@ -2,7 +2,7 @@
 
 ## Predator Confusion is sufficient to evolve swarming behaviour
 
-### What problem or question is this paper trying to answer, and why does ot matter?
+### What problem or question is this paper trying to answer, and why does it matter?
 
 The paper tries to answer the question, how significant the selective force of predator confusion
 for the formation of swarms is. Previous works have already provided insight into swarming behaviour
@@ -79,7 +79,7 @@ the position of their conspecifics.
 
 ### What is one thing the paper does well, and one limitation or open question?
 
-#### Advantage: Inverstigates both evolution of prey and predators
+#### Advantage: Investigates both evolution of prey and predators
 The paper investigates the coevolution of predator and prey, instead of focussing only on the prey.
 It also explores the interactions between predators and prey.
 
@@ -107,4 +107,105 @@ One idea which we could take over from the paper is the handling time of predato
 for the cats to hunt for mice, but it could be a too big advantage for the mice. Another idea we could
 take over is developing another visual sensor, which takes the density of individuals 180 degrees in front 
 of an individual into account, although we already have a density sensor. 
+
+## Behavioural response of prey to repeated attacks by non-coodinating predators
+
+### What problem or question is this paper trying to answer, and why does it matter?
+
+The paper tries to answer the question, how the attack of multiple predators, which chase the prey persistently,
+influences the behavioural answer of the prey. Previous works have already studied predator prey systems.
+However, few have considered the presence of more than one predator and the usage of more than a predator 
+strategy. The paper shows also that a higher intensity of prey coodination leads to a faster decay of prey numbers
+under successive predator attacks.
+
+### How does the simulation work (the world, the predator, the prey, what they can sense and do, evolution)?
+
+#### The world
+The world is a two-dimensional virtual environment, consisting of agents (predator and prey).
+A Langevin approach is used in order to decide the motions of the agents. 
+
+#### The predators
+The predators are agents which rely only on a visual system with a blind spot, influencing their motion. 
+A predator has a capture zone R<sub>c</sub>. If a prey agent enters the capture zone it will be marked 
+as dead (μ=0). Based on the living prey scanned within the detection zone R<sub>d</sub>, the agent
+can choose to chase the nearest prey (NP-Approach) or the most central prey agent of the group (MCP-Approach).
+The governing Langevin equation of the predator agent is: $$m_{pd}\ddot{x}_{pd} = F_{s,pd} + F_{f,pd} + F_{p,pd}$$
+
+m<sub>pd</sub> and x<sub>pd</sub> represent the mass and position of the predator. F<sub>s,pd</sub> represents
+the separation force of the predator, which acts in the separation zone of the predator. F<sub>f,pd</sub> 
+represents the frictional force, acts opposite to the direction of motion of the predator and depends
+on the medium (stationary fluid medium in the simulation). F<sub>p,pd<s/sub> represents the propulsion force
+of the predator and depends on the state of the predator. If the predator is in satisfied (after capturing a prey
+agent) or in refocus state (predator does not capture prey within given time limit) his own velocity influences
+the propulsion force. If the predator is in pursuit state, the last known prey agent position influences
+its propulsion (towards the prey agent, based on predator strategy), also allowing the predator to accelerate
+during pursuit. Predators have higher mass than prey, lowering their manoeuvrability, but they have also
+higher speed.
+
+#### The prey
+The prey are agents which also rely on a visual system with a blind spot, influencing their motion. 
+The governing Langevin equation of the prey agent is:
+$$m_{pr}\ddot{x}_{pr} = F_{s,pr} + F_{f,pr} + μ(F_{p,pr} + F_{c,pr} + F_{a,pr})$$
+
+The separation force F<sub>s,pr</sub> and the frictional force F<sub>f,pr</sub> have the same function as
+for the predator agent. The separation force serves to prevent an overlap between agents in the simulation.
+F<sub>p,pr</sub> represents the propulsion force of the prey agent. If the prey agent is in cruising state
+(no predator agent within prey vision), the own velocity influences the propulsion force. If the prey agent
+is detecting a predator, the propulsion force acts towards the direction away of the predators position.
+F<sub>c,pr</sub> represents the alignment force, driving the prey agents adjusting their velocity to that
+of their neighbours and therefore supports their swarming behaviour. F<sub>a,pr</sub> represents the 
+attraction force, also supporting swarming behaviour by driving prey agents towards their conspecifics
+in the attraction zone around the respective prey agent. 
+
+#### Both
+Separation force and frictional force work the same way for predator and prey agents.
+
+
+#### Evolution
+There is no evolution within the simulation. Instead the results depend on parameters set
+before a simulation (predator strategy, relative angle of predators attack, prey coordination strength...).
+
+### What are the main findings?
+
+#### Finding 1: Prey agents can stay cohesive or split into smaller groups
+The collective response of the prey agents under attack of a predator is mostly staying within a group
+while moving away from the predator or splitting up into smaller groups, which then escape independently.
+The paper also cites species in which such a behaviour was observed.
+
+#### Finding 2: Prey agent groups can merge 
+The merge of two prey groups can be caused by their attraction force. The merging of groups leading to 
+a higher cohesive group can reduce the predation risk according to the many-eyes hypothesis (the larger 
+the group, the lesser the individual burden of vigilance against predators, and the faster the response to
+perturbations). The presence of multiple predators however, can lead to a subsequent split of the prey groups,
+which highlights the dynamic nature of the prey response. The paper shows, that the merge of two prey groups
+leads to confusion in which the order and speed of the prey agents is negatively affected until the order in 
+their group is recovered.
+
+#### Finding 3: Going for the nearest prey agent is the most successfull predator strategy
+The paper shows, that using the NP strategy has the most success rate in capturing prey agents. The
+predator agents also show a bias hunting for smaller groups. This also shows the advantage of using the MCP 
+strategy intermittently to force the prey to split into smaller groups, since the success rate in hunting
+prey agents in smaller groups is above the success rate hunting prey agents in larger groups.
+
+#### Finding 4: The presence of multiple predators can benefits them
+The presence of multiple predators reduces the coordination benefits of prey agents. The prey split
+into smaller groups or stay cohesive depending on the angle of the predators attack. A phase difference
+in the predators attack timings can even cause the group response of the prey agents to the first predator
+benefitting the second one.
+
+### What is one thing the paper does well, and one limitation or open question?
+
+#### Advantage: Considers multiple predators and physical forces
+One advantage of the paper is, that it considers the effect of multiple predators on the group response
+of prey and also acceleration during an escape or attack attempt. 
+
+#### Disadvantage: Does not consider group attacks
+The paper only considers non-coordinating predators. In nature there are multiple species like african lions
+which use group hunting tactics in order to enhance their success chance. In the work, the agents also
+solely rely on visual system in order to decide their movements.
+
+
+
+
+
 
