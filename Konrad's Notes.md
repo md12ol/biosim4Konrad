@@ -187,7 +187,7 @@ predator agents also show a bias hunting for smaller groups. This also shows the
 strategy intermittently to force the prey to split into smaller groups, since the success rate in hunting
 prey agents in smaller groups is above the success rate hunting prey agents in larger groups.
 
-#### Finding 4: The presence of multiple predators can benefits them
+#### Finding 4: The presence of multiple predators can benefit them
 The presence of multiple predators reduces the coordination benefits of prey agents. The prey split
 into smaller groups or stay cohesive depending on the angle of the predators attack. A phase difference
 in the predators attack timings can even cause the group response of the prey agents to the first predator
@@ -204,7 +204,57 @@ The paper only considers non-coordinating predators. In nature there are multipl
 which use group hunting tactics in order to enhance their success chance. In the work, the agents also
 solely rely on visual system in order to decide their movements.
 
+## The evolution of representation of simple cognitive networks
 
+### What problem or question is this paper trying to answer, and why does it matter?
+
+The paper tries to explain internal models of the environment as representations, measure them as R
+and give a formal definition of representations based on information theory. The representation is used as
+a measure to evaluate the long-term adaptive success of an agent. In order to measure how R changes over
+the generations, two types of networks (Artificial Neuronal Network ANN and Markov Brains MB) 
+are evolved to solve a categorization task using a genetic algorithm. The problem does matter, because
+it shows the significance of AI systems to be able to use past knowledge and context knowledge
+to solve complex tasks. The paper argues, that the representation is a valuable tool to investigate
+the organization of evolved cognitive systems.
+
+### How does the simulation work?
+
+#### The world
+
+Agents have the task to categorize visual objects into discrete categories based on their appearance. 
+Agents have the task to catch falling small blocks and avoid large blocks either falling left or right. 
+There are four input units (sensor) to detect falling blocks, ten internal states (neurons) and two actuators 
+(actions; encodings 01 10 11 and 00)) which control whether the agent stands still (00 and 11), 
+moves to the left (10) or to the right (01). Start codon of two loci mark beginning of neuronal net, 
+two other loci the number of inputs and outputs while two further loci specify which inputs
+feed into which outputs. In one simulation only one brick falls at the time. The agent has a length of
+6 units with two sensors located at the left and right of the agent detecting the block falling from above
+with no sensors in the middle of the agent. Sensors can be 0 or 1. A large brick is 4 units long while a small
+brick is 2 units long. Each brick falls within 20 time steps (arena size 20x20). Bricks are caught if agent 
+and brick overlap at least in one unit.
+
+#### Artificial Neuronal Network
+In the network there are 4 sensors, 10 internal nodes and 2 output nodes. Sensors can have state -1 or 1.
+Action combinations are 00, 01, 10, 11. Internal nodes can have continuous between -1 and 1. Neuronal gates 
+are used, which can connect any types of nodes (even action to action or sensor to sensor). The output values 
+of the neuronal gates are calculated as 
+$$m(t+1)=tanh(\sum_{k=1}^{n}\sum_{j=1}w_{j}^{(k)}m_{j}^{(k)}(t))$$
+
+m<sub>j</sub><sup>(k)</sup> represents a value of an incoming node via gate k multiplied with the associated
+weight w<sub>j</sub><sup>(k)</sup>. m is the output for the timestep t.
+Output values of neuronal gates are propagated to every node which the gate feeds. \\
+Two loci mark the beginning of a neuronal gate, the two subsequent loci encode number of inputs and outputs
+and the last two loci give the specific nodes which feed into the NG and to which nodes the NG feeds.
+After this information n weights for of an n-input NG are encoded. The number of neuronal gates can
+change during the evolution.
+
+#### Markov Brains
+Types of nodes are the same as for the artificial neuronal networks. Instead of neuronal gates, hidden markov
+gates (HMG) are used to connect nodes to each other. A HMG can be understood as a finite state machine, defined
+by its input-output structure and a state transition table.
+The probability of an output node firing is determined by the state transition table. Each HMG can receive up
+to 4 inputs and distribute signals up to 4 nodes with minimum of one input and one output node. Only deterministic
+HMGs are considered. 
 
 
 
