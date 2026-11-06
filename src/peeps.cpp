@@ -6,6 +6,7 @@
 #include <cassert>
 #include <numeric>
 #include <utility>
+#include <algorithm>
 #include "simulator.h"
 
 namespace BS {
@@ -43,6 +44,8 @@ void Peeps::queueForDeath(const Indiv &indiv)
 // queued deaths, removing the dead agents from the grid.
 void Peeps::drainDeathQueue()
 {
+    // Threads fill the queue in an order that changes from run to run; index order does not.
+    std::sort(deathQueue.begin(), deathQueue.end());
     auto const &foodAreaLocs = grid.getFoodAreaLocations();
     for (uint16_t index : deathQueue) {
         auto & indiv = peeps[index];
@@ -86,6 +89,10 @@ void Peeps::queueForMove(const Indiv &indiv, Coord newLoc)
 // death queue was drained, so we'll ignore already-dead agents.
 void Peeps::drainMoveQueue()
 {
+    // Index order, so that when two individuals want the same cell the lower index gets it
+    // in every run, whatever order the threads queued them in.
+    std::stable_sort(moveQueue.begin(), moveQueue.end(),
+        [](const std::pair<uint16_t, Coord> &a, const std::pair<uint16_t, Coord> &b) { return a.first < b.first; });
     for (auto& moveRecord : moveQueue) {
         auto & indiv = peeps[moveRecord.first];
         if (indiv.alive) {
@@ -141,6 +148,31 @@ void Peeps::drainMoveQueue()
         }
     }
     moveQueue.clear();
+}
+
+// Safe to call during multithread mode. Records that a cat attacked a mouse this simulator
+// step; the cat is credited by drainKillQueue().
+void Peeps::queueForKill(const Indiv &cat, const Indiv &mouse)
+{
+    #pragma omp critical
+    {
+        killQueue.emplace_back(cat.index, mouse.index);
+    }
+}
+
+
+// Called in single-thread mode at end of sim step, before drainDeathQueue(). Each mouse
+// credits one kill, to the lowest-index cat that attacked it.
+void Peeps::drainKillQueue()
+{
+    std::sort(killQueue.begin(), killQueue.end());
+    for (auto const &[cat, mouse] : killQueue) {
+        if (!individuals[mouse].eatenByCat) {
+            individuals[cat].foodEaten = individuals[cat].foodEaten + 1;
+        }
+        individuals[mouse].eatenByCat = true;
+    }
+    killQueue.clear();
 }
 
 } // end namespace BS

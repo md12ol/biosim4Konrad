@@ -36,6 +36,8 @@ public:
     void drainDeathQueue();
     void queueForMove(const Indiv &, Coord newLoc);
     void drainMoveQueue();
+    void queueForKill(const Indiv &cat, const Indiv &mouse);
+    void drainKillQueue();
     unsigned deathQueueSize() const { return deathQueue.size(); }
     // getIndiv() does no error checking -- check first that loc is occupied
     Indiv & getIndiv(Coord loc) { return individuals[grid.at(loc)]; }
@@ -47,6 +49,7 @@ private:
     std::vector<Indiv> individuals; // Index value 0 is reserved
     std::vector<uint16_t> deathQueue;
     std::vector<std::pair<uint16_t, Coord>> moveQueue;
+    std::vector<std::pair<uint16_t, uint16_t>> killQueue; // (cat index, mouse index)
 };
 
 } // end namespace BS

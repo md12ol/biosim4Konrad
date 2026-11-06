@@ -55,8 +55,9 @@ strong level, we do this:
          our own individual during this function)
     SET_OSCILLATOR_PERIOD action - immediately change our individual's indiv.oscPeriod
          to the action level exponentially scaled to 2..2048 (TBD)
-    EMIT_SIGNALn action(s) - immediately increment the signal level at our agent's
-         location using signals.increment() (using a thread-safe call)
+    EMIT_SIGNALn action(s) - queue an increment of the signal level at our agent's
+         location using signals.queueIncrement(); the queue is applied at the end of
+         the simulator step, so every individual reads the same signal levels in a step
     KILL_FORWARD action - queue the other agent for deferred death with
          peeps.queueForDeath()
 
@@ -110,15 +111,15 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
     // Emit signal0 - if this action value is below a threshold, nothing emitted.
     // Otherwise convert the action value to a probability of emitting one unit of
     // signal (pheromone).
-    // Pheromones may be emitted immediately (see signals.cpp). If this action neuron
-    // is enabled but not driven, nothing will be emitted.
+    // Pheromones are emitted at the end of the simulator step (see signals.cpp). If this
+    // action neuron is enabled but not driven, nothing will be emitted.
     if (isEnabled(Action::EMIT_SIGNAL0)) {
         constexpr float emitThreshold = 0.5;  // 0.0..1.0; 0.5 is midlevel
         float level = actionLevels[Action::EMIT_SIGNAL0];
         level = (std::tanh(level) + 1.0) / 2.0; // convert to 0.0..1.0
         level *= responsivenessAdjusted;
         if (level > emitThreshold && prob2bool(level)) {
-            signals.increment(0, indiv.loc);
+            signals.queueIncrement(0, indiv.loc);
         }
     }
 
@@ -141,15 +142,8 @@ void executeActions(Indiv &indiv, std::array<float, Action::NUM_ACTIONS> &action
                     std::cerr << "Cats cannot be killed in the simulation." << std::endl;
                 }
                 assert((indiv.loc - indiv2.loc).length() == 1);
-                // Only one cat at once can attempt to eat a mouse.
                 peeps.queueForDeath(indiv2);
-                #pragma omp critical
-                {
-                if (!indiv2.eatenByCat) {
-                    indiv.foodEaten = indiv.foodEaten + 1;
-                }
-                indiv2.eatenByCat = true;
-                }
+                peeps.queueForKill(indiv, indiv2);
             }
         }
     }
