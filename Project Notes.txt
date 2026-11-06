@@ -426,13 +426,28 @@ October 21st, 2026
     >>  Run the post-processing on them
     >>  We want a single line graph per experiment with all 10 lines visible (one per replicate). 10 lines transparent and grayed out. Then one additional line thats the mean value of the 10 lines at that generation.
     >>  Generate the boxplots for the above data
-    >>  Put all python files in folder
-    >>  Finish and test issue for the dynamic population
+    >>  Put all python files in folder [DONE]
+    >>  Finish and test issue for the dynamic population [DONE]
     >>  Go through the draft issue, understand it, and merge it
     >>  Add stuff to overleaf
     >>  Find and read two papers (one on other predator pray and one on something similar with neural networks)
     >>  Be ready to talk about them similar to the last paper
     >>  Think about other ways to limit the population while maintaining fair reproduction rights for each species
+
+November 6th, 2026
+    >>  Re-run the eight experiments that I ran
+    >>  Run the post-processing on them
+    >>  We want a single line graph per experiment with all 10 lines visible (one per replicate). 10 lines transparent and grayed out. Then one additional line thats the mean value of the 10 lines at that generation.
+    >>  Generate the boxplots for the above data
+    >>  Add a job script for when both populations run out and call it from the C++ code for spawn new generation with a new seed (make sure the seed in the config file is changed if it is deterministic)
+    >>  Look up and brainstorm some possible fitness functions and their impact on the species behaviour
+    >>  Look into the altruistic challenge within biosim4
+    >>  Look into making a schedule for when you work 2*4 hours per week
+    >>  For Michael
+        >>  If both populations die out then a fully new run starts which messes with the time
+        >>  Fitness functions and what they result in terms of behaviour in the species
+        >>  Minimum and maximum number of each species
+
 
 Future Experiments To Try
     >>  A long evolution with more frequent collection of genomes to produce a more granular heatmap
