@@ -420,6 +420,16 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
                 p.population = numberOfCats + numberOfMice;
                 p.miceRatio = static_cast<double>(numberOfMice) / p.population;
             }
+
+            if (p.population < 2) {
+                // make sure we have at least two individuals (a mouse and a cat)
+                p.population = 2;
+                p.miceRatio = 0.5;
+            }
+            while (p.population - p.population * p.miceRatio < 1) {
+                // adjust mice ratio to make sure at least one cat spawns
+                p.miceRatio = p.miceRatio - 0.01;
+            }
             peeps.init(p.population);
         }
 
