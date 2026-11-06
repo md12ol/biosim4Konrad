@@ -167,10 +167,10 @@ void ParamManager::ingestParameter(std::string name, std::string val)
     bool bVal = getBoolVal(val);
 
     do {
-        if (name == "sizex" && isUint && uVal >= 2 && uVal <= (uint16_t)-1) {
+        if (name == "sizex" && isUint && uVal >= 16 && uVal <= 32767) {
             privParams.sizeX = uVal; break;
         }
-        else if (name == "sizey" && isUint && uVal >= 2 && uVal <= (uint16_t)-1) {
+        else if (name == "sizey" && isUint && uVal >= 16 && uVal <= 32767) {
             privParams.sizeY = uVal; break;
         }
         else if (name == "challengemice" && isUint && uVal < (uint16_t)-1) {

@@ -41,9 +41,24 @@ void visitNeighborhood(Coord loc, float radius, std::function<void(Coord)> f)
         for (int dy = -std::min<int>(extentY, loc.y); dy <= std::min<int>(extentY, (p.sizeY - loc.y) - 1); ++dy) {
             int16_t y = loc.y + dy;
             assert(y >= 0 && y < p.sizeY);
-            f( Coord { x, y} );
+            f( Coord { x, y } );
         }
     }
+}
+
+
+// This is a utility function which counts the number of elements which are the given element type.
+uint16_t Grid::countLocations(const uint16_t type) const {
+    uint16_t count = 0;
+
+    for (uint16_t x = 0; x < this->sizeX(); ++x) {
+        for (uint16_t y = 0; y < this->sizeY(); ++y) {
+            if (grid.at(x, y) == type) {
+                count++;
+            }
+        }
+    }
+    return count;
 }
 
 } // end namespace BS

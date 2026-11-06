@@ -1,7 +1,6 @@
 import sys
 
 import matplotlib.pyplot as plt
-#import numpy as np
 import os
 
 # name of the dir where the simulation data is located
@@ -96,6 +95,8 @@ def visualizePlot(logName):
 
 
 def main(argv):
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.chdir("..")
     for logName in argv:
         if argv.index(logName) > 0:
             getData(logName)

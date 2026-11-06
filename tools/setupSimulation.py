@@ -23,6 +23,9 @@
 # The setting of this file influence the results
 
 import os
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from tests.pylib.config import TestConfig
 from itertools import product
 import shutil
@@ -33,8 +36,8 @@ numReplicates = 10
 
 # global parameters which influence the config files and data table
 # (the functionality of each parameter is described in "biosim4.ini")
-staticMicePositions = ["true", "false"]
-staticCatPositions = ["true", "false"]
+staticMicePositions = ["false"]
+staticCatPositions = ["false"]
 sizeX = ["128"]
 sizeY = ["128"]
 population = ["1000"]
@@ -76,15 +79,15 @@ def modify_ini(exp_ini, key, value):
 
 
 # create the needed structure for a single experiment
-def create_folders(experimentIndex, replicaIndex):
+def create_folders(experimentIndex, replicateIndex):
     if not os.path.isdir(outputDir):
         os.mkdir(outputDir)
     os.chdir(outputDir)
     if not os.path.isdir("experiment{0}".format(str(experimentIndex).zfill(3))):
         os.mkdir("experiment{0}".format(str(experimentIndex).zfill(3)))
     os.chdir("experiment{0}".format(str(experimentIndex).zfill(3)))
-    os.mkdir("replicate{0}".format(str(replicaIndex).zfill(3)))
-    os.chdir("replicate{0}".format(str(replicaIndex).zfill(3)))
+    os.mkdir("replicate{0}".format(str(replicateIndex).zfill(3)))
+    os.chdir("replicate{0}".format(str(replicateIndex).zfill(3)))
     os.mkdir("genomes")
     os.mkdir("graphs")
     os.mkdir("heatmaps")
@@ -107,10 +110,12 @@ def create_folders(experimentIndex, replicaIndex):
 
 
 
-# Creates a single entry in the table for a replica.
+# Creates a single entry in the table for a replicate.
 def create_dat_table_entry(path):
      with open("table.dat", "a") as datfile:
         datfile.write("./bin/Release/biosim4 " + path + "\n")
+     with open("table_postprocess.dat", "a") as datfile_post:
+        datfile_post.write("./bin/Release/biosim4 " + path + " --postprocess\n")
 
 
 
@@ -130,7 +135,6 @@ def create_config_files():
         while replicateIndex <= numReplicates:
             # Create the needed folder structure for the replicate
             create_folders(experimentIndex, replicateIndex)
-
             shutil.copyfile("biosim4.ini", "biosim4replicate.ini")
 
             # Create needed default section in duplicate
@@ -203,7 +207,11 @@ def create_config_files():
 
 
 def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.chdir("..")
     with open("table.dat", "w"):
+        pass
+    with open("table_postprocess.dat", "w"):
         pass
     if os.path.isdir(outputDir):
         shutil.rmtree(outputDir)

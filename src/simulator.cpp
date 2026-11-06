@@ -177,7 +177,7 @@ void simulator(int argc, char **argv) {
         {
             randomUint.initialize(); // seed the RNG, each thread has a private instance
 
-            while (runMode == RunMode::RUN && generation < p.maxGenerations) { // generation loop
+            while (runMode == RunMode::RUN && generation <= p.maxGenerations) { // generation loop
 #pragma omp master
                 {
                     murderCount = 0; // for reporting purposes
@@ -247,10 +247,6 @@ void simulator(int argc, char **argv) {
             }
         }
 
-        // Only modify the textfiles containing the genomes if we have a single run.
-        if (p.numRuns == 1) {
-            displaySampleGenomes(3, generation); // final report, for debugging
-        }
 
         std::cout << "Simulator exit." << std::endl;
 
