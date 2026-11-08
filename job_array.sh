@@ -10,4 +10,4 @@ export TABLE=table.dat
 N_cases=$(cat "$TABLE" | wc -l)
 
 # Submitting an array job to the scheduler:
-sbatch --array=1-$N_cases run_many.sh
+sbatch --nice=1000 --array=1-$N_cases%10 run_many.sh

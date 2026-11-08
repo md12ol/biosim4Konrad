@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <cassert>
+#include <random>
 
 #include "heatmapWriter.h"
 #include "simulator.h"
@@ -438,7 +439,25 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
         // Special case: there are no surviving parents or only surviving parents from one species:
         // start the simulation over from scratch with randomly-generated genomes
         // std::cout << "No survivors in the generation" << std::endl;
-        initializeGeneration0();
+        if (p.deterministic) {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+
+            std::uniform_int_distribution<uint32_t> distrib(0, 4294967295);
+            unsigned seed = distrib(gen);
+
+            while (p.RNGSeed == seed) {
+                seed = distrib(gen);
+            }
+
+            const std::string command = "sbatch run_one.sh " + p.outputPath + "biosim4replicate.ini " + std::to_string(seed);
+            std::system(command.c_str());
+        } else {
+            const std::string command = "sbatch run_one.sh " + p.outputPath + "biosim4replicate.ini";
+            std::system(command.c_str());
+        }
+
+        //initializeGeneration0();
     }
 
     return parentGenomesMice.size() + parentGenomesCats.size();

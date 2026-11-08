@@ -47,7 +47,7 @@ turn left 8 degrees and move forward).
 #### Both
 Both predator and prey agents share the same Markov Networks, allowing them a visual field of 180 degrees.
 They also have the same moving options (forward, left, right). Retina sensors are organized into 12 layers.
-Only the presence of agents in a layer can be detected but not the number. However number of activated
+Only the presence of agents in a layer can be detected but not the number. However, number of activated
 layers can be count.
 
 
@@ -108,14 +108,14 @@ for the cats to hunt for mice, but it could be a too big advantage for the mice.
 take over is developing another visual sensor, which takes the density of individuals 180 degrees in front 
 of an individual into account, although we already have a density sensor. 
 
-## Behavioural response of prey to repeated attacks by non-coodinating predators
+## Behavioural response of prey to repeated attacks by non-coordinating predators
 
 ### What problem or question is this paper trying to answer, and why does it matter?
 
 The paper tries to answer the question, how the attack of multiple predators, which chase the prey persistently,
 influences the behavioural answer of the prey. Previous works have already studied predator prey systems.
 However, few have considered the presence of more than one predator and the usage of more than a predator 
-strategy. The paper shows also that a higher intensity of prey coodination leads to a faster decay of prey numbers
+strategy. The paper shows also that a higher intensity of prey coordination leads to a faster decay of prey numbers
 under successive predator attacks.
 
 ### How does the simulation work (the world, the predator, the prey, what they can sense and do, evolution)?
@@ -162,7 +162,7 @@ Separation force and frictional force work the same way for predator and prey ag
 
 
 #### Evolution
-There is no evolution within the simulation. Instead the results depend on parameters set
+There is no evolution within the simulation. Instead, the results depend on parameters set
 before a simulation (predator strategy, relative angle of predators attack, prey coordination strength...).
 
 ### What are the main findings?
@@ -181,7 +181,7 @@ which highlights the dynamic nature of the prey response. The paper shows, that 
 leads to confusion in which the order and speed of the prey agents is negatively affected until the order in 
 their group is recovered.
 
-#### Finding 3: Going for the nearest prey agent is the most successfull predator strategy
+#### Finding 3: Going for the nearest prey agent is the most successfully predator strategy
 The paper shows, that using the NP strategy has the most success rate in capturing prey agents. The
 predator agents also show a bias hunting for smaller groups. This also shows the advantage of using the MCP 
 strategy intermittently to force the prey to split into smaller groups, since the success rate in hunting
@@ -224,7 +224,7 @@ the organization of evolved cognitive systems.
 Agents have the task to categorize visual objects into discrete categories based on their appearance. 
 Agents have the task to catch falling small blocks and avoid large blocks either falling left or right. 
 There are four input units (sensor) to detect falling blocks, ten internal states (neurons) and two actuators 
-(actions; encodings 01 10 11 and 00)) which control whether the agent stands still (00 and 11), 
+(actions; encodings 01 10 11 and 00) which control whether the agent stands still (00 and 11), 
 moves to the left (10) or to the right (01). Start codon of two loci mark beginning of neuronal net, 
 two other loci the number of inputs and outputs while two further loci specify which inputs
 feed into which outputs. In one simulation only one brick falls at the time. The agent has a length of
@@ -242,7 +242,7 @@ $$m(t+1)=tanh(\sum_{k=1}^{n}\sum_{j=1}w_{j}^{(k)}m_{j}^{(k)}(t))$$
 
 m<sub>j</sub><sup>(k)</sup> represents a value of an incoming node via gate k multiplied with the associated
 weight w<sub>j</sub><sup>(k)</sup>. m is the output for the timestep t.
-Output values of neuronal gates are propagated to every node which the gate feeds. \\
+Output values of neuronal gates are propagated to every node which the gate feeds.
 Two loci mark the beginning of a neuronal gate, the two subsequent loci encode number of inputs and outputs
 and the last two loci give the specific nodes which feed into the NG and to which nodes the NG feeds.
 After this information n weights for of an n-input NG are encoded. The number of neuronal gates can
