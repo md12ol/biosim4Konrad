@@ -37,7 +37,7 @@ def getData(logName):
             if replicateDir.is_dir():
                 os.chdir(replicateDir.name)
 
-                # find and open the logfile from the replicate and print the last line for now
+                # find and open the logfile from the replicate and gather the data for the boxplots
                 with open("logs/epoch-log.txt") as logFile:
                     print(os.getcwd())
                     # logSpecifierIndex shows at which position in the line the logValue is stored
