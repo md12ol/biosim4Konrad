@@ -451,18 +451,39 @@ October 21st, 2026
     >>  Think about other ways to limit the population while maintaining fair reproduction rights for each species
 
 November 6th, 2026
-    >>  Re-run the eight experiments that I ran
-    >>  Run the post-processing on them
-    >>  We want a single line graph per experiment with all 10 lines visible (one per replicate). 10 lines transparent and grayed out. Then one additional line thats the mean value of the 10 lines at that generation.
-    >>  Generate the boxplots for the above data
-    >>  Add a job script for when both populations run out and call it from the C++ code for spawn new generation with a new seed (make sure the seed in the config file is changed if it is deterministic)
-    >>  Look up and brainstorm some possible fitness functions and their impact on the species behaviour
-    >>  Look into the altruistic challenge within biosim4
-    >>  Look into making a schedule for when you work 2*4 hours per week
+    >>  Re-run the eight experiments that I ran [DONE]
+    >>  Run the post-processing on them [DONE]
+    >>  We want a single line graph per experiment with all 10 lines visible (one per replicate). 10 lines transparent and grayed out. Then one additional line thats the mean value of the 10 lines at that generation. [DONE]
+        >>  Overall Population Diversity
+        >>  Species Diversity
+        >>  Overall Survivors
+        >>  Species Survivors
+        >>  Eaten Mice
+    >>  Generate the boxplots for the above data [NEXT WEEK]
+    >>  Add a job script for when both populations run out and call it from the C++ code for spawn new generation with a new seed (make sure the seed in the config file is changed if it is deterministic) [MOSTLY DONE]
+    >>  Look up and brainstorm some possible fitness functions and their impact on the species behaviour [DONE]
+    >>  Look into the altruistic challenge within biosim4 [DONE]
+    >>  Look into making a schedule for when you work 2*4 hours per week [DONE]
     >>  For Michael
         >>  If both populations die out then a fully new run starts which messes with the time
         >>  Fitness functions and what they result in terms of behaviour in the species
         >>  Minimum and maximum number of each species
+
+November 11th, 2026
+    >>  Integrate the line graph generation into the post-processing script
+    >>  Add some more plots (get the data if necessary):
+        >>  Overall Eaten
+        >>  Species Eaten
+        >>  Overall Genome Length
+        >>  Species Genome Length
+    >>  Have all plots/graphs (locally for review) of the eight full runs that you ran last week
+    >>  Write a script to do local post-processing
+    >>  Add check to job script for local vs cluster to determine how to re-start a replicate
+    >>  Read through and work through the Git issues. Please comment and or message me if you have questions
+    
+
+Schedule
+    >>  Plans to work Mondays and Tuesdays from 9 AM to 1 PM from my office
 
 
 Future Experiments To Try
