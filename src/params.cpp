@@ -84,7 +84,7 @@ void ParamManager::setDefaults()
     privParams.genomeAnalysisStride = privParams.videoStride;
     privParams.displaySampleGenomes = 5;
     privParams.displayBestGenomes = true;
-    privParams.genomeComparisonMethod = 1;
+    privParams.genomeComparisonMethod = 0;
     privParams.updateGraphLog = true;
     privParams.logGeneration = true;
     privParams.logSurvivors = true;
