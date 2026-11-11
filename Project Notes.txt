@@ -91,6 +91,22 @@ Notes
             >>  since sizeX = 128 the radius in which the individuals need to be in order to survive is 128 / 4 = 32 around the corners
             >>  the closer the individuals are to the corners the higher their score is
 
+    >>  Altruism Challenge
+        >>  consists of actually two challenges: CHALLENGE_ALTRUISM and CHALLENGE_ALTRUISM_SACRIFICE
+        >>  if CHALLENGE_ALTRUISM_SACRIFICE is chosen the survived individuals are those within radius of NE corner
+        >>  if CHALLENGE_ALTRUISM is chosen both challenges are considered
+            >>  genomes of individuals within the spawning area are saved as parents
+            >>  if considerKinship is false
+                >>  for each individual in the sacrificial area the sacrificedCount is raised by one
+                >>  numberSaved is calculated by multiplying sacrificedCount with altruismFactor
+                >>  a higher altruismFactor means that fewer individual genomes within spawning area will be erased
+                >>  the altruismFactor is the number individuals which can be saved (if they are in the spawning area) for each sacrificed individual
+            >>  if considerKinship is true
+                >>  the indices of the individuals in the sacrificial area are saved to sacrificesIndexes
+                >>  generationToApplyKinship will be considered
+                >>  if the current generation is lower than this number, the individuals in the spawning area will survived regardless of sacrifices
+                >>  else a higher genome similarity between an specific sacrificed individual and an indivivdual in the spawning area will benefit the individual within the spawning area
+
 
 Stuff we Don't Understand
 

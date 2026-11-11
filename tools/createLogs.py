@@ -10,9 +10,8 @@ outputDir = "outputTest"
 
 # get data necessary for creating an epoch-log which contains the mean values for each position
 # for each generation for each category in the log
-def getData(argv):
-    print(argv)
-    print(os.getcwd())
+def getData(logName):
+
     os.chdir(outputDir)
 
     # iterate over the experiment dirs and create a logfile with mean values in each of them
@@ -34,25 +33,23 @@ def getData(argv):
                         isFirstReplicate = False
                         dataFileCurrent = pd.read_csv("logs/epoch-log.txt", sep=r"\s+")
 
-                        if argv == 'Survivors':
+                        if logName == 'Survivors':
                             dataSurvivors = dataFileCurrent[['generation', 'Survivors']].rename(columns={'Survivors': 'Survivors' + replicateDir.name})
                             dataSurvivorsBoth = dataFileCurrent[['generation', 'SurvivedMice', 'SurvivedCats']].rename(columns={'SurvivedMice' : 'SurvivedMice' + replicateDir.name, 'SurvivedCats' : 'SurvivedCats' + replicateDir.name})
                             dataSurvivors.to_csv("../epoch-log-survivors.txt", sep = " ", index=False)
                             dataSurvivorsBoth.to_csv("../epoch-log-survivorsboth.txt", sep = " ", index=False)
-                        elif argv == 'Diversity':
-                            print("test should not be written")
+                        elif logName == 'Diversity':
                             dataDiversity = dataFileCurrent[['generation', 'Diversity']].rename(columns={'Diversity': 'Diversity' + replicateDir.name})
                             dataDiversityBoth = dataFileCurrent[['generation', 'DiversityMice', 'DiversityCats']].rename(columns={'DiversityMice' : 'DiversityMice' + replicateDir.name, 'DiversityCats' : 'DiversityCats' + replicateDir.name})
                             dataDiversity.to_csv("../epoch-log-diversity.txt", sep = " ", index=False)
                             dataDiversityBoth.to_csv("../epoch-log-diversityboth.txt", sep = " ", index=False)
                         else:
-                            print("test should not be written")
-                            data = dataFileCurrent[['generation', argv]].rename(columns={argv: argv + replicateDir.name})
-                            data.to_csv("../epoch-log-" + argv + ".txt", sep = " ", index=False)
+                            data = dataFileCurrent[['generation', logName]].rename(columns={logName: logName + replicateDir.name})
+                            data.to_csv("../epoch-log-" + logName + ".txt", sep =" ", index=False)
 
                     else:
                         dataFileCurrent = pd.read_csv("logs/epoch-log.txt", sep=r"\s+")
-                        if argv == 'Survivors':
+                        if logName == 'Survivors':
                             dataFileCurrentSurvivors = dataFileCurrent[['Survivors']].rename(columns={'Survivors': 'Survivors' + replicateDir.name})
                             dataFileCurrentSurvivorsBoth = dataFileCurrent[['SurvivedMice', 'SurvivedCats']].rename(columns={'SurvivedMice': 'SurvivedMice' + replicateDir.name, 'SurvivedCats' : 'SurvivedCats' + replicateDir.name})
                             dataSurvivors = pd.read_csv("../epoch-log-survivors.txt", sep=r"\s+")
@@ -62,7 +59,7 @@ def getData(argv):
 
                             ergebnisSurvivors.to_csv("../epoch-log-survivors.txt", sep=" ", index=False)
                             ergebnisSurvivorsBoth.to_csv("../epoch-log-survivorsboth.txt", sep=" ", index=False)
-                        elif argv == 'Diversity':
+                        elif logName == 'Diversity':
                             dataFileCurrentDiversity = dataFileCurrent[['Diversity']].rename(columns={'Diversity': 'Diversity' + replicateDir.name})
                             dataFileCurrentDiversityBoth = dataFileCurrent[['DiversityMice', 'DiversityCats']].rename(columns={'DiversityMice': 'DiversityMice' + replicateDir.name, 'DiversityCats' : 'DiversityCats' + replicateDir.name})
                             dataDiversity = pd.read_csv("../epoch-log-diversity.txt", sep=r"\s+")
@@ -72,15 +69,15 @@ def getData(argv):
                             ergebnisSurvivors.to_csv("../epoch-log-diversity.txt", sep=" ", index=False)
                             ergebnisSurvivorsBoth.to_csv("../epoch-log-diversityboth.txt", sep=" ", index=False)
                         else:
-                            dataFileCurrentData = dataFileCurrent[[argv]].rename(columns={argv: argv + replicateDir.name})
-                            dataFileData = pd.read_csv("../epoch-log-" + argv + ".txt", sep=r"\s+")
+                            dataFileCurrentData = dataFileCurrent[[logName]].rename(columns={logName: logName + replicateDir.name})
+                            dataFileData = pd.read_csv("../epoch-log-" + logName + ".txt", sep=r"\s+")
                             ergebnis = pd.concat([dataFileData, dataFileCurrentData], axis=1)
-                            ergebnis.to_csv("../epoch-log-" + argv + ".txt", sep=" ", index=False)
+                            ergebnis.to_csv("../epoch-log-" + logName + ".txt", sep=" ", index=False)
 
                     os.chdir("..")
 
             # plot a single line graph for an experiment
-            if argv == 'Survivors':
+            if logName == 'Survivors':
 
                 # add the missing mean values
                 dataFileSurvivors = pd.read_csv("./epoch-log-survivors.txt", sep=r"\s+")
@@ -106,7 +103,9 @@ def getData(argv):
                 plt.ylabel("values")
                 plt.title("Survivors for " + experimentDir.name)
                 plt.legend(fontsize='xx-small')
-                plt.show()
+                plt.savefig(logName + ".png")
+                #plt.show()
+                plt.close()
 
                 plt.figure(figsize=(10,6))
                 for col in y_SurvivorsBoth:
@@ -120,9 +119,11 @@ def getData(argv):
                 plt.ylabel("values")
                 plt.title("Survivors for " + experimentDir.name)
                 plt.legend(fontsize='xx-small')
-                plt.show()
+                plt.savefig(logName + "both.png")
+                #plt.show()
+                plt.close()
 
-            elif argv == 'Diversity':
+            elif logName == 'Diversity':
 
                 # add the missing mean values
                 dataFileDiversity = pd.read_csv("./epoch-log-diversity.txt", sep=r"\s+")
@@ -148,7 +149,9 @@ def getData(argv):
                 plt.ylabel("values")
                 plt.title("Diversity for " + experimentDir.name)
                 plt.legend(fontsize='xx-small')
-                plt.show()
+                plt.savefig(logName + ".png")
+                #plt.show()
+                plt.close()
 
                 plt.figure(figsize=(10,6))
                 for col in y_DiversityBoth:
@@ -162,11 +165,13 @@ def getData(argv):
                 plt.ylabel("values")
                 plt.title("Diversity for " + experimentDir.name)
                 plt.legend(fontsize='xx-small')
-                plt.show()
+                plt.savefig(logName + "both.png")
+                #plt.show()
+                plt.close()
 
             else:
                 # add the missing mean values
-                dataFile = pd.read_csv('./epoch-log-' + argv + '.txt', sep=r"\s+")
+                dataFile = pd.read_csv('./epoch-log-' + logName + '.txt', sep=r"\s+")
                 dataFile['mean'] = dataFile.iloc[:, 1:].mean(axis=1)
 
                 x = dataFile['generation']
@@ -180,9 +185,11 @@ def getData(argv):
                         plt.plot(x, dataFile[col], label=f"{col}", color="grey")
                 plt.xlabel("generation")
                 plt.ylabel("values")
-                plt.title("Values for " + argv + " (" + experimentDir.name + ")")
+                plt.title("Values for " + logName + " (" + experimentDir.name + ")")
                 plt.legend(fontsize='xx-small')
-                plt.show()
+                plt.savefig(logName + ".png")
+                #plt.show()
+                plt.close()
 
             os.chdir("..") # change into experiment folder
     os.chdir("..") # change into biosim folder

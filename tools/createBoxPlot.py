@@ -91,6 +91,7 @@ def visualizePlot(logName):
     plt.xticks(ticks=ticks, labels=tickLabels)
     #plt.savefig(logName + ".png")
     plt.show()
+    #plt.close()
     tickLabels.clear()
 
 
