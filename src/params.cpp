@@ -84,7 +84,7 @@ void ParamManager::setDefaults()
     privParams.genomeAnalysisStride = privParams.videoStride;
     privParams.displaySampleGenomes = 5;
     privParams.displayBestGenomes = true;
-    privParams.genomeComparisonMethod = 1;
+    privParams.genomeComparisonMethod = 0;
     privParams.updateGraphLog = true;
     privParams.logGeneration = true;
     privParams.logSurvivors = true;
@@ -463,6 +463,11 @@ void ParamManager::checkParameters()
 {
     if (privParams.deterministic && privParams.numThreads != 1) {
         std::cerr << "Warning: When deterministic is true, you probably want to set numThreads = 1." << std::endl;
+    }
+    if (privParams.geneInsertionDeletionRate > 0 && privParams.genomeComparisonMethod != 0) {
+        std::cerr << "Error: Set genomeComparisonMethod = 0, if geneInsertionDeletionRate > 0" << std::endl;
+        std::cout << "Simulator exit." << std::endl;
+        exit(-1);
     }
 }
 

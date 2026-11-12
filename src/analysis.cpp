@@ -346,7 +346,7 @@ float averageGenomeLength()
         sum += peeps[randomUint(1, p.population)].genome.size();
         ++numberSamples;
     }
-    return sum / numberSamples;
+    return static_cast<float>(sum) / static_cast<float>(numberSamples);
 }
 
 
