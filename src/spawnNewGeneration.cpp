@@ -219,7 +219,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::vector<uint16_t> highestScoredMice;
     std::vector<uint16_t> highestScoredCats;
 
-    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
+    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned eatenFoodByMice, unsigned murderCount);
     extern void createPopulationRange();
     extern void createPopulationFinalRange(unsigned numberSurvivors, unsigned generation);
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
@@ -380,7 +380,7 @@ unsigned spawnNewGeneration(unsigned generation, unsigned murderCount)
     std::cout << "Gen " << generation << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Gen " << generation << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Gen " << generation << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
-    appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
+    appendEpochLog(generation, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), numberOfFoodEaten, murderCount);
     if ((parentGenomesMice.size() + parentGenomesCats.size()) > 0 && (generation % p.genomeAnalysisStride == 0)) { // was counting cats twice and mice never
         displaySampleGenomes(p.displaySampleGenomes, generation, highestScoredMice, highestScoredCats);
         if (meanScoreMice >= p.meanScoreMice) {

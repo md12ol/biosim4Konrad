@@ -61,13 +61,17 @@ struct Params {
     unsigned updateGraphLogStride; // > 0
     bool logGeneration;
     bool logSurvivors;
+    bool logSurvivorsMice;
+    bool logSurvivorsCats;
     bool logDiversity;
     bool logDiversityMice;
     bool logDiversityCats;
     bool logAverageGenomeLength;
-    bool logSurvivorsMice;
-    bool logSurvivorsCats;
-    bool logEatenMice;
+    bool logAverageGenomeLengthMice;
+    bool logAverageGenomeLengthCats;
+    bool logEatenFood;
+    bool logEatenFoodMice;
+    bool logEatenFoodCats;
     unsigned challengeMice;
     unsigned challengeCats;
     mutable std::vector<Coord> micePositions;

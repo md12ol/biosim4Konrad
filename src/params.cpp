@@ -88,12 +88,17 @@ void ParamManager::setDefaults()
     privParams.updateGraphLog = true;
     privParams.logGeneration = true;
     privParams.logSurvivors = true;
+    privParams.logSurvivorsMice = true;
+    privParams.logSurvivorsCats = true;
     privParams.logDiversity = true;
     privParams.logDiversityMice = true;
     privParams.logDiversityCats = true;
     privParams.logAverageGenomeLength = true;
-    privParams.logSurvivorsMice = true;
-    privParams.logSurvivorsCats = true;
+    privParams.logAverageGenomeLengthMice = true;
+    privParams.logAverageGenomeLengthCats = true;
+    privParams.logEatenFood = true;
+    privParams.logEatenFoodMice = true;
+    privParams.logEatenFoodCats = true;
     privParams.updateGraphLogStride = privParams.videoStride;
     privParams.deterministic = false;
     privParams.RNGSeed = 12345678;
@@ -359,6 +364,12 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "logsurvivors" && isBool) {
             privParams.logSurvivors = bVal; break;
         }
+        else if (name == "logsurvivorsmice" && isBool) {
+            privParams.logSurvivorsMice= bVal; break;
+        }
+        else if (name == "logsurvivorscats" && isBool) {
+            privParams.logSurvivorsCats = bVal; break;
+        }
         else if (name == "logdiversity" && isBool) {
             privParams.logDiversity = bVal; break;
         }
@@ -371,14 +382,20 @@ void ParamManager::ingestParameter(std::string name, std::string val)
         else if (name == "logaveragegenomelength" && isBool) {
             privParams.logAverageGenomeLength = bVal; break;
         }
-        else if (name == "logsurvivorsmice" && isBool) {
-            privParams.logSurvivorsMice= bVal; break;
+        else if (name == "logaveragegenomelengthmice" && isBool) {
+            privParams.logAverageGenomeLengthMice = bVal; break;
         }
-        else if (name == "logsurvivorscats" && isBool) {
-            privParams.logSurvivorsCats = bVal; break;
+        else if (name == "logaveragegenomelengthcats" && isBool) {
+            privParams.logAverageGenomeLengthCats = bVal; break;
         }
-        else if (name == "logeatenmice" && isBool) {
-            privParams.logEatenMice = bVal; break;
+        else if (name == "logeatenfood" && isBool) {
+            privParams.logEatenFood = bVal; break;
+        }
+        else if (name == "logeatenfoodmice" && isBool) {
+            privParams.logEatenFoodMice = bVal; break;
+        }
+        else if (name == "logeatenfoodcats" && isBool) {
+            privParams.logEatenFoodCats = bVal; break;
         }
         else if (name == "updategraphlogstride" && isUint && uVal > 0) {
             privParams.updateGraphLogStride = uVal; break;

@@ -208,7 +208,7 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
     unsigned unsuccessfullMice = 0;
     unsigned unsuccessfullCats = 0;
 
-    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount);
+    extern void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned eatenFoodByMice, unsigned murderCount);
     extern void createPopulationRange();
     extern void createPopulationFinalRangeMultipleRuns(unsigned numberSurvivors, unsigned run);
     extern std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned challenge);
@@ -359,7 +359,7 @@ unsigned getSimulationRunInformation(unsigned run, unsigned murderCount)
     std::cout << "Run " << run << ", " << numberOfMiceEaten << " number of mice eaten" << std::endl;
     std::cout << "Run " << run << ", " << successfullCats << " number of cats that ate mice" << std::endl;
     std::cout << "Run " << run << ", " << (!parentsCats.empty() ? parentsCats.at(parentsCats.size() / 2).second : 0) << " median of eaten mice" << std::endl;
-    appendEpochLog(run, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), murderCount);
+    appendEpochLog(run, parentGenomesMice.size() + parentGenomesCats.size(), parentGenomesMice.size(), parentGenomesCats.size(), numberOfFoodEaten, murderCount);
     // Create textfile to contain maximum population number
     if (run == 0) {
         createPopulationRange();

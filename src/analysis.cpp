@@ -336,15 +336,31 @@ void Indiv::printIGraphEdgeList(unsigned index, unsigned generation, const std::
 }
 
 
-float averageGenomeLength()
+float averageGenomeLength(const std::string& species)
 {
     unsigned count = 100;
     unsigned numberSamples = 0;
     unsigned long sum = 0;
 
-    while (count-- > 0) {
-        sum += peeps[randomUint(1, p.population)].genome.size();
-        ++numberSamples;
+    if (species == "mouse") {
+        while (count-- > 0) {
+            const Indiv& indiv = peeps[randomUint(1, p.population * p.miceRatio)];
+            assert(indiv.species == "mouse");
+            sum += indiv.genome.size();
+            ++numberSamples;
+        }
+    } else if (species == "cat") {
+        while (count-- > 0) {
+            const Indiv& indiv = peeps[randomUint(p.population * p.miceRatio + 1, p.population)];
+            assert(indiv.species == "cat");
+            sum += indiv.genome.size();
+            ++numberSamples;
+        }
+    } else {
+        while (count-- > 0) {
+            sum += peeps[randomUint(1, p.population)].genome.size();
+            ++numberSamples;
+        }
     }
     return static_cast<float>(sum) / static_cast<float>(numberSamples);
 }
@@ -353,7 +369,7 @@ float averageGenomeLength()
 // The epoch log contains one line per generation in a format that can be
 // fed to graphlog.gp to produce a chart of the simulation progress.
 // ToDo: remove hardcoded filename.
-void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned murderCount)
+void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned survivedMice, unsigned survivedCats, unsigned eatenFoodByMice, unsigned murderCount)
 {
     std::ofstream foutput;
 
@@ -370,7 +386,13 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
                 foutput << "generation";
             }
             if (p.logSurvivors == true) {
-                foutput << " Survivors";
+                foutput << " Survived";
+            }
+            if (p.logSurvivorsMice ==  true) {
+                foutput << " SurvivedMice";
+            }
+            if (p.logSurvivorsCats == true) {
+                foutput << " SurvivedCats";
             }
             if (p.logDiversity == true) {
                 foutput << " Diversity";
@@ -384,14 +406,20 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
             if (p.logAverageGenomeLength == true) {
                 foutput << " averageGenomeLength";
             }
-            if (p.logSurvivorsMice ==  true) {
-                foutput << " SurvivedMice";
+            if (p.logAverageGenomeLengthMice == true) {
+                foutput << " averageGenomeLength";
             }
-            if (p.logSurvivorsCats == true) {
-                foutput << " SurvivedCats";
+            if (p.logAverageGenomeLengthCats == true) {
+                foutput << " averageGenomeLength";
             }
-            if (p.logEatenMice ==  true) {
-                foutput << " EatenMice";
+            if (p.logEatenFood ==  true) {
+                foutput << " EatenFood";
+            }
+            if (p.logEatenFood ==  true) {
+                foutput << " EatenFoodMice";
+            }
+            if (p.logEatenFood ==  true) {
+                foutput << " EatenFoodCats";
             }
             foutput << std::endl;
         }
@@ -401,6 +429,12 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
         }
         if (p.logSurvivors == true) {
             foutput << " " << numberSurvivors;
+        }
+        if (p.logSurvivorsMice == true) {
+            foutput << " " << survivedMice;
+        }
+        if (p.logSurvivorsCats == true) {
+            foutput << " " << survivedCats;
         }
         if (p.logDiversity == true) {
             foutput << " " << geneticDiversity();
@@ -412,15 +446,21 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
             foutput << " " << geneticDiversitySpecifiedPopulation("cat");
         }
         if (p.logAverageGenomeLength == true) {
-            foutput << " " << averageGenomeLength();
+            foutput << " " << averageGenomeLength("all");
         }
-        if (p.logSurvivorsMice == true) {
-            foutput << " " << survivedMice;
+        if (p.logAverageGenomeLengthMice == true) {
+            foutput << " " << averageGenomeLength("mouse");
         }
-        if (p.logSurvivorsCats == true) {
-            foutput << " " << survivedCats;
+        if (p.logAverageGenomeLengthCats == true) {
+            foutput << " " << averageGenomeLength("cat");
         }
-        if (p.logEatenMice == true) {
+        if (p.logEatenFood == true) {
+            foutput << " " << eatenFoodByMice + murderCount;
+        }
+        if (p.logEatenFoodMice == true) {
+            foutput << " " << eatenFoodByMice;
+        }
+        if (p.logEatenFoodCats == true) {
             foutput << " " << murderCount;
         }
         foutput << std::endl;
