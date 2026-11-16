@@ -3,9 +3,6 @@ import sys
 import matplotlib.pyplot as plt
 import os
 
-# name of the dir where the simulation data is located
-outputDir = "outputScript"
-
 # list which will contain arrays/lists of data points
 boxplotDataList = []
 
@@ -14,7 +11,7 @@ tickLabels = []
 
 
 # get data necessary for the plots and store it in arrays
-def getData(logName):
+def getData(outputDir, logName):
     os.chdir(outputDir)
     boxplotDataList.clear()
     experimentDataList = []
@@ -57,7 +54,7 @@ def getData(logName):
                     value = separateValuesLast[logSpecifierIndex]
 
                     # Append data value to the experimentDataList
-                    experimentDataList.append(int(value))
+                    experimentDataList.append(float(value))
                     logFile.close()
 
 
@@ -72,10 +69,11 @@ def getData(logName):
 
 
 # visualize the box plots
-def visualizePlot(logName):
+def visualizePlot(outputDir, logName):
     print("Visualizing boxplots...")
     print(boxplotDataList)
 
+    os.chdir(outputDir)
     completeData = []
     ticks=[]
     tickCount=1
@@ -89,19 +87,26 @@ def visualizePlot(logName):
     plt.boxplot(completeData, sym='') # sym specifies a symbol for outliers
     plt.title(logName)
     plt.xticks(ticks=ticks, labels=tickLabels)
-    #plt.savefig(logName + ".png")
-    plt.show()
-    #plt.close()
+    plt.savefig(logName + ".png")
+    #plt.show()
+    plt.close()
     tickLabels.clear()
+    os.chdir("..")
 
 
 def main(argv):
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     os.chdir("..")
+
+    # name of the dir where the simulation data is located
+    outputDir = "out"
+
     for logName in argv:
-        if argv.index(logName) > 0:
-            getData(logName)
-            visualizePlot(logName)
+        if argv.index(logName) == 1:
+            outputDir = logName
+        elif argv.index(logName) > 1:
+            getData(outputDir, logName)
+            visualizePlot(outputDir, logName)
 
 
 if __name__ == "__main__":

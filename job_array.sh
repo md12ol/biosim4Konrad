@@ -26,3 +26,12 @@ else
     eval $zeile
   done < $TABLE
 fi
+
+# In case the table is the one for postprocessing, create the boxplots and single line graphs
+if [ "$TABLE" = "table_postprocess.dat" ]; then
+  LINE=$(sed -n 1p "${TABLE}")
+  IFS='"' read -r -a elemente <<< "$LINE"
+  IFS='/' read -r -a verzeichnisse <<< "${elemente[1]}"
+  python3 tools/createBoxPlot.py "${verzeichnisse[0]}" Survived SurvivedMice SurvivedCats Diversity DiversityMice DiversityCats averageGenomeLength averageGenomeLengthMice averageGenomeLengthCats EatenFood EatenFoodMice EatenFoodCats
+  python3 tools/createLogs.py "${verzeichnisse[0]}" Survived Diversity averageGenomeLength EatenFood
+fi

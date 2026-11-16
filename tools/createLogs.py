@@ -4,12 +4,8 @@ import pandas as pd
 import csv
 import matplotlib.pyplot as plt
 
-# name of the directory which contains the log files
-outputDir = "outputTest"
-
-
 # create the plots for the corresponding logName
-def createPlots(logName):
+def createPlots(outputDir, logName):
 
     os.chdir(outputDir)
 
@@ -105,9 +101,14 @@ def main(argv):
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     os.chdir("..")
 
+    # name of the directory which contains the log files
+    outputDir = "out"
+
     for logName in argv:
-        if argv.index(logName) > 0:
-            createPlots(logName)
+        if argv.index(logName) == 1:
+            outputDir = logName
+        if argv.index(logName) > 1:
+            createPlots(outputDir, logName)
 
 if __name__ == "__main__":
     main(sys.argv)

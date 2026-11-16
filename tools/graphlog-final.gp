@@ -43,7 +43,7 @@ ScaleSurvivedCats(sc) = sc
 #ScaleMurders(m) = m
 
 plot LOGPATH \
-       using 1:(column("Survivors")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
+       using 1:(column("Survived")) with lines lw 2 linecolor 2 title "Survivors" axes x1y1, \
     "" using 1:(column("Diversity")) with lines lw 2 linecolor 1 title "Diversity" axes x1y2, \
     "" using 1:(column("DiversityMice")) with lines lw 2 linecolor 5 title "DiversityMice" axes x1y2, \
     "" using 1:(column("DiversityCats")) with lines lw 2 linecolor 6 title "DiversityCats" axes x1y2, \
