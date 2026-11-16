@@ -234,9 +234,13 @@ void simulator(int argc, char **argv) {
                         paramManager.updateFromConfigFile(generation + 1);
                         unsigned numberSurvivors = spawnNewGeneration(generation, murderCount);
                         if (numberSurvivors == 0) {
-                            std::cout << "Simulator exit." << std::endl;
-                            runMode = RunMode::ABORT; // set the runMode to abort the simulation
-                            // generation = 0;  // start over
+                            if (std::getenv("SLURM_JOB_ID") != nullptr) {
+                                std::cout << "Simulator exit." << std::endl;
+                                runMode = RunMode::ABORT; // set the runMode to abort the simulation
+                            }
+                            else {
+                                generation = 0;  // start over
+                            }
                         } else {
                             ++generation;
                         }
