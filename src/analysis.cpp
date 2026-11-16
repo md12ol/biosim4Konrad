@@ -407,10 +407,10 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned surv
                 foutput << " averageGenomeLength";
             }
             if (p.logAverageGenomeLengthMice == true) {
-                foutput << " averageGenomeLength";
+                foutput << " averageGenomeLengthMice";
             }
             if (p.logAverageGenomeLengthCats == true) {
-                foutput << " averageGenomeLength";
+                foutput << " averageGenomeLengthCats";
             }
             if (p.logEatenFood ==  true) {
                 foutput << " EatenFood";
