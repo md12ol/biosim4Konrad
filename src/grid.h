@@ -64,6 +64,9 @@ public:
     const std::vector<Coord> &getBarrierLocations() const { return barrierLocations; }
     const std::vector<Coord> &getBarrierCenters() const { return barrierCenters; }
     const std::vector<Coord> &getSafeAreaLocations() const { return safeAreaLocations; }
+    std::vector<Coord> &getSafeAreaLocations() { return safeAreaLocations; } // write access
+    std::vector<Coord> &getFoodAreaLocations() { return foodAreaLocations; } // write access
+    std::vector<Coord> &getSafeFoodAreaLocations() { return safeFoodAreaLocations; } // write access
     const std::vector<Coord> &getSafeAreaCenters() const { return safeAreaCenters; }
     const std::vector<Coord> &getFoodAreaLocations() const { return foodAreaLocations; }
     const std::vector<Coord> &getFoodAreaCenters() const { return foodAreaCenters; }

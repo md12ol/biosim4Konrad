@@ -56,7 +56,7 @@ struct Params {
     unsigned genomeAnalysisStride; // > 0
     unsigned displaySampleGenomes; // >= 0
     bool displayBestGenomes;
-    unsigned genomeComparisonMethod; // 0 = Jaro-Winkler; 1 = Hamming
+    unsigned genomeComparisonMethod; // 0 = Jaro-Winkler; 1 = Hamming; 2 = Hamming byte-by-byte
     bool updateGraphLog;
     unsigned updateGraphLogStride; // > 0
     bool logGeneration;
@@ -79,6 +79,8 @@ struct Params {
     bool staticMicePositions;
     bool staticCatPositions;
     unsigned foodAreaType; // >= 0
+    unsigned foodPerTile; // >= 0
+    float foodRegrowth;
     bool displayFoodLocations;
     unsigned barrierType; // >= 0
     unsigned safeAreaType; // >= 0

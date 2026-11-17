@@ -7,6 +7,7 @@
 #include "params.h"       // params from the config file plus some extra stuff
 #include "indiv.h"        // data structure for an individual
 #include "grid.h"         // the 2D world where the peeps live
+#include "foodLayer.h"
 #include "signals.h"      // a 2D array of pheromones that overlay the world grid
 #include "peeps.h"        // the 2D world where the peeps live
 #include "random.h"
@@ -42,6 +43,7 @@ constexpr unsigned CHALLENGE_MICE = 20;
 extern ParamManager paramManager; // manages simulator params from the config file plus more
 extern const Params &p; // read-only simulator config params
 extern Grid grid;  // 2D arena where the individuals live
+extern FoodLayer foodLayer;
 extern Signals signals;  // pheromone layers
 extern Peeps peeps;   // container of all the individuals
 extern void simulator(int argc, char **argv);

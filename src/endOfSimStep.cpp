@@ -84,11 +84,17 @@ void endOfSimStep(unsigned simStep, unsigned run, unsigned generation) {
             for (Coord loc : foodAreaLocs) {
                 if (loc == indiv.loc) {
                     indiv.foodEaten = indiv.foodEaten + 1;
+                    if (p.foodPerTile > 0) { // ToDo: Use the comparison which makes sense in that context (> or !=)
+                        foodLayer.decrement(loc.x, loc.y);
+                    }
                 }
             }
             for (Coord loc : safeFoodAreaLocs) {
                 if (loc == indiv.loc) {
                     indiv.foodEaten = indiv.foodEaten + 1;
+                    if (p.foodPerTile > 0) {
+                        foodLayer.decrement(loc.x, loc.y);
+                    }
                 }
             }
         }

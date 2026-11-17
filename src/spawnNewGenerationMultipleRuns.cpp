@@ -34,6 +34,9 @@ void initializeGeneration0Once(unsigned run)
     // The signal layers have already been allocated, so just reuse them
     signals.zeroFill();
 
+    // Refill the already allocated food cells
+    foodLayer.fill();
+
     // Spawn the population. The peeps container has already been allocated,
     // just clear and reuse it
     if (p.genomeMiceTextFile != "none" && p.genomeCatsTextFile == "none") {

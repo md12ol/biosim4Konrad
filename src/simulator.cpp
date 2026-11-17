@@ -33,6 +33,7 @@ extern void endOfGeneration(unsigned run, unsigned generation);
 
 RunMode runMode = RunMode::STOP;
 Grid grid;        // The 2D world where the creatures live
+FoodLayer foodLayer; // A 2D array of food tiles that overlay the world grid
 Signals signals;  // A 2D array of pheromones that overlay the world grid
 Peeps peeps;      // The container of all the individuals in the population
 ImageWriter imageWriter; // This is for generating the movies
@@ -146,6 +147,7 @@ void simulator(int argc, char **argv) {
         initHeatmap();
         grid.init(p.sizeX, p.sizeY); // the land on which the peeps live
         signals.init(p.signalLayers, p.sizeX, p.sizeY);  // where the pheromones waft
+        foodLayer.init(p.sizeX, p.sizeY); // where the food is counted
         peeps.init(p.population); // the peeps themselves
 
         // If imageWriter is to be run in its own thread, start it here:

@@ -32,6 +32,9 @@ void initializeGeneration0()
     // The signal layers have already been allocated, so just reuse them
     signals.zeroFill();
 
+    // Refill the already allocated food cells
+    foodLayer.fill();
+
     // Spawn the population. The peeps container has already been allocated,
     // just clear and reuse it
     if (p.genomeMiceTextFile != "none" && p.genomeCatsTextFile == "none") {
@@ -139,6 +142,7 @@ void initializeNewGeneration(const std::vector<Genome> &parentGenomesMice, const
     grid.createFoodArea(p.foodAreaType);
     grid.createSafeArea(p.safeAreaType);
     signals.zeroFill();
+    foodLayer.fill();
 
     // Limit the population if necessary and make sure at least one cat and mouse are spawn
     if (p.population >= grid.countLocations(EMPTY)) {

@@ -70,6 +70,8 @@ safeAreaType = ["6"]
 spawnMiceInSafeAreas = ["false"]
 deterministic = ["false"]
 RNGSeed = ["12345678"]
+foodPerTile = ["5"]
+foodRegrowth = ["0"]
 
 
 # modifies a single, specified line in the given config file
@@ -123,13 +125,13 @@ def create_dat_table_entry(path):
 def create_config_files():
     experimentIndex = 1
     replicateIndex = 1
-    for a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, ab, ac, ad, ae, af, ag, ah, ai in product(staticMicePositions, staticCatPositions,
+    for a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, ab, ac, ad, ae, af, ag, ah, ai, aj, ak in product(staticMicePositions, staticCatPositions,
     sizeX, sizeY, population, miceRatio, dynamicPopulation, stepsPerGeneration, maxGenerations, genomeInitialLengthMin, genomeInitialLengthMax,
     genomeMaxLength, maxNumberNeurons, killEnable, sexualReproduction, chooseParentsByFitness, pointMutationRate,
     responsivenessCurveKFactor, populationSensorRadius, longProbeDistance, shortProbeBarrierDistance,
     shortProbeSafeAreaDistance, shortProbeFoodAreaDistance, signalSensorRadius, genomeMiceTextFile, genomeCatsTextFile,
     challengeMice, challengeCats, foodAreaType, barrierType, safeAreaType,
-    spawnMiceInSafeAreas, deterministic, RNGSeed):
+    spawnMiceInSafeAreas, deterministic, RNGSeed, foodPerTile, foodRegrowth):
 
         # Create multiple replicates for each experiment
         while replicateIndex <= numReplicates:
@@ -183,6 +185,8 @@ def create_config_files():
             modify_ini(config, "spawnMiceInSafeAreas", ag)
             modify_ini(config, "deterministic", ah)
             modify_ini(config, "RNGSeed", ai)
+            modify_ini(config, "foodPerTile", aj)
+            modify_ini(config, "foodRegrowth", ak)
 
             # Modify output dir, experiment dir and replicate dir
             modify_ini(config, "outputDir", outputDir)
