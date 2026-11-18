@@ -480,6 +480,10 @@ November 11th, 2026
     >>  Write a script to do local post-processing
     >>  Add check to job script for local vs cluster to determine how to re-start a replicate
     >>  Read through and work through the Git issues. Please comment and or message me if you have questions
+
+November 18th, 2026
+    >>  Finish the runs on the cluster, transfer the data locally, and run the post-processing on the local data. Then show Michael.
+    >>  Keep working through the issues.
     
 
 Schedule
